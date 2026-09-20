@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -505,14 +505,14 @@
 </footer>
 
 <script>
-  // Theme toggle (remembers choice; falls back gracefully if storage is blocked)
+  // Theme toggle: starts in dark mode, remembers the visitor's choice
   (function () {
     var root = document.documentElement;
     var btn = document.getElementById('themeBtn');
     var saved = null;
     try { saved = localStorage.getItem('qt-theme'); } catch (e) {}
-    var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    root.setAttribute('data-theme', saved || (prefersDark ? 'dark' : 'light'));
+    // Dark mode is the default; a saved choice overrides it
+    root.setAttribute('data-theme', saved === 'light' ? 'light' : 'dark');
     btn.addEventListener('click', function () {
       var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
       root.setAttribute('data-theme', next);
