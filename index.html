@@ -95,7 +95,7 @@
   .brand__mark svg { width: 24px; height: 24px; }
   .brand__name span { color: var(--primary); }
   .nav__links { display: flex; gap: 38px; margin-left: auto; margin-right: 96px; height: 100%; }
-  .nav__links a { position: relative; display: flex; align-items: center; font-size: 15px; font-weight: 500; }
+  .nav__links a { position: relative; display: flex; align-items: center; font-size: 15px; font-weight: 500; cursor: pointer; }
   .nav__links a[aria-current="page"] { color: var(--primary); }
   .nav__links a[aria-current="page"]::after { content: ""; position: absolute; left: 0; right: 0; bottom: 12px; height: 2px; background: var(--primary); border-radius: 2px; }
   .theme-btn { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; color: var(--text); }
@@ -114,7 +114,7 @@
   .hero h1 span { display: block; }
   .grad { background: linear-gradient(90deg, #1d6bf3 20%, #8b5cf6 95%); -webkit-background-clip: text; background-clip: text; color: transparent; }
   .hero p { color: var(--muted); font-size: 16.5px; line-height: 1.75; max-width: 400px; }
-  .btn { display: inline-flex; align-items: center; gap: 10px; margin-top: 30px; padding: 14px 26px; border-radius: 999px; background: var(--primary-dark); color: #fff; font-weight: 500; font-size: 15.5px; box-shadow: 0 10px 22px rgba(37, 99, 235, .3); transition: transform .15s, box-shadow .15s; }
+  .btn { display: inline-flex; align-items: center; gap: 10px; margin-top: 30px; padding: 14px 26px; border-radius: 999px; background: var(--primary-dark); color: #fff; font-weight: 500; font-size: 15.5px; box-shadow: 0 10px 22px rgba(37, 99, 235, .3); transition: transform .15s, box-shadow .15s; cursor: pointer; }
   .btn:hover { transform: translateY(-2px); box-shadow: 0 14px 26px rgba(37, 99, 235, .36); }
   .btn svg { width: 19px; height: 19px; }
   .hero-art { width: 100%; height: auto; display: block; }
@@ -241,7 +241,7 @@
 <!-- ============ NAV ============ -->
 <header class="nav">
   <div class="container nav__in">
-    <a class="brand" href="/" aria-label="QuickTools home">
+    <a class="brand" href="#" id="brandHome" aria-label="QuickTools home">
       <span class="brand__mark">
         <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <rect x="3" y="3" width="18" height="18" rx="3.5"/><circle cx="9" cy="9" r="1.8" fill="#fff" stroke="none"/>
@@ -251,9 +251,9 @@
       <span class="brand__name">Quick<span>Tools</span></span>
     </a>
     <nav class="nav__links" aria-label="Main">
-      <a href="/" aria-current="page">Home</a>
-      <a href="#tools">All Tools</a>
-      <a href="#about">About</a>
+      <a href="#" id="navHome" aria-current="page">Home</a>
+      <a href="#" id="navTools">All Tools</a>
+      <a href="#" id="navAbout">About</a>
     </nav>
     <button class="theme-btn" id="themeBtn" type="button" aria-label="Toggle dark mode">
       <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.800A9 9 0 1 1 11.200 3a7 7 0 0 0 9.800 9.800z"/></svg>
@@ -274,7 +274,7 @@
           <span class="grad">in one place.</span>
         </h1>
         <p>Convert, compress, merge, generate and more — all directly in your browser. No downloads, no sign up, 100% free.</p>
-        <a class="btn" href="#tools">
+        <a class="btn" href="#" id="exploreBtn">
           <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-bolt"/></svg>
           Explore Tools
           <svg viewBox="0 0 24 24" aria-hidden="true" style="width:18px;height:18px"><use href="#i-arrow"/></svg>
@@ -492,7 +492,7 @@
 <!-- ============ FOOTER ============ -->
 <footer class="foot">
   <div class="container foot__in">
-    <a class="brand" href="/" aria-label="QuickTools home">
+    <a class="brand" href="#" id="footerHome" aria-label="QuickTools home">
       <span class="brand__mark">
         <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <rect x="3" y="3" width="18" height="18" rx="3.5"/><circle cx="9" cy="9" r="1.8" fill="#fff" stroke="none"/>
@@ -524,10 +524,14 @@
     });
   })();
 
-  // Nav underline follows the section you are viewing (Home / All Tools / About)
+  // In-page navigation: scrolls to sections WITHOUT ever changing the URL / adding a hash
   (function () {
     var nav = document.querySelector('.nav__links');
-    var links = { home: nav.querySelector('a[href="/"]'), tools: nav.querySelector('a[href="#tools"]'), about: nav.querySelector('a[href="#about"]') };
+    var links = {
+      home: document.getElementById('navHome'),
+      tools: document.getElementById('navTools'),
+      about: document.getElementById('navAbout')
+    };
     var toolsEl = document.getElementById('tools');
     var aboutEl = document.getElementById('about');
 
@@ -537,6 +541,15 @@
         else links[k].removeAttribute('aria-current');
       });
     }
+
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function scrollToEl(el) {
+      var y = el.getBoundingClientRect().top + window.scrollY - 70; // account for sticky nav
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+
     function spy() {
       var y = window.scrollY + 120;                       // a little below the sticky nav
       var atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
@@ -546,11 +559,30 @@
       else setActive('home');
     }
 
-    // "Home" scrolls to the top of this page instead of reloading it
-    links.home.addEventListener('click', function (e) { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
-    // clicking a link moves the underline straight away
-    links.tools.addEventListener('click', function () { setActive('tools'); });
-    links.about.addEventListener('click', function () { setActive('about'); });
+    // Every link/button that should just move you around the page:
+    // preventDefault stops the browser from ever touching the address bar.
+    [document.getElementById('brandHome'), document.getElementById('footerHome'), links.home].forEach(function (el) {
+      el.addEventListener('click', function (e) {
+        e.preventDefault();
+        scrollToTop();
+        setActive('home');
+      });
+    });
+    links.tools.addEventListener('click', function (e) {
+      e.preventDefault();
+      scrollToEl(toolsEl);
+      setActive('tools');
+    });
+    links.about.addEventListener('click', function (e) {
+      e.preventDefault();
+      scrollToEl(aboutEl);
+      setActive('about');
+    });
+    document.getElementById('exploreBtn').addEventListener('click', function (e) {
+      e.preventDefault();
+      scrollToEl(toolsEl);
+      setActive('tools');
+    });
 
     window.addEventListener('scroll', spy, { passive: true });
     window.addEventListener('resize', spy);
