@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Page not found – QuickTools</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#fff; --text:#0c1a4b; --muted:#64708f; --primary:#2563eb; --card:#f3f7fe; }
+  [data-theme="dark"] { --bg:#0b1120; --text:#eaf0ff; --muted:#9aa8c7; --primary:#5b8cff; --card:#111c37; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { min-height: 100vh; display: grid; place-items: center; padding: 24px; background: var(--bg); color: var(--text); font-family: Inter, "Segoe UI", system-ui, sans-serif; text-align: center; }
+  .box { max-width: 460px; }
+  .code { font-family: Poppins, "Segoe UI", sans-serif; font-weight: 700; font-size: 84px; line-height: 1; background: linear-gradient(90deg, #1d6bf3, #8b5cf6); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  h1 { font-family: Poppins, "Segoe UI", sans-serif; font-weight: 600; font-size: 26px; margin: 14px 0 10px; }
+  p { color: var(--muted); line-height: 1.7; margin-bottom: 26px; }
+  a.btn { display: inline-block; padding: 14px 28px; border-radius: 999px; background: #1d4fd8; color: #fff; text-decoration: none; font-weight: 500; box-shadow: 0 10px 22px rgba(37,99,235,.3); }
+  .tools { margin-top: 22px; font-size: 14px; }
+  .tools a { color: var(--primary); text-decoration: none; margin: 0 8px; }
+  .tools a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<script>try { if (localStorage.getItem('qt-theme') === 'light') document.documentElement.setAttribute('data-theme', 'light'); } catch (e) {}</script>
+<main class="box">
+  <div class="code">404</div>
+  <h1>This page doesn't exist (yet)</h1>
+  <p>The link may be wrong, or the tool you're looking for isn't ready. Head back home and pick a tool.</p>
+  <a class="btn" href="/">Back to QuickTools</a>
+  <div class="tools">
+    <a href="/tools/image-converter.html">Image Converter</a>
+    <a href="/tools/image-compressor.html">Compressor</a>
+    <a href="/tools/merge-pdf.html">Merge PDF</a>
+    <a href="/tools/qr-code-generator.html">QR Codes</a>
+  </div>
+</main>
+</body>
+</html>
