@@ -3,7 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>iLovePDF | Online PDF tools for PDF lovers</title>
+<title>ConvertKit Lite | Free online PDF tools</title>
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -49,10 +53,10 @@ button{font:inherit;color:inherit;cursor:pointer}
 /* ---------- Header ---------- */
 .hdr{position:relative;z-index:50;background:var(--surface);box-shadow:0 1px 0 var(--line),0 4px 14px rgba(40,30,50,.05)}
 .hdr-in{max-width:1400px;margin:0 auto;height:72px;padding:0 24px;display:flex;align-items:stretch;gap:20px}
-.logo{display:flex;align-items:center;gap:1px;font-weight:700;font-size:25px;letter-spacing:-.5px;white-space:nowrap;margin-right:8px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:23px;letter-spacing:-.5px;white-space:nowrap;margin-right:8px}
 .logo b{font-weight:700}
 .logo .pdf{color:var(--brand)}
-.logo svg{width:24px;height:24px;margin:0 1px;position:relative;top:1px}
+.logo svg{width:28px;height:auto;flex:none}
 .hdr nav{display:flex;flex:1}
 .nav{display:flex;align-items:stretch}
 .nav>li{display:flex;align-items:center}
@@ -62,10 +66,6 @@ button{font:inherit;color:inherit;cursor:pointer}
 .has-menu:hover>button .chev,.has-menu:focus-within>button .chev{transform:rotate(180deg)}
 .hdr-r{display:flex;align-items:stretch;margin-left:auto;gap:6px}
 .hdr-r>*{display:flex;align-items:center}
-.login{padding:0 12px;font-size:14px;font-weight:500}
-.login:hover{color:var(--brand)}
-.signup{align-self:center;height:42px;padding:0 20px;background:var(--brand);color:#fff;border-radius:8px;font-size:14px;font-weight:600}
-.signup:hover{background:var(--brand-d)}
 .burger>button{height:100%;padding:0 12px;background:none;border:0}
 .burger>button svg{width:26px;height:26px;stroke:var(--text)}
 
@@ -209,16 +209,12 @@ footer{background:var(--footer);color:var(--footer-text);padding:56px 24px 34px}
 }
 @media (max-width:560px){
   .hdr-in{padding:0 14px;gap:8px}
-  .logo{font-size:22px}
-  .login{padding:0 8px}
-  .signup{padding:0 14px}
+  .logo{font-size:19px}
+  .logo svg{width:24px}
   .grid{grid-template-columns:1fr}
   .hero{padding-top:44px}
   .burger:hover>.panel,.burger:focus-within>.panel{grid-template-columns:1fr}
   .f-cols{grid-template-columns:repeat(2,minmax(0,1fr))}
-}
-@media (max-width:380px){
-  .signup{display:none}
 }
 </style>
 </head>
@@ -227,10 +223,9 @@ footer{background:var(--footer);color:var(--footer-text);padding:56px 24px 34px}
 <!-- ================= HEADER ================= -->
 <header class="hdr">
   <div class="hdr-in">
-    <a class="logo" href="#" aria-label="iLovePDF">
-      <b>I</b>
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#e5322d" d="M12 21.2C4.6 15.6 2 12.2 2 8.7 2 5.9 4.2 3.8 6.9 3.8c1.9 0 3.7 1 5.1 3 1.4-2 3.2-3 5.1-3C19.8 3.8 22 5.9 22 8.7c0 3.5-2.6 6.9-10 12.5z"/></svg>
-      <b class="pdf">PDF</b>
+    <a class="logo" href="/" aria-label="ConvertKit Lite home">
+      <svg viewBox="100 75 200 232" aria-hidden="true"><polygon points="204,85 252,200 172,222" fill="#3E8FE0"/><polygon points="112,238 288,238 244,296 156,296" fill="#3E8FE0"/></svg>
+      <span><b>ConvertKit</b> <b class="pdf">Lite</b></span>
     </a>
     <nav aria-label="Main">
       <ul class="nav">
@@ -248,8 +243,6 @@ footer{background:var(--footer);color:var(--footer-text);padding:56px 24px 34px}
       </ul>
     </nav>
     <div class="hdr-r">
-      <a class="login" href="#">Login</a>
-      <a class="signup" href="#">Sign up</a>
       <div class="burger has-menu">
         <button type="button" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
         <div class="panel">
@@ -359,7 +352,7 @@ footer{background:var(--footer);color:var(--footer-text);padding:56px 24px 34px}
       <div class="txt">
         <h2>Get more with Premium</h2>
         <ul>
-          <li>Get full access to iLovePDF and work offline with Desktop</li>
+          <li>Get full access to ConvertKit Lite and work offline with Desktop</li>
           <li>Edit PDFs, get advanced OCR for scanned documents and request secure e-Signatures</li>
           <li>Connect tools and create custom workflows</li>
         </ul>
@@ -373,7 +366,7 @@ footer{background:var(--footer);color:var(--footer-text);padding:56px 24px 34px}
     <div class="pn img">
       <div class="txt">
         <h2>Image editing made simple with iLoveIMG</h2>
-        <p>Experience the speed, simplicity, and security you expect from iLovePDF tailored for image editing. Compress, resize, and enhance your images with AI.</p>
+        <p>Experience the speed, simplicity, and security you expect from ConvertKit Lite tailored for image editing. Compress, resize, and enhance your images with AI.</p>
         <a class="btn blue" href="#">Go to iLoveIMG</a>
       </div>
       <svg class="vis" viewBox="0 0 480 330" role="img" aria-label="Image editing illustration">
@@ -396,7 +389,7 @@ footer{background:var(--footer);color:var(--footer-text);padding:56px 24px 34px}
   <!-- ================= TRUST ================= -->
   <section class="trust">
     <h2>The PDF software trusted by millions of users</h2>
-    <p>iLovePDF is your number one web app for editing PDF with ease. Enjoy all the tools you need to work efficiently with your digital documents while keeping your data safe and secure.</p>
+    <p>ConvertKit Lite is your number one web app for editing PDF with ease. Enjoy all the tools you need to work efficiently with your digital documents while keeping your data safe and secure.</p>
     <div class="badges">
       <div class="badge">
         <svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15" fill="none" stroke="#33302e" stroke-width="2" style="stroke:var(--text)"/><text x="17" y="15" text-anchor="middle" font-family="Poppins,Arial,sans-serif" font-size="8" font-weight="700" fill="currentColor">ISO</text><text x="17" y="24" text-anchor="middle" font-family="Poppins,Arial,sans-serif" font-size="6.5" font-weight="600" fill="currentColor">27001</text></svg>
@@ -419,7 +412,7 @@ footer{background:var(--footer);color:var(--footer-text);padding:56px 24px 34px}
   <div class="f-in">
     <div class="f-cols">
       <div><h4>Product</h4><a href="#">Home</a><a href="#">Features</a><a href="#">Pricing</a><a href="#">Tools</a><a href="#">FAQ</a></div>
-      <div><h4>Resources</h4><a href="#">iLovePDF Desktop</a><a href="#">iLovePDF Mobile</a><a href="#">iLoveSign</a><a href="#">iLoveAPI</a><a href="#">iLoveIMG</a></div>
+      <div><h4>Resources</h4><a href="#">ConvertKit Lite Desktop</a><a href="#">ConvertKit Lite Mobile</a><a href="#">iLoveSign</a><a href="#">iLoveAPI</a><a href="#">iLoveIMG</a></div>
       <div><h4>Solutions</h4><a href="#">Business</a><a href="#">Education</a></div>
       <div><h4>Legal</h4><a href="#">Security</a><a href="#">Privacy policy</a><a href="#">Terms &amp; conditions</a><a href="#">Cookies</a></div>
       <div><h4>Company</h4><a href="#">About us</a><a href="#">Contact us</a><a href="#">Blog</a><a href="#">Press</a></div>
@@ -447,7 +440,7 @@ footer{background:var(--footer);color:var(--footer-text);padding:56px 24px 34px}
         </div>
       </div>
     </div>
-    <div class="copy">&copy; iLovePDF 2026 &reg; - Your PDF Editor</div>
+    <div class="copy">&copy; ConvertKit Lite 2026 - Your PDF Editor</div>
   </div>
 </footer>
 
