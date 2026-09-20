@@ -73,6 +73,7 @@
   button { font: inherit; cursor: pointer; border: 0; background: none; color: inherit; }
   :focus-visible { outline: 3px solid var(--primary); outline-offset: 3px; border-radius: 8px; }
 
+  #tools, #about { scroll-margin-top: 70px; }
   .container { width: 100%; max-width: 1040px; margin: 0 auto; padding: 0 28px; }
 
   /* ---------- Navigation ---------- */
@@ -518,6 +519,39 @@
       root.setAttribute('data-theme', next);
       try { localStorage.setItem('qt-theme', next); } catch (e) {}
     });
+  })();
+
+  // Nav underline follows the section you are viewing (Home / All Tools / About)
+  (function () {
+    var nav = document.querySelector('.nav__links');
+    var links = { home: nav.querySelector('a[href="/"]'), tools: nav.querySelector('a[href="#tools"]'), about: nav.querySelector('a[href="#about"]') };
+    var toolsEl = document.getElementById('tools');
+    var aboutEl = document.getElementById('about');
+
+    function setActive(key) {
+      Object.keys(links).forEach(function (k) {
+        if (k === key) links[k].setAttribute('aria-current', 'page');
+        else links[k].removeAttribute('aria-current');
+      });
+    }
+    function spy() {
+      var y = window.scrollY + 120;                       // a little below the sticky nav
+      var atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+      var top = function (el) { return el.getBoundingClientRect().top + window.scrollY; };
+      if (atBottom || y >= top(aboutEl)) setActive('about');
+      else if (y >= top(toolsEl)) setActive('tools');
+      else setActive('home');
+    }
+
+    // "Home" scrolls to the top of this page instead of reloading it
+    links.home.addEventListener('click', function (e) { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    // clicking a link moves the underline straight away
+    links.tools.addEventListener('click', function () { setActive('tools'); });
+    links.about.addEventListener('click', function () { setActive('about'); });
+
+    window.addEventListener('scroll', spy, { passive: true });
+    window.addEventListener('resize', spy);
+    spy();
   })();
 </script>
 </body>
