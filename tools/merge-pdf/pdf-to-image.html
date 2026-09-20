@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PDF to Image Converter - QuickTools</title>
+<meta name="description" content="Convert PDF files to editable Word documents (.docx). Fast, easy and completely free. Everything happens in your browser.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232563eb'/%3E%3Crect x='7' y='7' width='18' height='18' rx='3' fill='none' stroke='white' stroke-width='2'/%3E%3Ccircle cx='13' cy='13' r='2' fill='white'/%3E%3Cpath d='M8 23l6-6 4 4 3-3 4 5z' fill='white'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #ffffff;
+    --nav-bg: #ffffff;
+    --text: #0c1a4b;
+    --muted: #64708f;
+    --primary: #2563eb;
+    --primary-dark: #1d4fd8;
+    --border: #e8eefa;
+    --hero-1: #e8f0ff;
+    --hero-2: #f5f8ff;
+    --blob: #dfe6fd;
+    --tile: #ffffff;
+    --panel: #fafcff;
+    --panel-bd: #e6edf9;
+    --dash: #b9d0f3;
+    --strip: #f3f7fe;
+    --divider: #dfe7f5;
+    --tab: #e5eeff;
+    --wave-1: #eaf1ff;
+    --wave-2: #f4f8ff;
+    --font-head: "Poppins", "Segoe UI", system-ui, sans-serif;
+    --font-body: "Inter", "Segoe UI", system-ui, sans-serif;
+  }
+  [data-theme="dark"] {
+    --bg: #0b1120;
+    --nav-bg: #0d1428;
+    --text: #eaf0ff;
+    --muted: #9aa8c7;
+    --primary: #5b8cff;
+    --primary-dark: #4a7bf5;
+    --border: #1c2a4a;
+    --hero-1: #101b38;
+    --hero-2: #0d1630;
+    --blob: #182a55;
+    --tile: #17233f;
+    --panel: #0e172d;
+    --panel-bd: #1c2a4a;
+    --dash: #2c4275;
+    --strip: #111c37;
+    --divider: #21315a;
+    --tab: #16254a;
+    --wave-1: #0f1932;
+    --wave-2: #0c1428;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-body); background: var(--bg); color: var(--text); line-height: 1.5; -webkit-font-smoothing: antialiased; transition: background .25s, color .25s; }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; cursor: pointer; border: 0; background: none; color: inherit; }
+  :focus-visible { outline: 3px solid var(--primary); outline-offset: 3px; border-radius: 8px; }
+  .container { width: 100%; max-width: 1040px; margin: 0 auto; padding: 0 28px; }
+
+  /* ---------- Navigation ---------- */
+  .nav { background: var(--nav-bg); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 20; }
+  .nav__in { display: flex; align-items: center; height: 70px; }
+  .brand { display: flex; align-items: center; gap: 12px; font-family: var(--font-head); font-weight: 700; font-size: 27px; letter-spacing: -.02em; cursor: pointer; }
+  .brand__mark { width: 38px; height: 38px; border-radius: 10px; background: linear-gradient(135deg, #3b82f6, #1d4fd8); display: grid; place-items: center; }
+  .brand__mark svg { width: 24px; height: 24px; }
+  .brand__name span { color: var(--primary); }
+  .nav__spacer { margin-left: auto; }
+  .theme-btn { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; }
+  .theme-btn:hover { background: var(--strip); }
+  .theme-btn svg { width: 20px; height: 20px; }
+  .theme-btn .i-sun { display: none; }
+  [data-theme="dark"] .theme-btn .i-sun { display: block; }
+  [data-theme="dark"] .theme-btn .i-moon { display: none; }
+
+  /* ---------- Hero ---------- */
+  .hero { background: linear-gradient(180deg, var(--hero-1) 0%, var(--hero-2) 100%); padding: 40px 0 36px; }
+  .hero h1 { font-family: var(--font-head); font-weight: 600; font-size: 34px; letter-spacing: -.02em; margin-bottom: 10px; }
+  .hero p { color: var(--muted); font-size: 15px; }
+
+  /* ---------- Tool Section ---------- */
+  .tool { padding: 34px 0 20px; }
+  .panel { position: relative; max-width: 896px; margin: 0 auto; padding: 44px 30px 30px; background: var(--panel); border: 1px solid var(--panel-bd); border-radius: 20px; }
+  .tab { position: absolute; top: -17px; left: 50%; transform: translateX(-50%); padding: 7px 34px; border-radius: 12px; background: var(--tab); color: var(--primary); font-size: 14px; font-weight: 500; white-space: nowrap; }
+  
+  .dropzone { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 46px 20px 34px; border: 1.5px dashed var(--dash); border-radius: 16px; transition: background .15s, border-color .15s; cursor: pointer; }
+  .dropzone:hover { background: rgba(37, 99, 235, .07); }
+  .dropzone.active { background: rgba(37, 99, 235, .07); border-color: var(--primary); }
+  .dropzone h2 { font-family: var(--font-head); font-weight: 600; font-size: 22px; letter-spacing: -.01em; }
+  .dropzone .or { color: var(--muted); font-size: 14.5px; margin: 8px 0 20px; }
+  
+  .choose { display: inline-flex; align-items: center; gap: 12px; padding: 16px 44px; border-radius: 16px; background: linear-gradient(180deg, #2f6df6, #1f57e6); color: #fff; font-weight: 500; font-size: 16px; box-shadow: 0 10px 22px rgba(37, 99, 235, .3); transition: transform .15s, box-shadow .15s; }
+  .choose:hover { transform: translateY(-2px); box-shadow: 0 14px 26px rgba(37, 99, 235, .36); }
+  
+  #fileList { margin-top: 20px; }
+  .file-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 14px; background: var(--tile); border: 1px solid var(--panel-bd); border-radius: 12px; margin-bottom: 10px; }
+  .file-item span { flex: 1; }
+  .file-item button { background: #dc3545; color: white; border: none; padding: 5px 12px; border-radius: 3px; cursor: pointer; font-size: 12px; }
+  
+  .convert-btn { display: inline-flex; align-items: center; gap: 10px; width: 100%; justify-content: center; padding: 14px 34px; border-radius: 14px; background: linear-gradient(180deg, #22c07a, #16a468); color: #fff; font-weight: 500; font-size: 15.5px; box-shadow: 0 10px 22px rgba(22, 163, 90, .28); margin-top: 20px; }
+  .convert-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 14px 26px rgba(22, 163, 90, .36); }
+  .convert-btn:disabled { opacity: .6; cursor: not-allowed; }
+  
+  #status { min-height: 22px; text-align: center; font-size: 13.5px; margin-top: 12px; padding: 15px; border-radius: 8px; display: none; }
+  #status.success { background: rgba(34, 192, 122, .15); color: #22c07a; display: block; }
+  #status.error { background: rgba(239, 68, 88, .15); color: #ef4458; display: block; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 600px) {
+    .container { padding: 0 18px; }
+    .brand { font-size: 22px; }
+    .brand__mark { width: 32px; height: 32px; }
+    .panel { padding: 40px 14px 20px; }
+    .dropzone { padding: 32px 12px 26px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<header class="nav">
+  <div class="container nav__in">
+    <a class="brand" href="index.html" aria-label="QuickTools home">
+      <span class="brand__mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3.500"/><circle cx="9" cy="9" r="1.800" fill="#fff" stroke="none"/><path d="M3.500 18.500 9.5 13l4 4 3-2.500 4.5 4.5" fill="#fff" stroke="none"/></svg>
+      </span>
+      <span class="brand__name">Quick<span>Tools</span></span>
+    </a>
+    <div class="nav__spacer"></div>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="Toggle dark mode">
+      <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.800A9 9 0 1 1 11.200 3a7 7 0 0 0 9.800 9.800z"/></svg>
+      <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.900 4.900l1.400 1.400M17.700 17.700l1.400 1.400M2 12h2M20 12h2M4.900 19.100l1.400-1.400M17.700 6.300l1.400-1.400"/></svg>
+    </button>
+  </div>
+</header>
+
+<main>
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="container">
+      <h1>PDF to Image Converter</h1>
+      <p>Convert PDF to PNG, WebP and other image formats (.docx). Fast, free, and secure.</p>
+    </div>
+  </section>
+
+  <!-- ============ TOOL ============ -->
+  <section class="tool">
+    <div class="container">
+      <div class="panel">
+        <span class="tab">Convert PDF to Image</span>
+
+        <div class="dropzone" id="dropzone">
+          <div style="font-size: 2.5em; margin-bottom: 15px;">🎨</div>
+          <h2>Drag & Drop PDF Here</h2>
+          <p class="or">or click to browse</p>
+          <input type="file" id="fileInput" accept=".pdf" multiple hidden>
+          <button class="choose" id="browseBtn" type="button">Choose PDF File</button>
+        </div>
+
+        <div id="fileList"></div>
+        
+        <button class="convert-btn" id="convertBtn" disabled>
+          <span>Convert to Images</span>
+        </button>
+        
+        <div id="status"></div>
+      </div>
+    </div>
+  </section>
+</main>
+    
+    <script>
+        const dropzone = document.getElementById('dropzone');
+        const fileInput = document.getElementById('fileInput');
+        const browseBtn = document.getElementById('browseBtn');
+        const fileList = document.getElementById('fileList');
+        const convertBtn = document.getElementById('convertBtn');
+        const status = document.getElementById('status');
+        
+        let selectedFiles = [];
+        
+        browseBtn.addEventListener('click', () => fileInput.click());
+        
+        dropzone.addEventListener('click', () => fileInput.click());
+        
+        dropzone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropzone.classList.add('active');
+        });
+        
+        dropzone.addEventListener('dragleave', () => {
+            dropzone.classList.remove('active');
+        });
+        
+        dropzone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropzone.classList.remove('active');
+            handleFiles(e.dataTransfer.files);
+        });
+        
+        fileInput.addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+        });
+        
+        function handleFiles(files) {
+            selectedFiles = Array.from(files).filter(file => file.type === 'application/pdf');
+            
+            if (selectedFiles.length === 0) {
+                showStatus('Please select valid PDF files', 'error');
+                return;
+            }
+            
+            displayFiles();
+            convertBtn.disabled = false;
+        }
+        
+        function displayFiles() {
+            fileList.innerHTML = selectedFiles.map((file, index) => `
+                <div class="file-item">
+                    <span>${file.name}</span>
+                    <button onclick="removeFile(${index})" style="background: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer;">Remove</button>
+                </div>
+            `).join('');
+        }
+        
+        window.removeFile = function(index) {
+            selectedFiles.splice(index, 1);
+            if (selectedFiles.length === 0) {
+                convertBtn.disabled = true;
+            }
+            displayFiles();
+        };
+        
+        convertBtn.addEventListener('click', () => {
+            if (selectedFiles.length === 0) return;
+            
+            convertBtn.disabled = true;
+            showStatus('Converting your PDFs... (This is a placeholder)', 'success');
+            
+            // Placeholder for actual conversion logic
+            setTimeout(() => {
+                showStatus('Conversion completed! Files ready for download.', 'success');
+                convertBtn.disabled = false;
+            }, 2000);
+        });
+        
+        function showStatus(message, type) {
+            status.textContent = message;
+            status.className = type;
+        }
+    </script>
+</body>
+</html>

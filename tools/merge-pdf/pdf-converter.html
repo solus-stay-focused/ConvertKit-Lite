@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Converter - QuickTools</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        nav {
+            margin-bottom: 30px;
+        }
+        
+        nav a {
+            background: #2563eb;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        nav a:hover {
+            background: #1d4fd8;
+        }
+        
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #666;
+        }
+        
+        .tool-section {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .dropzone {
+            border: 2px dashed #2563eb;
+            border-radius: 8px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .dropzone:hover {
+            background: #f0f7ff;
+        }
+        
+        .dropzone.active {
+            background: #e8f0ff;
+            border-color: #1d4fd8;
+        }
+        
+        .dropzone p {
+            color: #666;
+            margin: 10px 0;
+        }
+        
+        input[type="file"] {
+            display: none;
+        }
+        
+        .upload-btn {
+            background: #2563eb;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 15px;
+        }
+        
+        .upload-btn:hover {
+            background: #1d4fd8;
+        }
+        
+        #fileList {
+            margin-top: 20px;
+        }
+        
+        .file-item {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .format-selector {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 5px;
+        }
+        
+        .format-selector label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .format-selector select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        
+        .convert-btn {
+            background: #16a35a;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 20px;
+            width: 100%;
+        }
+        
+        .convert-btn:hover {
+            background: #128a4a;
+        }
+        
+        .convert-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        #status {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        #status.success {
+            background: #d4edda;
+            color: #155724;
+            display: block;
+        }
+        
+        #status.error {
+            background: #f8d7da;
+            color: #721c24;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <a href="index.html">← Back to Home</a>
+        </nav>
+        
+        <div class="header">
+            <h1>PDF Converter</h1>
+            <p>Convert PDFs to multiple formats</p>
+        </div>
+        
+        <div class="tool-section">
+            <div class="dropzone" id="dropzone">
+                <div style="font-size: 3em; margin-bottom: 10px;">⚙️</div>
+                <h2>Drag & Drop PDF Here</h2>
+                <p>or click to browse</p>
+                <input type="file" id="fileInput" accept=".pdf" multiple>
+                <button class="upload-btn" type="button" id="browseBtn">Choose PDF File</button>
+            </div>
+            
+            <div id="fileList"></div>
+            
+            <div class="format-selector">
+                <label for="formatSelect">Select Output Format:</label>
+                <select id="formatSelect">
+                    <option value="word">Word (.docx)</option>
+                    <option value="excel">Excel (.xlsx)</option>
+                    <option value="jpg">JPG Image</option>
+                    <option value="png">PNG Image</option>
+                    <option value="text">Text (.txt)</option>
+                </select>
+            </div>
+            
+            <button class="convert-btn" id="convertBtn" disabled>Convert</button>
+            
+            <div id="status"></div>
+        </div>
+    </div>
+    
+    <script>
+        const dropzone = document.getElementById('dropzone');
+        const fileInput = document.getElementById('fileInput');
+        const browseBtn = document.getElementById('browseBtn');
+        const fileList = document.getElementById('fileList');
+        const convertBtn = document.getElementById('convertBtn');
+        const formatSelect = document.getElementById('formatSelect');
+        const status = document.getElementById('status');
+        
+        let selectedFiles = [];
+        
+        browseBtn.addEventListener('click', () => fileInput.click());
+        
+        dropzone.addEventListener('click', () => fileInput.click());
+        
+        dropzone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropzone.classList.add('active');
+        });
+        
+        dropzone.addEventListener('dragleave', () => {
+            dropzone.classList.remove('active');
+        });
+        
+        dropzone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropzone.classList.remove('active');
+            handleFiles(e.dataTransfer.files);
+        });
+        
+        fileInput.addEventListener('change', (e) => {
+            handleFiles(e.target.files);
+        });
+        
+        function handleFiles(files) {
+            selectedFiles = Array.from(files).filter(file => file.type === 'application/pdf');
+            
+            if (selectedFiles.length === 0) {
+                showStatus('Please select valid PDF files', 'error');
+                return;
+            }
+            
+            displayFiles();
+            convertBtn.disabled = false;
+        }
+        
+        function displayFiles() {
+            fileList.innerHTML = selectedFiles.map((file, index) => `
+                <div class="file-item">
+                    <span>${file.name}</span>
+                    <button onclick="removeFile(${index})" style="background: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer;">Remove</button>
+                </div>
+            `).join('');
+        }
+        
+        window.removeFile = function(index) {
+            selectedFiles.splice(index, 1);
+            if (selectedFiles.length === 0) {
+                convertBtn.disabled = true;
+            }
+            displayFiles();
+        };
+        
+        convertBtn.addEventListener('click', () => {
+            if (selectedFiles.length === 0) return;
+            
+            const format = formatSelect.value;
+            convertBtn.disabled = true;
+            showStatus(`Converting your PDFs to ${format.toUpperCase()}... (This is a placeholder)`, 'success');
+            
+            // Placeholder for actual conversion logic
+            setTimeout(() => {
+                showStatus('Conversion completed! Files ready for download.', 'success');
+                convertBtn.disabled = false;
+            }, 2000);
+        });
+        
+        function showStatus(message, type) {
+            status.textContent = message;
+            status.className = type;
+        }
+    </script>
+</body>
+</html>
