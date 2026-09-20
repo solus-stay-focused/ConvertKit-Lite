@@ -91,8 +91,7 @@
   .nav { background: var(--nav-bg); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 20; }
   .nav__in { display: flex; align-items: center; height: 70px; }
   .brand { display: flex; align-items: center; gap: 12px; font-family: var(--font-head); font-weight: 700; font-size: 27px; letter-spacing: -.02em; }
-  .brand__mark { width: 38px; height: 38px; border-radius: 10px; background: linear-gradient(135deg, #3b82f6, #1d4fd8); display: grid; place-items: center; }
-  .brand__mark svg { width: 24px; height: 24px; }
+  .brand__logo { width: 32px; height: auto; flex: none; }
   .brand__name span { color: var(--primary); }
   .nav__links { display: flex; gap: 38px; margin-left: auto; margin-right: 96px; height: 100%; }
   .nav__links a { position: relative; display: flex; align-items: center; font-size: 15px; font-weight: 500; cursor: pointer; }
@@ -160,8 +159,7 @@
   .foot { background: var(--nav-bg); border-top: 1px solid var(--border); }
   .foot__in { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 28px; }
   .foot .brand { font-size: 19px; gap: 9px; }
-  .foot .brand__mark { width: 27px; height: 27px; border-radius: 8px; }
-  .foot .brand__mark svg { width: 17px; height: 17px; }
+  .foot .brand__logo { width: 22px; }
   .foot__note { display: flex; align-items: center; gap: 6px; color: var(--muted); font-size: 12px; }
   .foot__note svg { width: 15px; height: 15px; fill: var(--primary); }
 
@@ -179,7 +177,7 @@
   @media (max-width: 560px) {
     .container { padding: 0 20px; }
     .brand { font-size: 22px; }
-    .brand__mark { width: 32px; height: 32px; }
+    .brand__logo { width: 28px; }
     .nav__links a:nth-child(3) { display: none; }
     .card { flex-basis: 100%; min-height: 0; }
     .feats { grid-template-columns: 1fr; }
@@ -242,12 +240,7 @@
 <header class="nav">
   <div class="container nav__in">
     <a class="brand" href="#" id="brandHome" aria-label="QuickTools home">
-      <span class="brand__mark">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <rect x="3" y="3" width="18" height="18" rx="3.5"/><circle cx="9" cy="9" r="1.8" fill="#fff" stroke="none"/>
-          <path d="M3.500 18.500 9.500 13l4 4 3-2.500 4.500 4.500" fill="#fff" stroke="none"/>
-        </svg>
-      </span>
+      <svg class="brand__logo" viewBox="100 75 200 232" aria-hidden="true"><polygon points="204,85 252,200 172,222" fill="#3E8FE0"/><polygon points="112,238 288,238 244,296 156,296" fill="#3E8FE0"/></svg>
       <span class="brand__name">Quick<span>Tools</span></span>
     </a>
     <nav class="nav__links" aria-label="Main">
@@ -493,12 +486,7 @@
 <footer class="foot">
   <div class="container foot__in">
     <a class="brand" href="#" id="footerHome" aria-label="QuickTools home">
-      <span class="brand__mark">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <rect x="3" y="3" width="18" height="18" rx="3.5"/><circle cx="9" cy="9" r="1.8" fill="#fff" stroke="none"/>
-          <path d="M3.500 18.500 9.500 13l4 4 3-2.500 4.500 4.500" fill="#fff" stroke="none"/>
-        </svg>
-      </span>
+      <svg class="brand__logo" viewBox="100 75 200 232" aria-hidden="true"><polygon points="204,85 252,200 172,222" fill="#3E8FE0"/><polygon points="112,238 288,238 244,296 156,296" fill="#3E8FE0"/></svg>
       <span class="brand__name">Quick<span>Tools</span></span>
     </a>
     <div class="foot__note">
