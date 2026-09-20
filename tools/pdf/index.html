@@ -1,233 +1,582 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>QuickTools - Free PDF Conversion Tools</title>
-<meta name="description" content="Free PDF conversion tools. Convert PDF to Word, JPG, Excel, compress, merge and more. Fast, easy and completely free. Everything happens in your browser.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232563eb'/%3E%3Crect x='7' y='7' width='18' height='18' rx='3' fill='none' stroke='white' stroke-width='2'/%3E%3Ccircle cx='13' cy='13' r='2' fill='white'/%3E%3Cpath d='M8 23l6-6 4 4 3-3 4 5z' fill='white'/%3E%3C/svg%3E">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>iLovePDF | Online PDF tools for PDF lovers</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #ffffff;
-    --nav-bg: #ffffff;
-    --text: #0c1a4b;
-    --muted: #64708f;
-    --primary: #2563eb;
-    --primary-dark: #1d4fd8;
-    --border: #e8eefa;
-    --hero-1: #e8f0ff;
-    --hero-2: #f5f8ff;
-    --blob: #dfe6fd;
-    --tile: #ffffff;
-    --panel: #fafcff;
-    --panel-bd: #e6edf9;
-    --dash: #b9d0f3;
-    --strip: #f3f7fe;
-    --divider: #dfe7f5;
-    --tab: #e5eeff;
-    --wave-1: #eaf1ff;
-    --wave-2: #f4f8ff;
-    --font-head: "Poppins", "Segoe UI", system-ui, sans-serif;
-    --font-body: "Inter", "Segoe UI", system-ui, sans-serif;
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#f3f0f5;
+  --surface:#ffffff;
+  --text:#33302e;
+  --muted:#6f6a73;
+  --line:#e7e3ea;
+  --brand:#e5322d;
+  --brand-d:#c9241f;
+  --soft:#f7f5f8;
+  --img-bg:#e8e5fa;
+  --img-btn:#5b4fe0;
+  --footer:#2f2c31;
+  --footer-text:#cfcad3;
+  --shadow:0 8px 26px rgba(40,30,50,.13);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#1b191e;--surface:#26232a;--text:#f1eef3;--muted:#aaa5b0;--line:#383440;
+    --soft:#2d2a33;--img-bg:#2b2748;--footer:#121114;--footer-text:#b9b4bf;
+    --shadow:0 8px 26px rgba(0,0,0,.45);
   }
-  [data-theme="dark"] {
-    --bg: #0b1120;
-    --nav-bg: #0d1428;
-    --text: #eaf0ff;
-    --muted: #9aa8c7;
-    --primary: #5b8cff;
-    --primary-dark: #4a7bf5;
-    --border: #1c2a4a;
-    --hero-1: #101b38;
-    --hero-2: #0d1630;
-    --blob: #182a55;
-    --tile: #17233f;
-    --panel: #0e172d;
-    --panel-bd: #1c2a4a;
-    --dash: #2c4275;
-    --strip: #111c37;
-    --divider: #21315a;
-    --tab: #16254a;
-    --wave-1: #0f1932;
-    --wave-2: #0c1428;
-  }
+}
+:root[data-theme="dark"]{
+  --bg:#1b191e;--surface:#26232a;--text:#f1eef3;--muted:#aaa5b0;--line:#383440;
+  --soft:#2d2a33;--img-bg:#2b2748;--footer:#121114;--footer-text:#b9b4bf;
+  --shadow:0 8px 26px rgba(0,0,0,.45);
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px);background:var(--bg)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Poppins,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+ul{list-style:none;margin:0;padding:0}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body { font-family: var(--font-body); background: var(--bg); color: var(--text); line-height: 1.5; -webkit-font-smoothing: antialiased; transition: background .25s, color .25s; }
-  a { color: inherit; text-decoration: none; }
-  button { font: inherit; cursor: pointer; border: 0; background: none; color: inherit; }
-  :focus-visible { outline: 3px solid var(--primary); outline-offset: 3px; border-radius: 8px; }
-  .container { width: 100%; max-width: 1040px; margin: 0 auto; padding: 0 28px; }
-  .grad { background: linear-gradient(90deg, #1d6bf3 20%, #8b5cf6 95%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+/* ---------- Header ---------- */
+.hdr{position:relative;z-index:50;background:var(--surface);box-shadow:0 1px 0 var(--line),0 4px 14px rgba(40,30,50,.05)}
+.hdr-in{max-width:1400px;margin:0 auto;height:72px;padding:0 24px;display:flex;align-items:stretch;gap:20px}
+.logo{display:flex;align-items:center;gap:1px;font-weight:700;font-size:25px;letter-spacing:-.5px;white-space:nowrap;margin-right:8px}
+.logo b{font-weight:700}
+.logo .pdf{color:var(--brand)}
+.logo svg{width:24px;height:24px;margin:0 1px;position:relative;top:1px}
+.hdr nav{display:flex;flex:1}
+.nav{display:flex;align-items:stretch}
+.nav>li{display:flex;align-items:center}
+.nav>li>a,.nav>li>button{display:flex;align-items:center;gap:6px;height:100%;padding:0 14px;background:none;border:0;font-size:14px;font-weight:500;text-transform:uppercase;letter-spacing:.2px;color:var(--text)}
+.nav>li:hover>a,.nav>li:hover>button,.nav>li:focus-within>button{color:var(--brand)}
+.chev{width:10px;height:10px;transition:transform .15s}
+.has-menu:hover>button .chev,.has-menu:focus-within>button .chev{transform:rotate(180deg)}
+.hdr-r{display:flex;align-items:stretch;margin-left:auto;gap:6px}
+.hdr-r>*{display:flex;align-items:center}
+.login{padding:0 12px;font-size:14px;font-weight:500}
+.login:hover{color:var(--brand)}
+.signup{align-self:center;height:42px;padding:0 20px;background:var(--brand);color:#fff;border-radius:8px;font-size:14px;font-weight:600}
+.signup:hover{background:var(--brand-d)}
+.burger>button{height:100%;padding:0 12px;background:none;border:0}
+.burger>button svg{width:26px;height:26px;stroke:var(--text)}
 
-  /* ---------- Navigation ---------- */
-  .nav { background: var(--nav-bg); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 20; }
-  .nav__in { display: flex; align-items: center; height: 70px; }
-  .brand { display: flex; align-items: center; gap: 12px; font-family: var(--font-head); font-weight: 700; font-size: 27px; letter-spacing: -.02em; cursor: pointer; }
-  .brand__mark { width: 38px; height: 38px; border-radius: 10px; background: linear-gradient(135deg, #3b82f6, #1d4fd8); display: grid; place-items: center; }
-  .brand__mark svg { width: 24px; height: 24px; }
-  .brand__name span { color: var(--primary); }
-  .nav__spacer { margin-left: auto; }
-  .theme-btn { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; }
-  .theme-btn:hover { background: var(--strip); }
-  .theme-btn svg { width: 20px; height: 20px; }
-  .theme-btn .i-sun { display: none; }
-  [data-theme="dark"] .theme-btn .i-sun { display: block; }
-  [data-theme="dark"] .theme-btn .i-moon { display: none; }
+.panel{display:none;position:absolute;top:100%;background:var(--surface);box-shadow:0 18px 34px rgba(40,30,50,.16);border-top:1px solid var(--line)}
+.has-menu:hover>.panel,.has-menu:focus-within>.panel{display:block}
+.m-convert{position:relative}
+.m-convert>.panel{left:0;width:520px;padding:26px 28px;border-radius:0 0 12px 12px;display:none}
+.m-convert:hover>.panel,.m-convert:focus-within>.panel{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.m-all>.panel{left:0;right:0}
+.m-all>.panel .wrap{max-width:1400px;margin:0 auto;padding:30px 24px 34px;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:20px}
+.mh{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin:0 0 12px}
+.mlist li a{display:block;padding:6px 0;font-size:14.5px;font-weight:500}
+.mlist li a:hover{color:var(--brand)}
+.burger>.panel{right:16px;width:min(780px,calc(100vw - 32px));max-height:calc(100vh - 90px);overflow:auto;padding:28px;border-radius:0 0 14px 14px}
+.burger:hover>.panel,.burger:focus-within>.panel{display:grid;grid-template-columns:1fr 1fr 1fr;gap:28px}
+.pi{display:block;padding:8px 0}
+.pi strong{display:block;font-size:15px;font-weight:600}
+.pi span{display:block;font-size:13px;color:var(--muted);line-height:1.4}
+.pi:hover strong{color:var(--brand)}
+.plain a{display:block;padding:6px 0;font-size:14.5px;font-weight:500}
+.plain a:hover{color:var(--brand)}
+.sep{height:1px;background:var(--line);margin:12px 0}
+details.dd summary{list-style:none;display:flex;align-items:center;justify-content:space-between;padding:6px 0;font-size:14.5px;font-weight:500;cursor:pointer}
+details.dd summary::-webkit-details-marker{display:none}
+details.dd[open] summary .chev{transform:rotate(180deg)}
+details.dd .sub{max-height:190px;overflow:auto;border-left:2px solid var(--line);margin:4px 0 6px 2px;padding-left:12px}
+details.dd .sub a{display:block;padding:4px 0;font-size:14px;color:var(--muted)}
+details.dd .sub a:hover{color:var(--brand)}
 
-  /* ---------- Hero ---------- */
-  .hero { background: linear-gradient(180deg, var(--hero-1) 0%, var(--hero-2) 100%); padding: 56px 0 46px; overflow: hidden; }
-  .hero__in { display: grid; grid-template-columns: 1fr; align-items: center; gap: 10px; text-align: center; }
-  .free { display: inline-flex; align-items: center; justify-content: center; gap: 7px; padding: 5px 15px 5px 12px; border-radius: 999px; background: #16b364; color: #fff; font-size: 13px; font-weight: 600; margin: 0 auto 18px; }
-  .free svg { width: 12px; height: 12px; }
-  .hero h1 { font-family: var(--font-head); font-weight: 600; font-size: clamp(34px, 4.9vw, 50px); line-height: 1.16; letter-spacing: -.02em; margin: 18px 0 20px; }
-  .hero h1 span { display: block; }
-  .hero p { color: var(--muted); font-size: 16px; line-height: 1.75; max-width: 600px; margin: 0 auto; }
+/* ---------- Hero ---------- */
+.hero{text-align:center;padding:72px 24px 30px}
+.hero h1{margin:0 auto 14px;max-width:980px;font-size:clamp(28px,4.2vw,42px);line-height:1.2;font-weight:600;letter-spacing:-.6px}
+.hero p{margin:0 auto;max-width:900px;font-size:clamp(15px,1.7vw,19px);color:var(--muted);line-height:1.55}
+.tabs{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:34px auto 0;max-width:1000px}
+.tab{padding:9px 20px;border-radius:26px;border:1px solid transparent;background:transparent;font-size:14.5px;font-weight:500;color:var(--text)}
+.tab:hover{background:var(--surface)}
+.tab.on{background:var(--surface);color:var(--brand);border-color:var(--line);box-shadow:0 2px 8px rgba(40,30,50,.08)}
 
-  /* ---------- Services Grid ---------- */
-  .services { padding: 34px 0 46px; }
-  .services__title { text-align: center; margin-bottom: 40px; }
-  .services__title h2 { font-family: var(--font-head); font-weight: 600; font-size: clamp(26px, 3.6vw, 34px); letter-spacing: -.02em; margin-bottom: 10px; }
-  .services__title p { color: var(--muted); font-size: 15px; }
-  .services__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
-  .service-card { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 30px 24px; background: var(--panel); border: 1px solid var(--panel-bd); border-radius: 16px; transition: transform .3s, box-shadow .3s; cursor: pointer; }
-  .service-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(37, 99, 235, .15); }
-  .service-card__icon { font-size: 2.8em; margin-bottom: 18px; }
-  .service-card h3 { font-family: var(--font-head); font-weight: 600; font-size: 17px; margin-bottom: 8px; color: var(--text); }
-  .service-card p { color: var(--muted); font-size: 13.5px; line-height: 1.6; }
+/* ---------- Tools grid ---------- */
+.grid{max-width:1240px;margin:30px auto 0;padding:0 24px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+.tool{position:relative;display:block;background:var(--surface);border-radius:12px;padding:28px 24px 26px;transition:box-shadow .2s,transform .2s}
+.tool:hover{box-shadow:var(--shadow);transform:translateY(-2px)}
+.ico{width:60px;height:60px;display:block}
+.tool h3{margin:16px 0 8px;font-size:19px;font-weight:600;letter-spacing:-.2px}
+.tool p{margin:0;font-size:14.5px;line-height:1.55;color:var(--muted)}
+.new{position:absolute;top:18px;right:18px;background:var(--brand);color:#fff;font-size:11.5px;font-weight:600;padding:2px 10px;border-radius:12px}
+.wf{display:flex;flex-direction:column}
+.wf .ico-wf{width:60px;height:60px;border-radius:14px;background:var(--soft);display:grid;place-items:center}
+.wf .ico-wf svg{width:32px;height:32px;stroke:var(--brand);fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.wf .btn-o{margin-top:auto;align-self:flex-start;padding:10px 20px;border-radius:8px;border:1.5px solid var(--brand);color:var(--brand);font-size:14px;font-weight:600;background:transparent}
+.wf .btn-o:hover{background:var(--brand);color:#fff}
+.wf p{margin-bottom:18px}
+.wf-add{border:2px dashed var(--line);background:transparent}
+.wf-add:hover{transform:none;box-shadow:none;border-color:var(--brand)}
+.wf-add .ico-wf{background:var(--surface)}
+.wf-meta{display:flex;align-items:center;gap:10px;margin-top:auto;font-size:13.5px;color:var(--muted)}
+.pill{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:1px 10px;font-weight:600;color:var(--text);font-size:12.5px}
 
-  /* ---------- Footer ---------- */
-  .foot { position: relative; padding: 70px 0 34px; text-align: center; overflow: hidden; }
-  .wave { position: absolute; inset: 0; width: 100%; height: 100%; }
-  .foot__txt { position: relative; }
-  .foot__brand { display: inline-flex; align-items: center; gap: 7px; font-size: 13.5px; font-weight: 500; }
-  .foot__brand svg { width: 15px; height: 15px; fill: var(--primary); }
-  .foot small { display: block; color: var(--muted); font-size: 11.5px; margin-top: 6px; }
+/* ---------- Work your way ---------- */
+.way{max-width:1240px;margin:84px auto 60px;padding:0 24px;text-align:center}
+.way h2,.trust h2{margin:0 0 28px;font-size:clamp(24px,3vw,32px);font-weight:600;letter-spacing:-.4px}
+.way-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;text-align:left}
+.way-card{display:block;background:var(--surface);border-radius:14px;padding:32px 28px}
+.way-card:hover{box-shadow:var(--shadow)}
+.way-ico{width:64px;height:64px;border-radius:50%;background:var(--soft);display:grid;place-items:center;margin-bottom:18px}
+.way-ico svg{width:34px;height:34px;fill:none;stroke:var(--brand);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.way-card h3{margin:0 0 8px;font-size:20px;font-weight:600}
+.way-card p{margin:0;font-size:15px;color:var(--muted);line-height:1.55}
 
-  /* ---------- Responsive ---------- */
-  @media (max-width: 860px) {
-    .hero__in { grid-template-columns: 1fr; }
-  }
-  @media (max-width: 600px) {
-    .container { padding: 0 18px; }
-    .brand { font-size: 22px; }
-    .brand__mark { width: 32px; height: 32px; }
-    .services__grid { grid-template-columns: 1fr; }
-  }
-  @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
+/* ---------- Feature panels ---------- */
+.sec{max-width:1240px;margin:26px auto 0;padding:0 24px}
+.pn{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:40px;border-radius:20px;padding:48px 56px;background:var(--surface)}
+.pn.img{background:var(--img-bg)}
+.pn h2{margin:0 0 18px;font-size:clamp(24px,3vw,34px);line-height:1.2;font-weight:600;letter-spacing:-.5px}
+.pn ul{margin:0 0 28px}
+.pn li{position:relative;padding:6px 0 6px 34px;font-size:16px;color:var(--text)}
+.pn li::before{content:"";position:absolute;left:0;top:10px;width:20px;height:20px;border-radius:50%;background:var(--brand)}
+.pn li::after{content:"";position:absolute;left:6px;top:15px;width:8px;height:4px;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(-45deg)}
+.pn p{margin:0 0 28px;font-size:16.5px;line-height:1.65;color:var(--muted);max-width:520px}
+.btn{display:inline-block;padding:14px 30px;border-radius:10px;background:var(--brand);color:#fff;font-size:15.5px;font-weight:600}
+.btn:hover{background:var(--brand-d)}
+.btn.blue{background:var(--img-btn)}
+.btn.blue:hover{background:#4a3fc4}
+.pn svg.vis{width:100%;height:auto;display:block}
+
+/* ---------- Trust ---------- */
+.trust{text-align:center;padding:84px 24px 88px;max-width:900px;margin:0 auto}
+.trust h2{margin-bottom:14px}
+.trust p{margin:0 auto 30px;max-width:720px;font-size:16.5px;line-height:1.65;color:var(--muted)}
+.badges{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:22px}
+.badge{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 18px;text-align:left}
+.badge svg{width:34px;height:34px;flex:none}
+.badge b{display:block;font-size:13.5px;font-weight:600;line-height:1.2}
+.badge span{display:block;font-size:12px;color:var(--muted);line-height:1.2}
+
+/* ---------- Footer ---------- */
+footer{background:var(--footer);color:var(--footer-text);padding:56px 24px 34px}
+.f-in{max-width:1240px;margin:0 auto}
+.f-cols{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:28px}
+.f-cols h4{margin:0 0 14px;font-size:14px;font-weight:600;color:#fff}
+.f-cols a{display:block;padding:5px 0;font-size:14.5px}
+.f-cols a:hover{color:#fff;text-decoration:underline}
+.f-mid{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:22px;margin-top:42px;padding-top:30px;border-top:1px solid rgba(255,255,255,.14)}
+.stores{display:flex;flex-wrap:wrap;gap:10px}
+.store{display:flex;align-items:center;gap:10px;min-width:150px;padding:8px 16px;border:1px solid rgba(255,255,255,.35);border-radius:9px;background:#000;color:#fff}
+.store svg{width:22px;height:22px;flex:none;fill:#fff}
+.store small{display:block;font-size:10px;line-height:1.1;opacity:.8}
+.store strong{display:block;font-size:15px;font-weight:600;line-height:1.2}
+.f-right{display:flex;flex-wrap:wrap;align-items:center;gap:20px}
+.lang{position:relative}
+.lang summary{list-style:none;display:flex;align-items:center;gap:8px;padding:9px 16px;border:1px solid rgba(255,255,255,.35);border-radius:9px;font-size:14.5px;color:#fff;cursor:pointer}
+.lang summary::-webkit-details-marker{display:none}
+.lang summary svg{width:16px;height:16px}
+.lang .sub{position:absolute;bottom:calc(100% + 8px);left:0;width:210px;max-height:280px;overflow:auto;background:var(--surface);color:var(--text);border-radius:10px;box-shadow:0 12px 30px rgba(0,0,0,.35);padding:8px 0;z-index:5}
+.lang .sub a{display:block;padding:6px 18px;font-size:14px}
+.lang .sub a:hover{background:var(--soft);color:var(--brand)}
+.social{display:flex;gap:10px}
+.social a{width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.35);display:grid;place-items:center;color:#fff}
+.social a:hover{background:var(--brand);border-color:var(--brand)}
+.social svg{width:18px;height:18px}
+.copy{margin-top:28px;text-align:center;font-size:13.5px;opacity:.85}
+
+/* ---------- Responsive ---------- */
+@media (max-width:1240px){
+  .m-all>.panel .wrap{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+@media (max-width:1100px){
+  .grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .f-cols{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media (max-width:960px){
+  .hdr nav{display:none}
+  .hdr-r{margin-left:auto}
+  .burger:hover>.panel,.burger:focus-within>.panel{grid-template-columns:1fr 1fr}
+  .pn{grid-template-columns:1fr;padding:36px 28px}
+  .pn.img .txt{order:1}
+  .way-grid{grid-template-columns:1fr}
+}
+@media (max-width:800px){
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:560px){
+  .hdr-in{padding:0 14px;gap:8px}
+  .logo{font-size:22px}
+  .login{padding:0 8px}
+  .signup{padding:0 14px}
+  .grid{grid-template-columns:1fr}
+  .hero{padding-top:44px}
+  .burger:hover>.panel,.burger:focus-within>.panel{grid-template-columns:1fr}
+  .f-cols{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:380px){
+  .signup{display:none}
+}
 </style>
 </head>
 <body>
 
-<!-- ============ NAV ============ -->
-<header class="nav">
-  <div class="container nav__in">
-    <a class="brand" href="https://www.convertkitlite.site/">
-      <span class="brand__mark">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3.500"/><circle cx="9" cy="9" r="1.800" fill="#fff" stroke="none"/><path d="M3.500 18.500 9.5 13l4 4 3-2.500 4.5 4.5" fill="#fff" stroke="none"/></svg>
-      </span>
-      <span class="brand__name">Quick<span>Tools</span></span>
+<!-- ================= HEADER ================= -->
+<header class="hdr">
+  <div class="hdr-in">
+    <a class="logo" href="#" aria-label="iLovePDF">
+      <b>I</b>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#e5322d" d="M12 21.2C4.6 15.6 2 12.2 2 8.7 2 5.9 4.2 3.8 6.9 3.8c1.9 0 3.7 1 5.1 3 1.4-2 3.2-3 5.1-3C19.8 3.8 22 5.9 22 8.7c0 3.5-2.6 6.9-10 12.5z"/></svg>
+      <b class="pdf">PDF</b>
     </a>
-    <div class="nav__spacer"></div>
-    <button class="theme-btn" id="themeBtn" type="button" aria-label="Toggle dark mode">
-      <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.800A9 9 0 1 1 11.200 3a7 7 0 0 0 9.800 9.800z"/></svg>
-      <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.900 4.900l1.400 1.400M17.700 17.700l1.400 1.400M2 12h2M20 12h2M4.900 19.100l1.400-1.400M17.700 6.300l1.400-1.400"/></svg>
-    </button>
+    <nav aria-label="Main">
+      <ul class="nav">
+        <li><a href="#">Merge PDF</a></li>
+        <li><a href="#">Split PDF</a></li>
+        <li><a href="#">Compress PDF</a></li>
+        <li class="has-menu m-convert">
+          <button type="button">Convert PDF <svg class="chev" viewBox="0 0 10 10"><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div class="panel" id="convertPanel"></div>
+        </li>
+        <li class="has-menu m-all">
+          <button type="button">All PDF tools <svg class="chev" viewBox="0 0 10 10"><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div class="panel"><div class="wrap" id="allPanel"></div></div>
+        </li>
+      </ul>
+    </nav>
+    <div class="hdr-r">
+      <a class="login" href="#">Login</a>
+      <a class="signup" href="#">Sign up</a>
+      <div class="burger has-menu">
+        <button type="button" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+        <div class="panel">
+          <div>
+            <p class="mh">Other products</p>
+            <a class="pi" href="#"><strong>iLoveIMG</strong><span>Effortless image editing</span></a>
+            <a class="pi" href="#"><strong>iLoveSign</strong><span>e-Signing made simple</span></a>
+            <a class="pi" href="#"><strong>iLoveAPI</strong><span>Document automation for developers</span></a>
+            <a class="pi" href="#"><strong>Integrations</strong><span>Zapier, Make, Wordpress...</span></a>
+          </div>
+          <div>
+            <p class="mh">Solutions</p>
+            <a class="pi" href="#"><strong>Business</strong><span>Streamlined PDF editing and workflows for business teams</span></a>
+            <p class="mh" style="margin-top:18px">Applications</p>
+            <a class="pi" href="#"><strong>Desktop App</strong><span>Available for Mac and Windows</span></a>
+            <a class="pi" href="#"><strong>Mobile App</strong><span>Available for iOS and Android</span></a>
+          </div>
+          <div class="plain">
+            <a href="#">Pricing</a>
+            <a href="#">Security</a>
+            <a href="#">Features</a>
+            <a href="#">About us</a>
+            <div class="sep"></div>
+            <details class="dd">
+              <summary>Help <svg class="chev" viewBox="0 0 10 10"><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+              <div class="sub"><a href="#">FAQ</a><a href="#">Tools</a><a href="#">Legal &amp; Privacy</a><a href="#">Contact</a></div>
+            </details>
+            <details class="dd">
+              <summary>English <svg class="chev" viewBox="0 0 10 10"><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+              <div class="sub" id="langBurger"></div>
+            </details>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </header>
 
 <main>
-  <!-- ============ HERO ============ -->
+  <!-- ================= HERO ================= -->
   <section class="hero">
-    <div class="container hero__in">
-      <span class="free"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.500 2 4.500 13.500h6.600L9.900 22l9.600-12h-6.700z"/></svg>Free</span>
-      <h1><span>PDF Conversion</span><span class="grad">Made Simple</span></h1>
-      <p>Fast, easy and completely free PDF tools. Convert, merge, compress and transform your PDFs. Everything happens in your browser — no upload, no sign up, no limits.</p>
+    <h1>Every tool you need to work with PDFs in one place</h1>
+    <p>Every tool you need to use PDFs, at your fingertips. All are 100% FREE and easy to use! Merge, split, compress, convert, rotate, unlock and watermark PDFs with just a few clicks.</p>
+    <div class="tabs" role="tablist">
+      <button class="tab on" type="button">All</button>
+      <button class="tab" type="button">Workflows</button>
+      <button class="tab" type="button">Organize PDF</button>
+      <button class="tab" type="button">Optimize PDF</button>
+      <button class="tab" type="button">Convert PDF</button>
+      <button class="tab" type="button">Edit PDF</button>
+      <button class="tab" type="button">PDF Security</button>
+      <button class="tab" type="button">PDF Intelligence</button>
     </div>
   </section>
 
-  <!-- ============ SERVICES ============ -->
-  <section class="services">
-    <div class="container">
-      <div class="services__title">
-        <h2>All Tools</h2>
-        <p>Choose a tool to get started</p>
+  <!-- ================= TOOLS ================= -->
+  <section class="grid" id="grid" aria-label="PDF tools"></section>
+
+  <!-- ================= WORK YOUR WAY ================= -->
+  <section class="way">
+    <h2>Work your way</h2>
+    <div class="way-grid">
+      <a class="way-card" href="#">
+        <div class="way-ico"><svg viewBox="0 0 64 64"><rect x="8" y="12" width="48" height="32" rx="4"/><path d="M24 54h16M32 44v10"/></svg></div>
+        <h3>Work offline with Desktop</h3>
+        <p>Batch edit and manage documents locally, with no internet and no limits.</p>
+      </a>
+      <a class="way-card" href="#">
+        <div class="way-ico"><svg viewBox="0 0 64 64"><rect x="19" y="6" width="26" height="52" rx="5"/><path d="M28 50h8"/></svg></div>
+        <h3>On-the-go with Mobile</h3>
+        <p>Your favorite tools, right in your pocket. Keep working on your projects anytime, anywhere.</p>
+      </a>
+      <a class="way-card" href="#">
+        <div class="way-ico"><svg viewBox="0 0 64 64"><rect x="10" y="12" width="28" height="44" rx="2"/><path d="M38 28h16v28H38M18 22h4M26 22h4M18 32h4M26 32h4M18 42h4M26 42h4"/></svg></div>
+        <h3>Built for business</h3>
+        <p>Automate document management, onboard teams easily, and scale with flexible plans.</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- ================= PREMIUM ================= -->
+  <section class="sec">
+    <div class="pn">
+      <svg class="vis" viewBox="0 0 480 330" role="img" aria-label="Premium illustration">
+        <rect x="10" y="20" width="440" height="290" rx="20" fill="#fbe9e8"/>
+        <rect x="46" y="52" width="330" height="226" rx="12" fill="#fff" stroke="#f0d3d1"/>
+        <rect x="46" y="52" width="330" height="30" rx="12" fill="#f6f3f7"/>
+        <circle cx="66" cy="67" r="5" fill="#e5322d"/><circle cx="84" cy="67" r="5" fill="#f2a900"/><circle cx="102" cy="67" r="5" fill="#3fa34d"/>
+        <rect x="64" y="100" width="76" height="24" rx="6" fill="#e5322d"/>
+        <rect x="64" y="134" width="76" height="16" rx="5" fill="#eee9f1"/>
+        <rect x="64" y="158" width="76" height="16" rx="5" fill="#eee9f1"/>
+        <rect x="64" y="182" width="76" height="16" rx="5" fill="#eee9f1"/>
+        <rect x="64" y="206" width="76" height="16" rx="5" fill="#eee9f1"/>
+        <rect x="164" y="100" width="190" height="158" rx="8" fill="#faf8fb" stroke="#ece6ef"/>
+        <rect x="182" y="120" width="110" height="10" rx="5" fill="#33302e"/>
+        <rect x="182" y="142" width="154" height="7" rx="3.5" fill="#d9d3dd"/>
+        <rect x="182" y="158" width="140" height="7" rx="3.5" fill="#d9d3dd"/>
+        <rect x="182" y="174" width="150" height="7" rx="3.5" fill="#d9d3dd"/>
+        <rect x="182" y="198" width="72" height="30" rx="7" fill="#e5322d"/>
+        <rect x="266" y="198" width="72" height="30" rx="7" fill="none" stroke="#e5322d" stroke-width="2"/>
+        <circle cx="390" cy="86" r="44" fill="#e5322d"/>
+        <path d="M368 100l-5-24 13 10 14-18 14 18 13-10-5 24z" fill="#fff"/>
+        <rect x="368" y="104" width="44" height="6" rx="3" fill="#fff"/>
+        <circle cx="410" cy="252" r="30" fill="#fff" stroke="#f0d3d1" stroke-width="2"/>
+        <path d="M396 252l9 9 17-19" fill="none" stroke="#3fa34d" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="txt">
+        <h2>Get more with Premium</h2>
+        <ul>
+          <li>Get full access to iLovePDF and work offline with Desktop</li>
+          <li>Edit PDFs, get advanced OCR for scanned documents and request secure e-Signatures</li>
+          <li>Connect tools and create custom workflows</li>
+        </ul>
+        <a class="btn" href="#">Get Premium</a>
       </div>
-      <div class="services__grid">
-        <a href="pdf-to-word.html" class="service-card">
-          <div class="service-card__icon">📄</div>
-          <h3>PDF to Word</h3>
-          <p>Convert PDF files to editable Word documents</p>
-        </a>
-        
-        <a href="pdf-to-jpg.html" class="service-card">
-          <div class="service-card__icon">🖼️</div>
-          <h3>PDF to JPG</h3>
-          <p>Convert PDF pages to high-quality JPG images</p>
-        </a>
-        
-        <a href="pdf-to-excel.html" class="service-card">
-          <div class="service-card__icon">📊</div>
-          <h3>PDF to Excel</h3>
-          <p>Extract tables from PDF to Excel spreadsheets</p>
-        </a>
-        
-        <a href="merge-pdf.html" class="service-card">
-          <div class="service-card__icon">📑</div>
-          <h3>Merge PDF & JPG</h3>
-          <p>Combine multiple PDFs or images (JPG, PNG, WebP) into one PDF</p>
-        </a>
-        
-        <a href="pdf-compressor.html" class="service-card">
-          <div class="service-card__icon">🗜️</div>
-          <h3>PDF Compressor</h3>
-          <p>Reduce PDF file size while maintaining quality</p>
-        </a>
-        
-        <a href="pdf-to-image.html" class="service-card">
-          <div class="service-card__icon">🎨</div>
-          <h3>PDF to Image</h3>
-          <p>Convert PDF to PNG, WebP and other formats</p>
-        </a>
-        
-        <a href="pdf-converter.html" class="service-card">
-          <div class="service-card__icon">⚙️</div>
-          <h3>PDF Converter</h3>
-          <p>Convert PDFs to multiple formats</p>
-        </a>
+    </div>
+  </section>
+
+  <!-- ================= iLoveIMG ================= -->
+  <section class="sec">
+    <div class="pn img">
+      <div class="txt">
+        <h2>Image editing made simple with iLoveIMG</h2>
+        <p>Experience the speed, simplicity, and security you expect from iLovePDF tailored for image editing. Compress, resize, and enhance your images with AI.</p>
+        <a class="btn blue" href="#">Go to iLoveIMG</a>
+      </div>
+      <svg class="vis" viewBox="0 0 480 330" role="img" aria-label="Image editing illustration">
+        <rect x="40" y="36" width="360" height="252" rx="20" fill="#fff"/>
+        <rect x="60" y="56" width="320" height="180" rx="12" fill="#cfc9f7"/>
+        <circle cx="128" cy="112" r="24" fill="#f7c948"/>
+        <path d="M60 236l90-88 62 58 52-44 116 74z" fill="#5b4fe0"/>
+        <path d="M60 236l70-62 50 46 20-18 62 34z" fill="#7d72ee"/>
+        <rect x="60" y="250" width="120" height="10" rx="5" fill="#d9d5f3"/>
+        <rect x="60" y="266" width="76" height="8" rx="4" fill="#e8e5fa"/>
+        <circle cx="366" cy="262" r="16" fill="#5b4fe0"/>
+        <path d="M358 262h16M366 254v16" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="404" cy="74" r="38" fill="#5b4fe0"/>
+        <path d="M404 50l6 18 18 6-18 6-6 18-6-18-18-6 18-6z" fill="#fff"/>
+        <path d="M436 118l3 8 8 3-8 3-3 8-3-8-8-3 8-3z" fill="#7d72ee"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ================= TRUST ================= -->
+  <section class="trust">
+    <h2>The PDF software trusted by millions of users</h2>
+    <p>iLovePDF is your number one web app for editing PDF with ease. Enjoy all the tools you need to work efficiently with your digital documents while keeping your data safe and secure.</p>
+    <div class="badges">
+      <div class="badge">
+        <svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15" fill="none" stroke="#33302e" stroke-width="2" style="stroke:var(--text)"/><text x="17" y="15" text-anchor="middle" font-family="Poppins,Arial,sans-serif" font-size="8" font-weight="700" fill="currentColor">ISO</text><text x="17" y="24" text-anchor="middle" font-family="Poppins,Arial,sans-serif" font-size="6.5" font-weight="600" fill="currentColor">27001</text></svg>
+        <div><b>ISO27001</b><span>Certified</span></div>
+      </div>
+      <div class="badge">
+        <svg viewBox="0 0 34 34"><rect x="7" y="15" width="20" height="14" rx="3" fill="#3fa34d"/><path d="M11 15v-4a6 6 0 0 1 12 0v4" fill="none" stroke="#3fa34d" stroke-width="3" stroke-linecap="round"/><circle cx="17" cy="22" r="2" fill="#fff"/></svg>
+        <div><b>Https</b><span>Secure connection</span></div>
+      </div>
+      <div class="badge">
+        <svg viewBox="0 0 34 34"><rect x="4" y="4" width="26" height="26" rx="6" fill="#e5322d"/><text x="17" y="21.5" text-anchor="middle" font-family="Poppins,Arial,sans-serif" font-size="9.5" font-weight="700" fill="#fff">PDF</text></svg>
+        <div><b>PDF Association</b><span>Member</span></div>
       </div>
     </div>
   </section>
 </main>
 
-<!-- ============ FOOTER ============ -->
-<footer class="foot">
-  <svg class="wave" viewBox="0 0 1440 220" preserveAspectRatio="none" aria-hidden="true">
-    <path d="M0 70C220 10 420 20 640 70S1100 130 1440 40V220H0Z" style="fill:var(--wave-1)"/>
-    <path d="M0 120C260 70 520 90 760 130S1200 170 1440 110V220H0Z" style="fill:var(--wave-2);opacity:.9"/>
-  </svg>
-  <div class="foot__txt">
-    <span class="foot__brand">QuickTools <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.500-4.600-9.500-9.400C1.200 8.400 3 5 6.300 5c2 0 3.500 1.100 4.400 2.600h2.600C14.200 6.100 15.700 5 17.700 5 21 5 22.800 8.400 21.5 11.600 19.5 16.400 12 21 12 21z"/></svg></span>
-    <small>Small tools. Big convenience.</small>
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="f-in">
+    <div class="f-cols">
+      <div><h4>Product</h4><a href="#">Home</a><a href="#">Features</a><a href="#">Pricing</a><a href="#">Tools</a><a href="#">FAQ</a></div>
+      <div><h4>Resources</h4><a href="#">iLovePDF Desktop</a><a href="#">iLovePDF Mobile</a><a href="#">iLoveSign</a><a href="#">iLoveAPI</a><a href="#">iLoveIMG</a></div>
+      <div><h4>Solutions</h4><a href="#">Business</a><a href="#">Education</a></div>
+      <div><h4>Legal</h4><a href="#">Security</a><a href="#">Privacy policy</a><a href="#">Terms &amp; conditions</a><a href="#">Cookies</a></div>
+      <div><h4>Company</h4><a href="#">About us</a><a href="#">Contact us</a><a href="#">Blog</a><a href="#">Press</a></div>
+    </div>
+
+    <div class="f-mid">
+      <div class="stores">
+        <a class="store" href="#"><svg viewBox="0 0 24 24"><path d="M4 3l16 9-16 9z"/></svg><span><small>GET IT ON</small><strong>Google Play</strong></span></a>
+        <a class="store" href="#"><svg viewBox="0 0 24 24"><path d="M12 3c1 3-1 5-3 5 0-2 1-4 3-5zM7 9c2-1 4 0 5 0s3-1 5 0c-3 2-3 7 0 8-1 3-3 5-5 4-1 0-2-1-5 0-2 0-4-4-4-8s3-5 4-4z"/></svg><span><small>Download on the</small><strong>App Store</strong></span></a>
+        <a class="store" href="#"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><rect x="8" y="18" width="8" height="2" rx="1"/></svg><span><small>Download on the</small><strong>Mac App Store</strong></span></a>
+        <a class="store" href="#"><svg viewBox="0 0 24 24"><path d="M3 4h8v8H3zM13 4h8v8h-8zM3 14h8v6H3zM13 14h8v6h-8z"/></svg><span><small>Get it from</small><strong>Microsoft</strong></span></a>
+      </div>
+      <div class="f-right">
+        <details class="lang">
+          <summary><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg>English <svg class="chev" style="width:10px;height:10px" viewBox="0 0 10 10"><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+          <div class="sub" id="langFooter"></div>
+        </details>
+        <div class="social">
+          <a href="#" aria-label="Twitter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 5l14 14M19 5L5 19"/></svg></a>
+          <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 8V6.5c0-.7.3-1 1-1h2V2h-3c-3 0-4.500 2-4.500 4.500V8H7v3.500h2.500V22H14V11.500h2.800L17.300 8z"/></svg></a>
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="9" width="4" height="12"/><circle cx="5" cy="5" r="2.200"/><path d="M10 9h4v2c.8-1.400 2.200-2.300 4-2.300 3 0 4 2 4 5V21h-4v-6c0-1.500-.5-2.500-2-2.500S14 13.500 14 15v6h-4z"/></svg></a>
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.500" cy="6.500" r="1" fill="currentColor" stroke="none"/></svg></a>
+          <a href="#" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.200" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v11.500a3.500 3.500 0 1 1-3.500-3.500M14 3c.3 2.500 2 4 4.500 4"/></svg></a>
+          <a href="#" aria-label="Reddit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><ellipse cx="12" cy="14" rx="8" ry="5.500"/><circle cx="9" cy="13.500" r="1" fill="currentColor"/><circle cx="15" cy="13.500" r="1" fill="currentColor"/><path d="M9.500 16.500c1.500 1 3.500 1 5 0M12 8.500l1-5 4 1"/></svg></a>
+        </div>
+      </div>
+    </div>
+    <div class="copy">&copy; iLovePDF 2026 &reg; - Your PDF Editor</div>
   </div>
 </footer>
 
 <script>
-  /* ---------- Theme (dark by default, remembers choice) ---------- */
-  var root = document.documentElement;
-  var saved = null;
-  try { saved = localStorage.getItem('qt-theme'); } catch (e) {}
-  root.setAttribute('data-theme', saved === 'light' ? 'light' : 'dark');
-  document.getElementById('themeBtn').addEventListener('click', function () {
-    var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    root.setAttribute('data-theme', next);
-    try { localStorage.setItem('qt-theme', next); } catch (e) {}
+(function(){
+  // Keep every placeholder link inert (design only)
+  document.addEventListener('click', function(e){
+    var a = e.target.closest('a[href="#"]');
+    if (a) e.preventDefault();
   });
+
+  // ---------- Icon glyph system ----------
+  var S = 'fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"';
+  var T = function(t, s, y){ return '<text x="31.5" y="' + y + '" text-anchor="middle" font-family="Poppins,Arial,sans-serif" font-weight="700" font-size="' + s + '" fill="#fff">' + t + '</text>'; };
+  var AR = '<path ' + S + ' d="M24 49h15m-5-4 5 4-5 4"/>';
+  var AL = '<path ' + S + ' d="M39 49H24m5-4-5 4 5 4"/>';
+  var g = function(d){ return '<g ' + S + '>' + d + '</g>'; };
+  var lockBody = '<rect x="23" y="38" width="18" height="13" rx="2.500"/><circle cx="32" cy="44.500" r="1.600" fill="#fff" stroke="none"/>';
+
+  var G = {
+    merge:  g('<path d="M22 30h6c5 0 6 8 12 8h4"/><path d="M22 46h6c5 0 6-8 12-8"/><path d="M41 34l4 4-4 4"/>'),
+    split:  g('<path d="M22 38h6c5 0 6-8 12-8h4"/><path d="M28 38c5 0 6 8 12 8h4"/><path d="M41 26l4 4-4 4"/><path d="M41 42l4 4-4 4"/>'),
+    compress: g('<path d="M31.500 25v10m-4-4 4 4 4-4"/><path d="M31.500 53V43m-4 4 4-4 4 4"/><path d="M23 39h17"/>'),
+    p2w:  T('W',17,40) + AR,
+    p2p:  T('P',17,40) + AR,
+    p2x:  T('X',17,40) + AR,
+    w2p:  T('W',17,40) + AL,
+    pp2p: T('P',17,40) + AL,
+    x2p:  T('X',17,40) + AL,
+    edit: g('<path d="M23 47l1.800-7 14-14 5.200 5.200-14 14z"/><path d="M36 28.500l5.200 5.200"/>'),
+    p2j:  T('JPG',11,40) + AR,
+    j2p:  T('JPG',11,40) + AL,
+    sign: g('<path d="M22 42c2-9 5-9 6-1s3 5 6-1 4-4 8-1"/><path d="M22 50h20"/>'),
+    wm:   g('<path d="M31.500 26c5 7 9 11 9 16a9 9 0 0 1-18 0c0-5 4-9 9-16z"/>'),
+    rot:  g('<path d="M41 33a10 10 0 1 0 1.500 8"/><path d="M42 27v7h-7"/>'),
+    html: g('<path d="M27 34l-6 5 6 5"/><path d="M36 34l6 5-6 5"/><path d="M34 31l-4 16"/>'),
+    unlock: g(lockBody + '<path d="M27 38v-5a5 5 0 0 1 9.500-2.200"/>'),
+    lock:   g(lockBody + '<path d="M27 38v-5a5 5 0 0 1 10 0v5"/>'),
+    org:  g('<rect x="22" y="27" width="8.500" height="8.500" rx="1.500"/><rect x="33" y="27" width="8.500" height="8.500" rx="1.500"/><rect x="22" y="38.500" width="8.500" height="8.500" rx="1.500"/><rect x="33" y="38.500" width="8.500" height="8.500" rx="1.500"/>'),
+    pdfa: T('PDF/A',9.500,42),
+    repair: g('<path d="M39.500 27a6 6 0 0 0-7.500 7.500L23 44a2.800 2.800 0 0 0 4 4l9.500-9.500A6 6 0 0 0 44 31l-4 4-3.500-.5-.5-3.500z"/>'),
+    num:  T('123',11,42),
+    scan: g('<path d="M22 33v-6h6M41 33v-6h-6M22 43v6h6M41 43v6h-6"/><path d="M22 38h19"/>'),
+    ocr:  T('OCR',12,42),
+    cmp:  g('<rect x="21" y="28" width="10" height="20" rx="1.500"/><rect x="33" y="28" width="10" height="20" rx="1.500"/>'),
+    redact: '<g fill="#fff"><rect x="22" y="29" width="20" height="4" rx="1"/><rect x="22" y="37" width="20" height="4" rx="1"/><rect x="22" y="45" width="12" height="4" rx="1"/></g>',
+    crop: g('<path d="M26 26v16h16"/><path d="M22 30h16v16"/>'),
+    forms: g('<rect x="22" y="28" width="7" height="7" rx="1.500"/><path d="M32 31.500h10"/><rect x="22" y="41" width="7" height="7" rx="1.500"/><path d="M32 44.500h10"/><path d="M23.500 31.500l1.500 1.500 2.500-3"/>'),
+    ai:   g('<path d="M30 26l2.600 7.400L40 36l-7.400 2.600L30 46l-2.600-7.400L20 36l7.400-2.600z"/><path d="M41 25v5M38.500 27.500h5"/>'),
+    tr:   T('文A',14,42),
+    md:   T('MD',13,40) + AR
+  };
+  var PAGE = 'M17 8h22l10 10v36a3 3 0 0 1-3 3H17a3 3 0 0 1-3-3V11a3 3 0 0 1 3-3z';
+  function icon(t){
+    return '<svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><path d="' + PAGE + '" fill="' + t.c + '"/><path d="M39 8v7a3 3 0 0 0 3 3h7z" fill="#fff" opacity=".35"/>' + G[t.g] + '</svg>';
+  }
+
+  // ---------- Tools (in the order shown on the page) ----------
+  var TOOLS = [
+    {n:'Merge PDF', d:'Combine PDFs in the order you want with the easiest PDF merger available.', c:'#e5322d', g:'merge'},
+    {n:'Split PDF', d:'Separate one page or a whole set for easy conversion into independent PDF files.', c:'#e5322d', g:'split'},
+    {n:'Compress PDF', d:'Reduce file size while optimizing for maximal PDF quality.', c:'#3fa34d', g:'compress'},
+    {n:'PDF to Word', d:'Easily convert your PDF files into easy to edit DOC and DOCX documents. The converted WORD document is almost 100% accurate.', c:'#2b6fd6', g:'p2w'},
+    {n:'PDF to PowerPoint', d:'Turn your PDF files into easy to edit PPT and PPTX slideshows.', c:'#e8642c', g:'p2p'},
+    {n:'PDF to Excel', d:'Pull data straight from PDFs into Excel spreadsheets in a few short seconds.', c:'#1f9d55', g:'p2x'},
+    {n:'Word to PDF', d:'Make DOC and DOCX files easy to read by converting them to PDF.', c:'#2b6fd6', g:'w2p'},
+    {n:'PowerPoint to PDF', d:'Make PPT and PPTX slideshows easy to view by converting them to PDF.', c:'#e8642c', g:'pp2p'},
+    {n:'Excel to PDF', d:'Make EXCEL spreadsheets easy to read by converting them to PDF.', c:'#1f9d55', g:'x2p'},
+    {n:'Edit PDF', d:'Add text, images, shapes or freehand annotations to a PDF document. Edit the size, font, and color of the added content.', c:'#9b51e0', g:'edit'},
+    {n:'PDF to JPG', d:'Convert each PDF page into a JPG or extract all images contained in a PDF.', c:'#f2a900', g:'p2j'},
+    {n:'JPG to PDF', d:'Convert JPG images to PDF in seconds. Easily adjust orientation and margins.', c:'#f2a900', g:'j2p'},
+    {n:'Sign PDF', d:'Sign yourself or request electronic signatures from others.', c:'#2f80ed', g:'sign'},
+    {n:'Watermark', d:'Stamp an image or text over your PDF in seconds. Choose the typography, transparency and position.', c:'#9b51e0', g:'wm'},
+    {n:'Rotate PDF', d:'Rotate your PDFs the way you need them. You can even rotate multiple PDFs at once!', c:'#9b51e0', g:'rot'},
+    {n:'HTML to PDF', d:'Convert webpages in HTML to PDF. Copy and paste the URL of the page you want and convert it to PDF with a click.', c:'#f2a900', g:'html'},
+    {n:'Unlock PDF', d:'Remove PDF password security, giving you the freedom to use your PDFs as you want.', c:'#2c4a9a', g:'unlock'},
+    {n:'Protect PDF', d:'Protect PDF files with a password. Encrypt PDF documents to prevent unauthorized access.', c:'#2c4a9a', g:'lock'},
+    {n:'Organize PDF', d:'Sort pages of your PDF file however you like. Delete PDF pages or add PDF pages to your document at your convenience.', c:'#e5322d', g:'org'},
+    {n:'PDF to PDF/A', d:'Transform your PDF to PDF/A, the ISO-standardized version of PDF for long-term archiving. Your PDF will preserve formatting when accessed in the future.', c:'#2f80ed', g:'pdfa'},
+    {n:'Repair PDF', d:'Repair a damaged PDF and recover data from corrupt PDF. Fix PDF files with our Repair tool.', c:'#3fa34d', g:'repair'},
+    {n:'Page numbers', d:'Add page numbers into PDFs with ease. Choose your positions, dimensions, typography.', c:'#9b51e0', g:'num'},
+    {n:'Scan to PDF', d:'Capture document scans from your mobile device and send them instantly to your browser.', c:'#e5322d', g:'scan'},
+    {n:'OCR PDF', d:'Easily convert scanned PDF into searchable and selectable documents.', c:'#3fa34d', g:'ocr'},
+    {n:'Compare PDF', d:'Show a side-by-side document comparison and easily spot changes between different file versions.', c:'#2c4a9a', g:'cmp'},
+    {n:'Redact PDF', d:'Redact text and graphics to permanently remove sensitive information from a PDF.', c:'#2c4a9a', g:'redact'},
+    {n:'Crop PDF', d:'Crop margins of PDF documents or select specific areas, then apply the changes to one page or the whole document.', c:'#9b51e0', g:'crop'},
+    {n:'PDF Forms', d:'Detect form fields automatically, create interactive fillable PDFs, or fill PDF forms yourself. Add text fields, checkboxes, multiple choice fields, and lists.', c:'#9b51e0', g:'forms', isNew:true},
+    {n:'AI Summarizer', d:'Quickly generate concise summaries from articles, paragraphs, and essays, providing clear and precise key points in seconds.', c:'#e0327f', g:'ai', isNew:true},
+    {n:'Translate PDF', d:'Easily translate PDF files powered by AI. Keep fonts, layout, and formatting perfectly intact.', c:'#e0327f', g:'tr', isNew:true},
+    {n:'PDF to Markdown', d:'Easily turn PDFs into Markdown files. Perfect for notes, docs, and LLMs. Headings, tables, lists, and links preserved automatically.', c:'#e0327f', g:'md', isNew:true}
+  ];
+
+  var html = TOOLS.map(function(t){
+    return '<a class="tool" href="#">' + (t.isNew ? '<span class="new">New!</span>' : '') + icon(t) + '<h3>' + t.n + '</h3><p>' + t.d + '</p></a>';
+  }).join('');
+
+  // Workflow cards
+  html += '<div class="tool wf">' +
+    '<div class="ico-wf"><svg viewBox="0 0 32 32"><circle cx="7" cy="8" r="3"/><circle cx="25" cy="8" r="3"/><circle cx="16" cy="24" r="3"/><path d="M10 8h12M8.500 10.500l6 11M23.500 10.500l-6 11"/></svg></div>' +
+    '<h3>Create a workflow</h3><p>Create custom workflows with your favorite tools, automate tasks, and reuse them anytime.</p>' +
+    '<button class="btn-o" type="button">Create workflow</button></div>';
+  html += '<a class="tool wf wf-add" href="#">' +
+    '<div class="ico-wf"><svg viewBox="0 0 32 32"><path d="M16 7v18M7 16h18"/></svg></div>' +
+    '<h3>Add a workflow</h3>' +
+    '<div class="wf-meta"><span>1 of 6</span><span class="pill">1 x free</span></div></a>';
+  document.getElementById('grid').innerHTML = html;
+
+  // ---------- Mega menu ----------
+  var MENU = [
+    {h:'Organize PDF', i:['Merge PDF','Split PDF','Remove pages','Extract pages','Organize PDF','Scan to PDF']},
+    {h:'Optimize PDF', i:['Compress PDF','Repair PDF','OCR PDF']},
+    {h:'Convert to PDF', i:['JPG to PDF','WORD to PDF','POWERPOINT to PDF','EXCEL to PDF','HTML to PDF']},
+    {h:'Convert from PDF', i:['PDF to JPG','PDF to WORD','PDF to POWERPOINT','PDF to EXCEL','PDF to PDF/A']},
+    {h:'Edit PDF', i:['Rotate PDF','Add page numbers','Add watermark','Crop PDF','Edit PDF','PDF Forms']},
+    {h:'PDF security', i:['Unlock PDF','Protect PDF','Sign PDF','Redact PDF','Compare PDF']},
+    {h:'PDF Intelligence', i:['AI Summarizer','Translate PDF','PDF to Markdown']}
+  ];
+  function col(m){
+    return '<div><p class="mh">' + m.h + '</p><ul class="mlist">' + m.i.map(function(x){ return '<li><a href="#">' + x + '</a></li>'; }).join('') + '</ul></div>';
+  }
+  document.getElementById('allPanel').innerHTML = MENU.map(col).join('');
+  document.getElementById('convertPanel').innerHTML = col(MENU[2]) + col(MENU[3]);
+
+  // ---------- Languages ----------
+  var LANGS = ['English','Español','Français','Deutsch','Italiano','Português','日本語','Pусский','한국어','中文 (简体)','中文 (繁體)','العربية','Български','Català','Nederlands','Ελληνικά','हिन्दी','Bahasa Indonesia','Bahasa Melayu','Polski','Svenska','ภาษาไทย','Türkçe','Українська','Tiếng Việt','Kiswahili'];
+  var langHtml = LANGS.map(function(l){ return '<a href="#">' + l + '</a>'; }).join('');
+  document.getElementById('langBurger').innerHTML = langHtml;
+  document.getElementById('langFooter').innerHTML = langHtml;
+})();
 </script>
 </body>
 </html>
