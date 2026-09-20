@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QuickTools – Free Image & PDF Tools Online</title>
+<meta name="description" content="Convert, compress, merge, generate and more – all directly in your browser. No downloads, no sign up, 100% free.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232563eb'/%3E%3Crect x='7' y='7' width='18' height='18' rx='3' fill='none' stroke='white' stroke-width='2'/%3E%3Ccircle cx='13' cy='13' r='2' fill='white'/%3E%3Cpath d='M8 23l6-6 4 4 3-3 4 5z' fill='white'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #ffffff;
+    --nav-bg: #ffffff;
+    --text: #0c1a4b;
+    --muted: #64708f;
+    --primary: #2563eb;
+    --primary-dark: #1d4fd8;
+    --border: #e8eefa;
+    --hero-1: #e8f0ff;
+    --hero-2: #f5f8ff;
+    --why-bg: #eef4ff;
+    --blob: #dbe7fd;
+    --tile: #ffffff;
+    --tile-shadow: 0 8px 24px rgba(59, 111, 216, .16);
+    --badge: #1fbfae;
+
+    --blue-bg: #eef3ff;   --blue-bd: #d8e4ff;   --blue-ic: #dbe6ff;
+    --green-bg: #ecf9f1;  --green-bd: #d2efdc;  --green-ic: #d3f4e1;
+    --pink-bg: #fff0f2;   --pink-bd: #fbd8de;   --pink-ic: #ffd9df;
+    --orange-bg: #fff7e8; --orange-bd: #fae6c1; --orange-ic: #ffe2b0;
+    --purple-bg: #f3f0ff; --purple-bd: #e0d9ff; --purple-ic: #e2daff;
+
+    --font-head: "Poppins", "Segoe UI", system-ui, sans-serif;
+    --font-body: "Inter", "Segoe UI", system-ui, sans-serif;
+  }
+
+  [data-theme="dark"] {
+    --bg: #0b1120;
+    --nav-bg: #0d1428;
+    --text: #eaf0ff;
+    --muted: #9aa8c7;
+    --primary: #5b8cff;
+    --primary-dark: #4a7bf5;
+    --border: #1c2a4a;
+    --hero-1: #101b38;
+    --hero-2: #0d1630;
+    --why-bg: #0f1932;
+    --blob: #182a55;
+    --tile: #17233f;
+    --tile-shadow: 0 8px 24px rgba(0, 0, 0, .4);
+
+    --blue-bg: #121d3a;   --blue-bd: #22345f;   --blue-ic: #1f3266;
+    --green-bg: #102a24;  --green-bd: #1c4437;  --green-ic: #16392f;
+    --pink-bg: #2c1521;   --pink-bd: #4a2436;   --pink-ic: #4a1f31;
+    --orange-bg: #2a2114; --orange-bd: #46381f;  --orange-ic: #4a3818;
+    --purple-bg: #1f1a3d; --purple-bd: #35306a;  --purple-ic: #2f2760;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    transition: background .25s, color .25s;
+  }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; cursor: pointer; border: 0; background: none; color: inherit; }
+  :focus-visible { outline: 3px solid var(--primary); outline-offset: 3px; border-radius: 8px; }
+
+  .container { width: 100%; max-width: 1040px; margin: 0 auto; padding: 0 28px; }
+
+  /* ---------- Navigation ---------- */
+  .nav { background: var(--nav-bg); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 20; }
+  .nav__in { display: flex; align-items: center; height: 70px; }
+  .brand { display: flex; align-items: center; gap: 12px; font-family: var(--font-head); font-weight: 700; font-size: 27px; letter-spacing: -.02em; }
+  .brand__mark { width: 38px; height: 38px; border-radius: 10px; background: linear-gradient(135deg, #3b82f6, #1d4fd8); display: grid; place-items: center; }
+  .brand__mark svg { width: 24px; height: 24px; }
+  .brand__name span { color: var(--primary); }
+  .nav__links { display: flex; gap: 38px; margin-left: auto; margin-right: 96px; height: 100%; }
+  .nav__links a { position: relative; display: flex; align-items: center; font-size: 15px; font-weight: 500; }
+  .nav__links a[aria-current="page"] { color: var(--primary); }
+  .nav__links a[aria-current="page"]::after { content: ""; position: absolute; left: 0; right: 0; bottom: 12px; height: 2px; background: var(--primary); border-radius: 2px; }
+  .theme-btn { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; color: var(--text); }
+  .theme-btn:hover { background: var(--why-bg); }
+  .theme-btn svg { width: 20px; height: 20px; }
+  .theme-btn .i-sun { display: none; }
+  [data-theme="dark"] .theme-btn .i-sun { display: block; }
+  [data-theme="dark"] .theme-btn .i-moon { display: none; }
+
+  /* ---------- Hero ---------- */
+  .hero { background: linear-gradient(180deg, var(--hero-1) 0%, var(--hero-2) 100%); padding: 46px 0 64px; overflow: hidden; }
+  .hero__in { display: grid; grid-template-columns: 1fr 1.1fr; align-items: center; gap: 12px; }
+  .pill { display: inline-flex; align-items: center; gap: 9px; padding: 6px 14px; border-radius: 999px; background: rgba(37, 99, 235, .1); color: var(--primary); font-size: 13.5px; font-weight: 500; }
+  .pill i { font-style: normal; opacity: .8; }
+  .hero h1 { font-family: var(--font-head); font-weight: 600; font-size: clamp(32px, 4.4vw, 45px); line-height: 1.17; letter-spacing: -.02em; margin: 20px 0 18px; }
+  .hero h1 span { display: block; }
+  .grad { background: linear-gradient(90deg, #1d6bf3 20%, #8b5cf6 95%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .hero p { color: var(--muted); font-size: 16.5px; line-height: 1.75; max-width: 400px; }
+  .btn { display: inline-flex; align-items: center; gap: 10px; margin-top: 30px; padding: 14px 26px; border-radius: 999px; background: var(--primary-dark); color: #fff; font-weight: 500; font-size: 15.5px; box-shadow: 0 10px 22px rgba(37, 99, 235, .3); transition: transform .15s, box-shadow .15s; }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 14px 26px rgba(37, 99, 235, .36); }
+  .btn svg { width: 19px; height: 19px; }
+  .hero-art { width: 100%; height: auto; display: block; }
+  .blob { fill: var(--blob); }
+  .tile { fill: var(--tile); }
+
+  /* ---------- Tools ---------- */
+  .tools { padding: 44px 0 56px; text-align: center; }
+  .eyebrow { font-size: 12px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--primary); }
+  .tools h2 { font-family: var(--font-head); font-weight: 600; font-size: clamp(26px, 3.4vw, 33px); letter-spacing: -.02em; margin: 8px 0 8px; }
+  .tools .sub { color: var(--muted); font-size: 15px; }
+  .cards { display: flex; flex-wrap: wrap; justify-content: center; gap: 26px; max-width: 792px; margin: 40px auto 0; }
+  .card { position: relative; flex: 0 0 calc((100% - 52px) / 3); min-height: 250px; padding: 22px 26px 26px; border-radius: 16px; text-align: left; background: var(--c-bg); border: 1px solid var(--c-bd); transition: transform .18s, box-shadow .18s; }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 16px 30px rgba(37, 60, 130, .12); }
+  .card--blue   { --c-bg: var(--blue-bg);   --c-bd: var(--blue-bd);   --c-ic: var(--blue-ic);   --c-fg: #2563eb; }
+  .card--green  { --c-bg: var(--green-bg);  --c-bd: var(--green-bd);  --c-ic: var(--green-ic);  --c-fg: #16a35a; }
+  .card--pink   { --c-bg: var(--pink-bg);   --c-bd: var(--pink-bd);   --c-ic: var(--pink-ic);   --c-fg: #ef3b57; }
+  .card--orange { --c-bg: var(--orange-bg); --c-bd: var(--orange-bd); --c-ic: var(--orange-ic); --c-fg: #f59e0b; }
+  .card--purple { --c-bg: var(--purple-bg); --c-bd: var(--purple-bd); --c-ic: var(--purple-ic); --c-fg: #7c4dff; }
+  .badge { position: absolute; top: 14px; right: 14px; padding: 4px 11px; border-radius: 999px; background: var(--badge); color: #fff; font-size: 11px; font-weight: 600; letter-spacing: .04em; }
+  .card__icon { width: 72px; height: 72px; border-radius: 18px; background: var(--c-ic); display: grid; place-items: center; margin: 14px 0 20px; }
+  .card__icon svg { width: 40px; height: 40px; }
+  .card h3 { font-family: var(--font-head); font-weight: 600; font-size: 18px; line-height: 1.25; margin-bottom: 8px; max-width: 190px; }
+  .card p { color: var(--muted); font-size: 14px; line-height: 1.55; max-width: 190px; }
+  .card__go { position: absolute; right: 20px; bottom: 20px; width: 36px; height: 36px; border-radius: 50%; background: color-mix(in srgb, var(--c-fg) 14%, transparent); color: var(--c-fg); display: grid; place-items: center; }
+  .card__go svg { width: 18px; height: 18px; }
+
+  /* ---------- Why ---------- */
+  .why { background: var(--why-bg); padding: 38px 0 40px; }
+  .why__in { display: grid; grid-template-columns: 1.05fr 1fr; align-items: center; gap: 20px; }
+  .why .eyebrow { color: var(--muted); font-size: 11.5px; }
+  .why h2 { font-family: var(--font-head); font-weight: 700; font-size: clamp(26px, 3.4vw, 33px); letter-spacing: -.02em; margin: 6px 0 12px; }
+  .why .lead { color: var(--muted); font-size: 15px; line-height: 1.65; max-width: 410px; }
+  .feats { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 34px; margin-top: 26px; max-width: 470px; }
+  .feat { display: flex; align-items: center; gap: 14px; }
+  .feat__ic { flex: none; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; }
+  .feat__ic svg { width: 22px; height: 22px; }
+  .feat b { display: block; font-size: 13.5px; font-weight: 600; line-height: 1.3; }
+  .feat small { display: block; color: var(--muted); font-size: 12px; line-height: 1.4; }
+  .why-art { width: 100%; height: auto; display: block; }
+
+  /* ---------- Footer ---------- */
+  .foot { background: var(--nav-bg); border-top: 1px solid var(--border); }
+  .foot__in { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 28px; }
+  .foot .brand { font-size: 19px; gap: 9px; }
+  .foot .brand__mark { width: 27px; height: 27px; border-radius: 8px; }
+  .foot .brand__mark svg { width: 17px; height: 17px; }
+  .foot__links { display: flex; gap: 30px; font-size: 12.5px; color: var(--muted); margin-left: 60px; }
+  .foot__links a:hover { color: var(--primary); }
+  .foot__note { display: flex; align-items: center; gap: 6px; color: var(--muted); font-size: 12px; }
+  .foot__note svg { width: 15px; height: 15px; fill: var(--primary); }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 860px) {
+    .hero__in, .why__in { grid-template-columns: 1fr; }
+    .hero { padding-top: 34px; }
+    .hero p { max-width: 520px; }
+    .hero-art { max-width: 480px; margin: 10px auto 0; }
+    .why-art { max-width: 420px; margin: 12px auto 0; }
+    .card { flex-basis: calc((100% - 26px) / 2); }
+    .nav__links { margin-right: 24px; gap: 22px; }
+    .foot__in { flex-wrap: wrap; justify-content: center; text-align: center; }
+    .foot__links { margin-left: 0; }
+  }
+  @media (max-width: 560px) {
+    .container { padding: 0 20px; }
+    .brand { font-size: 22px; }
+    .brand__mark { width: 32px; height: 32px; }
+    .nav__links a:nth-child(3) { display: none; }
+    .card { flex-basis: 100%; min-height: 0; }
+    .feats { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; scroll-behavior: auto !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Shared SVG symbols & gradients -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="gSky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#63b0ff"/><stop offset="1" stop-color="#3b82f6"/>
+    </linearGradient>
+    <linearGradient id="gPdf" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ff5a68"/><stop offset="1" stop-color="#e11d3f"/>
+    </linearGradient>
+    <filter id="sh" x="-30%" y="-30%" width="160%" height="170%">
+      <feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#3b6fd8" flood-opacity=".2"/>
+    </filter>
+    <pattern id="chk" width="16" height="16" patternUnits="userSpaceOnUse">
+      <rect width="16" height="16" fill="#fff"/>
+      <rect width="8" height="8" fill="#e3e9f5"/><rect x="8" y="8" width="8" height="8" fill="#e3e9f5"/>
+    </pattern>
+  </defs>
+
+  <symbol id="i-qr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="3" width="7" height="7" rx="1.6"/><rect x="14" y="3" width="7" height="7" rx="1.6"/><rect x="3" y="14" width="7" height="7" rx="1.6"/>
+    <path d="M14 14h3v3h-3zM20.5 14v.01M14 20.5h.01M17.5 20.5H21M21 17.5v3"/>
+  </symbol>
+  <symbol id="i-max" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M16 21h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+  </symbol>
+  <symbol id="i-min" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 3v3a2 2 0 0 1-2 2H3M21 8h-3a2 2 0 0 1-2-2V3M16 21v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/>
+  </symbol>
+  <symbol id="i-code" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 8V6a2 2 0 0 1 2-2h2M17 4h2a2 2 0 0 1 2 2v2M21 16v2a2 2 0 0 1-2 2h-2M7 20H5a2 2 0 0 1-2-2v-2"/>
+    <path d="m9.5 9-3 3 3 3M14.5 9l3 3-3 3"/>
+  </symbol>
+  <symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 8V6a2 2 0 0 1 2-2h2M17 4h2a2 2 0 0 1 2 2v2M21 16v2a2 2 0 0 1-2 2h-2M7 20H5a2 2 0 0 1-2-2v-2"/>
+    <circle cx="12" cy="10" r="3"/><path d="M6.8 19a5.3 5.3 0 0 1 10.4 0"/>
+  </symbol>
+  <symbol id="i-acro" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12.2 3c-1.6 0-1.4 3.2.1 6.2 1.1 2.2 3.1 5 6 6.4 2 .9 3.2-.1 2.6-1.1-.9-1.4-5-.9-9.6.4C6.3 16 3.8 19 4.9 20.1c1.2 1.1 3.5-1.6 6-6.6C13.4 8.4 13.3 3 12.2 3z"/>
+  </symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 12h14M13 6l6 6-6 6"/>
+  </symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M13.5 2 4.5 13.5h6.6L9.900 22l9.600-12h-6.700z"/>
+  </symbol>
+</svg>
+
+<!-- ============ NAV ============ -->
+<header class="nav">
+  <div class="container nav__in">
+    <a class="brand" href="/" aria-label="QuickTools home">
+      <span class="brand__mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="3" width="18" height="18" rx="3.5"/><circle cx="9" cy="9" r="1.8" fill="#fff" stroke="none"/>
+          <path d="M3.500 18.500 9.500 13l4 4 3-2.500 4.500 4.500" fill="#fff" stroke="none"/>
+        </svg>
+      </span>
+      <span class="brand__name">Quick<span>Tools</span></span>
+    </a>
+    <nav class="nav__links" aria-label="Main">
+      <a href="/" aria-current="page">Home</a>
+      <a href="#tools">All Tools</a>
+      <a href="#about">About</a>
+    </nav>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="Toggle dark mode">
+      <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.800A9 9 0 1 1 11.200 3a7 7 0 0 0 9.800 9.800z"/></svg>
+      <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.900 4.900l1.400 1.400M17.700 17.700l1.400 1.400M2 12h2M20 12h2M4.900 19.100l1.400-1.400M17.700 6.300l1.400-1.400"/></svg>
+    </button>
+  </div>
+</header>
+
+<main>
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="container hero__in">
+      <div>
+        <div class="pill"><span>Fast</span><i>•</i><span>Free</span><i>•</i><span>Online</span></div>
+        <h1>
+          <span>All the image &amp; PDF</span>
+          <span>tools you need,</span>
+          <span class="grad">in one place.</span>
+        </h1>
+        <p>Convert, compress, merge, generate and more — all directly in your browser. No downloads, no sign up, 100% free.</p>
+        <a class="btn" href="#tools">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-bolt"/></svg>
+          Explore Tools
+          <svg viewBox="0 0 24 24" aria-hidden="true" style="width:18px;height:18px"><use href="#i-arrow"/></svg>
+        </a>
+      </div>
+
+      <svg class="hero-art" viewBox="0 0 500 380" role="img" aria-label="An image and a PDF file surrounded by tool icons">
+        <defs>
+          <clipPath id="clipPhoto"><rect x="14" y="14" width="136" height="150" rx="11"/></clipPath>
+        </defs>
+
+        <!-- soft background blob -->
+        <path class="blob" d="M112 96C150 24 300 8 382 58c72 44 92 138 42 212-48 70-182 88-262 46C72 268 64 158 112 96z" opacity=".85"/>
+
+        <!-- photo card -->
+        <g transform="translate(78 68) rotate(-7)" filter="url(#sh)">
+          <rect width="164" height="196" rx="18" fill="#fff"/>
+          <rect x="14" y="14" width="136" height="150" rx="11" fill="url(#gSky)"/>
+          <g clip-path="url(#clipPhoto)">
+            <circle cx="100" cy="52" r="13" fill="#ffc83d"/>
+            <path d="M60 164 104 100 150 164Z" fill="#2f74f0"/>
+            <path d="M14 164 52 96 100 164Z" fill="#1e5fe0"/>
+          </g>
+        </g>
+
+        <!-- PDF card -->
+        <g transform="translate(196 126) rotate(12)" filter="url(#sh)">
+          <path d="M0 18A18 18 0 0 1 18 0H86L126 40V132A18 18 0 0 1 108 150H18A18 18 0 0 1 0 132Z" fill="url(#gPdf)"/>
+          <path d="M86 0V22a18 18 0 0 0 18 18H126Z" fill="#fff" opacity=".38"/>
+          <use href="#i-acro" x="30" y="24" width="58" height="58" color="#fff"/>
+          <text x="10" y="128" transform="rotate(-24 10 128)" font-family="Poppins, sans-serif" font-weight="700" font-size="27" fill="#fff">PDF</text>
+        </g>
+
+        <!-- floating tool tiles -->
+        <g filter="url(#sh)">
+          <rect x="263" y="25" width="62" height="62" rx="16" class="tile"/>
+          <rect x="313" y="108" width="58" height="58" rx="15" class="tile"/>
+          <rect x="355" y="190" width="62" height="62" rx="16" class="tile"/>
+          <rect x="40" y="243" width="62" height="62" rx="16" class="tile"/>
+          <rect x="146" y="298" width="56" height="56" rx="15" class="tile"/>
+        </g>
+        <use href="#i-qr"   x="279" y="41"  width="30" height="30" style="color:var(--text)"/>
+        <use href="#i-max"  x="328" y="123" width="28" height="28" color="#2563eb"/>
+        <use href="#i-code" x="371" y="206" width="30" height="30" color="#16a35a"/>
+        <use href="#i-user" x="56"  y="259" width="30" height="30" color="#2563eb"/>
+        <use href="#i-min"  x="160" y="312" width="28" height="28" color="#16a35a"/>
+
+        <!-- decorative strokes -->
+        <g fill="none" stroke="#2f6df6" stroke-width="3" stroke-linecap="round">
+          <path d="M377 60l6 22"/><path d="M392 88l14 14"/><path d="M400 122l24-6"/>
+          <path d="M34 150q24 4 32 26"/><path d="M22 206q22-22 44-28"/>
+        </g>
+        <path d="M126 350l8-20" stroke="#22c55e" stroke-width="3" stroke-linecap="round" fill="none"/>
+
+        <!-- handwritten note + arrow -->
+        <g fill="none" stroke="#2563eb" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M412 296C392 286 372 272 358 254"/>
+          <path d="M358 254l1 13M358 254l12 3"/>
+        </g>
+        <text transform="translate(418 322) rotate(-13)" font-family="Caveat, cursive" font-weight="600" font-size="28" fill="#2563eb">Fast &amp;</text>
+        <text transform="translate(424 352) rotate(-13)" font-family="Caveat, cursive" font-weight="600" font-size="28" fill="#2563eb">Easy!</text>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ============ TOOLS ============ -->
+  <section class="tools" id="tools">
+    <div class="container">
+      <div class="eyebrow">Our Tools</div>
+      <h2>Simple tools, powerful results</h2>
+      <p class="sub">Choose a tool below and get started in seconds. Everything works right in your browser.</p>
+
+      <div class="cards">
+        <a class="card card--blue" href="tools/image-converter.html">
+          <span class="badge">FREE</span>
+          <div class="card__icon">
+            <svg viewBox="0 0 40 40" aria-hidden="true">
+              <rect x="2" y="2" width="36" height="36" rx="9" fill="#2b6cf5"/>
+              <rect x="8" y="8" width="24" height="24" rx="4" fill="#fff"/>
+              <circle cx="15.500" cy="15.500" r="3" fill="#2b6cf5"/>
+              <path d="M8 32l9-11 6 7 4-4 5 6v2z" fill="#2b6cf5"/>
+            </svg>
+          </div>
+          <h3>Image Converter</h3>
+          <p>Convert HEIC, JPG, PNG, WebP and more.</p>
+          <span class="card__go"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+        </a>
+
+        <a class="card card--green" href="tools/image-compressor.html">
+          <span class="badge">FREE</span>
+          <div class="card__icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true" style="color:#1fb765"><use href="#i-min" stroke-width="2.6"/></svg>
+          </div>
+          <h3>Image Compressor &amp; Resizer</h3>
+          <p>Smaller images, faster uploads.</p>
+          <span class="card__go"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+        </a>
+
+        <a class="card card--pink" href="tools/merge-pdf.html">
+          <span class="badge">FREE</span>
+          <div class="card__icon">
+            <svg viewBox="0 0 40 40" aria-hidden="true">
+              <path d="M6 10a6 6 0 0 1 6-6h13l9 9v17a6 6 0 0 1-6 6H12a6 6 0 0 1-6-6z" fill="#ef3b57"/>
+              <path d="M25 4v5a4 4 0 0 0 4 4h5z" fill="#fff" opacity=".4"/>
+              <use href="#i-acro" x="10" y="10" width="20" height="20" color="#fff"/>
+            </svg>
+          </div>
+          <h3>Merge PDF &amp; JPG to PDF</h3>
+          <p>Combine files into one PDF, quickly.</p>
+          <span class="card__go"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+        </a>
+
+        <a class="card card--orange" href="tools/qr-code-generator.html">
+          <span class="badge">FREE</span>
+          <div class="card__icon">
+            <svg viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke="#f59e0b" stroke-width="4">
+              <rect x="5" y="5" width="12" height="12" rx="3"/><rect x="5" y="23" width="12" height="12" rx="3"/><rect x="23" y="5" width="12" height="12" rx="3"/>
+              <rect x="9.500" y="9.500" width="3" height="3" fill="#f59e0b" stroke="none"/><rect x="9.500" y="27.500" width="3" height="3" fill="#f59e0b" stroke="none"/><rect x="27.500" y="9.500" width="3" height="3" fill="#f59e0b" stroke="none"/>
+              <g fill="#f59e0b" stroke="none"><rect x="23" y="23" width="5" height="5" rx="1"/><rect x="30" y="23" width="5" height="5" rx="1"/><rect x="23" y="30" width="5" height="5" rx="1"/><rect x="30" y="30" width="5" height="5" rx="1"/></g>
+            </svg>
+          </div>
+          <h3>QR Code Generator</h3>
+          <p>Create QR codes for links, text, Wi-Fi and more.</p>
+          <span class="card__go"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+        </a>
+
+        <a class="card card--purple" href="tools/background-remover.html">
+          <span class="badge">FREE</span>
+          <div class="card__icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true" style="color:#7c4dff"><use href="#i-user" stroke-width="2.4"/></svg>
+          </div>
+          <h3>Background Remover</h3>
+          <p>Remove backgrounds with AI in seconds.</p>
+          <span class="card__go"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WHY ============ -->
+  <section class="why" id="about">
+    <div class="container why__in">
+      <div>
+        <div class="eyebrow">Why choose us</div>
+        <h2>Fast. Secure. 100% Free.</h2>
+        <p class="lead">We built these tools to make your everyday file tasks simpler. Everything runs in your browser, so your files stay private and secure.</p>
+
+        <div class="feats">
+          <div class="feat">
+            <span class="feat__ic" style="background:#dcf5e6;color:#1fa75f">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 5 6v5.500c0 4.500 3 7.800 7 9.500 4-1.700 7-5 7-9.500V6z"/><path d="m9 12 2 2 4-4"/></svg>
+            </span>
+            <span><b>No installation</b><small>Works in your browser</small></span>
+          </div>
+          <div class="feat">
+            <span class="feat__ic" style="background:#dfe9ff;color:#2563eb">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-bolt"/></svg>
+            </span>
+            <span><b>100% Free</b><small>No hidden charges</small></span>
+          </div>
+          <div class="feat">
+            <span class="feat__ic" style="background:#e9e2ff;color:#7c4dff">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 10V8a4 4 0 0 1 8 0v2h.5A2.500 2.500 0 0 1 19 12.500v6a2.500 2.500 0 0 1-2.500 2.500h-9A2.500 2.500 0 0 1 5 18.500v-6A2.500 2.500 0 0 1 7.500 10zm2 0h4V8a2 2 0 0 0-4 0z"/></svg>
+            </span>
+            <span><b>Your files stay private</b><small>Everything is processed locally</small></span>
+          </div>
+          <div class="feat">
+            <span class="feat__ic" style="background:#ffe1e5;color:#ef3b57">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-bolt"/></svg>
+            </span>
+            <span><b>Fast &amp; Easy</b><small>Get results in seconds</small></span>
+          </div>
+        </div>
+      </div>
+
+      <svg class="why-art" viewBox="0 0 420 260" role="img" aria-label="A browser window showing an image with its background removed">
+        <defs><clipPath id="clipWin"><rect x="58" y="86" width="252" height="128" rx="10"/></clipPath></defs>
+        <ellipse class="blob" cx="205" cy="140" rx="190" ry="105" opacity=".55"/>
+
+        <g transform="rotate(-3 190 140)" filter="url(#sh)">
+          <rect x="42" y="46" width="286" height="184" rx="16" class="tile"/>
+          <circle cx="62" cy="66" r="4.500" fill="#3b82f6"/><circle cx="77" cy="66" r="4.500" fill="#60a5fa"/><circle cx="92" cy="66" r="4.500" fill="#93c5fd"/>
+          <rect x="58" y="86" width="252" height="128" rx="10" fill="url(#gSky)"/>
+          <g clip-path="url(#clipWin)">
+            <rect x="222" y="86" width="88" height="128" fill="url(#chk)"/>
+            <circle cx="132" cy="120" r="13" fill="#ffc83d"/>
+            <path d="M138 214 190 140 244 214Z" fill="#2f74f0"/>
+            <path d="M58 214 112 150 170 214Z" fill="#1e5fe0"/>
+            <rect x="222" y="86" width="88" height="128" fill="url(#chk)" opacity=".92"/>
+            <path d="M222 214 232 202 244 214Z" fill="#2f74f0"/>
+          </g>
+          <path d="M236 172v30l8-7 6 13 6-3-6-12 11-1z" fill="#0c1a4b" stroke="#fff" stroke-width="2" stroke-linejoin="round"/>
+        </g>
+
+        <!-- floating file tiles -->
+        <g filter="url(#sh)">
+          <rect x="340" y="16" width="50" height="50" rx="13" class="tile"/>
+          <rect x="350" y="98" width="44" height="44" rx="12" class="tile"/>
+          <rect x="340" y="170" width="50" height="50" rx="13" class="tile"/>
+        </g>
+        <path d="M351 27h17l11 11v18a3 3 0 0 1-3 3h-25a3 3 0 0 1-3-3V30a3 3 0 0 1 3-3z" fill="#2b6cf5"/>
+        <text x="365" y="57" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="700" font-size="8.500" fill="#fff">JPG</text>
+        <path d="M359 108h14l8 8v14a3 3 0 0 1-3 3h-19a3 3 0 0 1-3-3v-19a3 3 0 0 1 3-3z" fill="#ef3b57"/>
+        <text x="368" y="129" text-anchor="middle" font-family="Poppins, sans-serif" font-weight="700" font-size="7.500" fill="#fff">PDF</text>
+        <use href="#i-qr" x="352" y="182" width="26" height="26" color="#16a35a"/>
+
+        <g fill="none" stroke="#2f6df6" stroke-width="3" stroke-linecap="round">
+          <path d="M318 26l6 14"/><path d="M334 78l14 12"/><path d="M26 74l10 8"/>
+        </g>
+      </svg>
+    </div>
+  </section>
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="foot">
+  <div class="container foot__in">
+    <a class="brand" href="/" aria-label="QuickTools home">
+      <span class="brand__mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="3" width="18" height="18" rx="3.5"/><circle cx="9" cy="9" r="1.8" fill="#fff" stroke="none"/>
+          <path d="M3.500 18.500 9.500 13l4 4 3-2.500 4.500 4.500" fill="#fff" stroke="none"/>
+        </svg>
+      </span>
+      <span class="brand__name">Quick<span>Tools</span></span>
+    </a>
+    <nav class="foot__links" aria-label="Footer">
+      <a href="/">Home</a>
+      <a href="#tools">All Tools</a>
+      <a href="#about">About</a>
+    </nav>
+    <div class="foot__note">
+      Made for a simpler internet
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.500-4.600-9.500-9.400C1.200 8.400 3 5 6.300 5c2 0 3.500 1.100 4.400 2.600h2.600C14.200 6.100 15.700 5 17.700 5 21 5 22.800 8.400 21.500 11.600 19.500 16.400 12 21 12 21z"/></svg>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Theme toggle (remembers choice; falls back gracefully if storage is blocked)
+  (function () {
+    var root = document.documentElement;
+    var btn = document.getElementById('themeBtn');
+    var saved = null;
+    try { saved = localStorage.getItem('qt-theme'); } catch (e) {}
+    var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    root.setAttribute('data-theme', saved || (prefersDark ? 'dark' : 'light'));
+    btn.addEventListener('click', function () {
+      var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('qt-theme', next); } catch (e) {}
+    });
+  })();
+</script>
+</body>
+</html>
