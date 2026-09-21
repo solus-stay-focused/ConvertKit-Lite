@@ -509,10 +509,10 @@ footer{background:var(--footer);color:var(--footer-text);padding:56px 24px 34px}
     {n:'Split PDF', d:'Separate one page or a whole set for easy conversion into independent PDF files.', c:'#e5322d', g:'split', href:'split-pdf/', cat:'organize'},
     {n:'Compress PDF', d:'Reduce file size while optimizing for maximal PDF quality.', c:'#3fa34d', g:'compress', href:'compress-pdf/', cat:'optimize'},
     {n:'PDF to Word', d:'Easily convert your PDF files into easy to edit DOC and DOCX documents. The converted WORD document is almost 100% accurate.', c:'#2b6fd6', g:'p2w', href:'pdf-to-word/', cat:'convert'},
-    {n:'PDF to PowerPoint', d:'Turn your PDF files into easy to edit PPT and PPTX slideshows.', c:'#e8642c', g:'p2p', cat:'convert'},
-    {n:'PDF to Excel', d:'Pull data straight from PDFs into Excel spreadsheets in a few short seconds.', c:'#1f9d55', g:'p2x', cat:'convert'},
-    {n:'Word to PDF', d:'Make DOC and DOCX files easy to read by converting them to PDF.', c:'#2b6fd6', g:'w2p', cat:'convert'},
-    {n:'PowerPoint to PDF', d:'Make PPT and PPTX slideshows easy to view by converting them to PDF.', c:'#e8642c', g:'pp2p', cat:'convert'},
+    {n:'PDF to PowerPoint', d:'Turn your PDF files into easy to edit PPT and PPTX slideshows.', c:'#e8642c', g:'p2p', href:'pdf-to-powerpoint/', cat:'convert'},
+    {n:'PDF to Excel', d:'Pull data straight from PDFs into Excel spreadsheets in a few short seconds.', c:'#1f9d55', g:'p2x', href:'pdf-to-excel/', cat:'convert'},
+    {n:'Word to PDF', d:'Make DOC and DOCX files easy to read by converting them to PDF.', c:'#2b6fd6', g:'w2p', href:'word-to-pdf/', cat:'convert'},
+    {n:'PowerPoint to PDF', d:'Make PPT and PPTX slideshows easy to view by converting them to PDF.', c:'#e8642c', g:'pp2p', href:'powerpoint-to-pdf/', cat:'convert'},
     {n:'Excel to PDF', d:'Make EXCEL spreadsheets easy to read by converting them to PDF.', c:'#1f9d55', g:'x2p', cat:'convert'},
     {n:'Edit PDF', d:'Add text, images, shapes or freehand annotations to a PDF document. Edit the size, font, and color of the added content.', c:'#9b51e0', g:'edit', cat:'edit'},
     {n:'PDF to JPG', d:'Convert each PDF page into a JPG or extract all images contained in a PDF.', c:'#f2a900', g:'p2j', cat:'convert'},
@@ -584,7 +584,11 @@ footer{background:var(--footer);color:var(--footer-text);padding:56px 24px 34px}
     'Merge PDF':'merge-pdf/',
     'Split PDF':'split-pdf/',
     'Compress PDF':'compress-pdf/',
-    'PDF to WORD':'pdf-to-word/'
+    'PDF to WORD':'pdf-to-word/',
+    'PDF to POWERPOINT':'pdf-to-powerpoint/',
+    'PDF to EXCEL':'pdf-to-excel/',
+    'WORD to PDF':'word-to-pdf/',
+    'POWERPOINT to PDF':'powerpoint-to-pdf/'
   };
   var MENU = [
     {h:'Organize PDF', i:['Merge PDF','Split PDF','Remove pages','Extract pages','Organize PDF','Scan to PDF']},
