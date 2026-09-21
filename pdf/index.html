@@ -505,53 +505,78 @@ footer{background:var(--footer);color:var(--footer-text);padding:56px 24px 34px}
   // href: the page each card links to. Tools without a dedicated page yet
   // still point at "#" so they stay inert until their page is built.
   var TOOLS = [
-    {n:'Merge PDF', d:'Combine PDFs in the order you want with the easiest PDF merger available.', c:'#e5322d', g:'merge', href:'merge-pdf/'},
-    {n:'Split PDF', d:'Separate one page or a whole set for easy conversion into independent PDF files.', c:'#e5322d', g:'split', href:'split-pdf/'},
-    {n:'Compress PDF', d:'Reduce file size while optimizing for maximal PDF quality.', c:'#3fa34d', g:'compress', href:'compress-pdf/'},
-    {n:'PDF to Word', d:'Easily convert your PDF files into easy to edit DOC and DOCX documents. The converted WORD document is almost 100% accurate.', c:'#2b6fd6', g:'p2w', href:'pdf-to-word/'},
-    {n:'PDF to PowerPoint', d:'Turn your PDF files into easy to edit PPT and PPTX slideshows.', c:'#e8642c', g:'p2p'},
-    {n:'PDF to Excel', d:'Pull data straight from PDFs into Excel spreadsheets in a few short seconds.', c:'#1f9d55', g:'p2x'},
-    {n:'Word to PDF', d:'Make DOC and DOCX files easy to read by converting them to PDF.', c:'#2b6fd6', g:'w2p'},
-    {n:'PowerPoint to PDF', d:'Make PPT and PPTX slideshows easy to view by converting them to PDF.', c:'#e8642c', g:'pp2p'},
-    {n:'Excel to PDF', d:'Make EXCEL spreadsheets easy to read by converting them to PDF.', c:'#1f9d55', g:'x2p'},
-    {n:'Edit PDF', d:'Add text, images, shapes or freehand annotations to a PDF document. Edit the size, font, and color of the added content.', c:'#9b51e0', g:'edit'},
-    {n:'PDF to JPG', d:'Convert each PDF page into a JPG or extract all images contained in a PDF.', c:'#f2a900', g:'p2j'},
-    {n:'JPG to PDF', d:'Convert JPG images to PDF in seconds. Easily adjust orientation and margins.', c:'#f2a900', g:'j2p'},
-    {n:'Sign PDF', d:'Sign yourself or request electronic signatures from others.', c:'#2f80ed', g:'sign'},
-    {n:'Watermark', d:'Stamp an image or text over your PDF in seconds. Choose the typography, transparency and position.', c:'#9b51e0', g:'wm'},
-    {n:'Rotate PDF', d:'Rotate your PDFs the way you need them. You can even rotate multiple PDFs at once!', c:'#9b51e0', g:'rot'},
-    {n:'HTML to PDF', d:'Convert webpages in HTML to PDF. Copy and paste the URL of the page you want and convert it to PDF with a click.', c:'#f2a900', g:'html'},
-    {n:'Unlock PDF', d:'Remove PDF password security, giving you the freedom to use your PDFs as you want.', c:'#2c4a9a', g:'unlock'},
-    {n:'Protect PDF', d:'Protect PDF files with a password. Encrypt PDF documents to prevent unauthorized access.', c:'#2c4a9a', g:'lock'},
-    {n:'Organize PDF', d:'Sort pages of your PDF file however you like. Delete PDF pages or add PDF pages to your document at your convenience.', c:'#e5322d', g:'org'},
-    {n:'PDF to PDF/A', d:'Transform your PDF to PDF/A, the ISO-standardized version of PDF for long-term archiving. Your PDF will preserve formatting when accessed in the future.', c:'#2f80ed', g:'pdfa'},
-    {n:'Repair PDF', d:'Repair a damaged PDF and recover data from corrupt PDF. Fix PDF files with our Repair tool.', c:'#3fa34d', g:'repair'},
-    {n:'Page numbers', d:'Add page numbers into PDFs with ease. Choose your positions, dimensions, typography.', c:'#9b51e0', g:'num'},
-    {n:'Scan to PDF', d:'Capture document scans from your mobile device and send them instantly to your browser.', c:'#e5322d', g:'scan'},
-    {n:'OCR PDF', d:'Easily convert scanned PDF into searchable and selectable documents.', c:'#3fa34d', g:'ocr'},
-    {n:'Compare PDF', d:'Show a side-by-side document comparison and easily spot changes between different file versions.', c:'#2c4a9a', g:'cmp'},
-    {n:'Redact PDF', d:'Redact text and graphics to permanently remove sensitive information from a PDF.', c:'#2c4a9a', g:'redact'},
-    {n:'Crop PDF', d:'Crop margins of PDF documents or select specific areas, then apply the changes to one page or the whole document.', c:'#9b51e0', g:'crop'},
-    {n:'PDF Forms', d:'Detect form fields automatically, create interactive fillable PDFs, or fill PDF forms yourself. Add text fields, checkboxes, multiple choice fields, and lists.', c:'#9b51e0', g:'forms', isNew:true},
-    {n:'AI Summarizer', d:'Quickly generate concise summaries from articles, paragraphs, and essays, providing clear and precise key points in seconds.', c:'#e0327f', g:'ai', isNew:true},
-    {n:'Translate PDF', d:'Easily translate PDF files powered by AI. Keep fonts, layout, and formatting perfectly intact.', c:'#e0327f', g:'tr', isNew:true},
-    {n:'PDF to Markdown', d:'Easily turn PDFs into Markdown files. Perfect for notes, docs, and LLMs. Headings, tables, lists, and links preserved automatically.', c:'#e0327f', g:'md', isNew:true}
+    {n:'Merge PDF', d:'Combine PDFs in the order you want with the easiest PDF merger available.', c:'#e5322d', g:'merge', href:'merge-pdf/', cat:'organize'},
+    {n:'Split PDF', d:'Separate one page or a whole set for easy conversion into independent PDF files.', c:'#e5322d', g:'split', href:'split-pdf/', cat:'organize'},
+    {n:'Compress PDF', d:'Reduce file size while optimizing for maximal PDF quality.', c:'#3fa34d', g:'compress', href:'compress-pdf/', cat:'optimize'},
+    {n:'PDF to Word', d:'Easily convert your PDF files into easy to edit DOC and DOCX documents. The converted WORD document is almost 100% accurate.', c:'#2b6fd6', g:'p2w', href:'pdf-to-word/', cat:'convert'},
+    {n:'PDF to PowerPoint', d:'Turn your PDF files into easy to edit PPT and PPTX slideshows.', c:'#e8642c', g:'p2p', cat:'convert'},
+    {n:'PDF to Excel', d:'Pull data straight from PDFs into Excel spreadsheets in a few short seconds.', c:'#1f9d55', g:'p2x', cat:'convert'},
+    {n:'Word to PDF', d:'Make DOC and DOCX files easy to read by converting them to PDF.', c:'#2b6fd6', g:'w2p', cat:'convert'},
+    {n:'PowerPoint to PDF', d:'Make PPT and PPTX slideshows easy to view by converting them to PDF.', c:'#e8642c', g:'pp2p', cat:'convert'},
+    {n:'Excel to PDF', d:'Make EXCEL spreadsheets easy to read by converting them to PDF.', c:'#1f9d55', g:'x2p', cat:'convert'},
+    {n:'Edit PDF', d:'Add text, images, shapes or freehand annotations to a PDF document. Edit the size, font, and color of the added content.', c:'#9b51e0', g:'edit', cat:'edit'},
+    {n:'PDF to JPG', d:'Convert each PDF page into a JPG or extract all images contained in a PDF.', c:'#f2a900', g:'p2j', cat:'convert'},
+    {n:'JPG to PDF', d:'Convert JPG images to PDF in seconds. Easily adjust orientation and margins.', c:'#f2a900', g:'j2p', cat:'convert'},
+    {n:'Sign PDF', d:'Sign yourself or request electronic signatures from others.', c:'#2f80ed', g:'sign', cat:'security'},
+    {n:'Watermark', d:'Stamp an image or text over your PDF in seconds. Choose the typography, transparency and position.', c:'#9b51e0', g:'wm', cat:'edit'},
+    {n:'Rotate PDF', d:'Rotate your PDFs the way you need them. You can even rotate multiple PDFs at once!', c:'#9b51e0', g:'rot', cat:'edit'},
+    {n:'HTML to PDF', d:'Convert webpages in HTML to PDF. Copy and paste the URL of the page you want and convert it to PDF with a click.', c:'#f2a900', g:'html', cat:'convert'},
+    {n:'Unlock PDF', d:'Remove PDF password security, giving you the freedom to use your PDFs as you want.', c:'#2c4a9a', g:'unlock', cat:'security'},
+    {n:'Protect PDF', d:'Protect PDF files with a password. Encrypt PDF documents to prevent unauthorized access.', c:'#2c4a9a', g:'lock', cat:'security'},
+    {n:'Organize PDF', d:'Sort pages of your PDF file however you like. Delete PDF pages or add PDF pages to your document at your convenience.', c:'#e5322d', g:'org', cat:'organize'},
+    {n:'PDF to PDF/A', d:'Transform your PDF to PDF/A, the ISO-standardized version of PDF for long-term archiving. Your PDF will preserve formatting when accessed in the future.', c:'#2f80ed', g:'pdfa', cat:'convert'},
+    {n:'Repair PDF', d:'Repair a damaged PDF and recover data from corrupt PDF. Fix PDF files with our Repair tool.', c:'#3fa34d', g:'repair', cat:'optimize'},
+    {n:'Page numbers', d:'Add page numbers into PDFs with ease. Choose your positions, dimensions, typography.', c:'#9b51e0', g:'num', cat:'edit'},
+    {n:'Scan to PDF', d:'Capture document scans from your mobile device and send them instantly to your browser.', c:'#e5322d', g:'scan', cat:'organize'},
+    {n:'OCR PDF', d:'Easily convert scanned PDF into searchable and selectable documents.', c:'#3fa34d', g:'ocr', cat:'optimize'},
+    {n:'Compare PDF', d:'Show a side-by-side document comparison and easily spot changes between different file versions.', c:'#2c4a9a', g:'cmp', cat:'security'},
+    {n:'Redact PDF', d:'Redact text and graphics to permanently remove sensitive information from a PDF.', c:'#2c4a9a', g:'redact', cat:'security'},
+    {n:'Crop PDF', d:'Crop margins of PDF documents or select specific areas, then apply the changes to one page or the whole document.', c:'#9b51e0', g:'crop', cat:'edit'},
+    {n:'PDF Forms', d:'Detect form fields automatically, create interactive fillable PDFs, or fill PDF forms yourself. Add text fields, checkboxes, multiple choice fields, and lists.', c:'#9b51e0', g:'forms', isNew:true, cat:'edit'},
+    {n:'AI Summarizer', d:'Quickly generate concise summaries from articles, paragraphs, and essays, providing clear and precise key points in seconds.', c:'#e0327f', g:'ai', isNew:true, cat:'intelligence'},
+    {n:'Translate PDF', d:'Easily translate PDF files powered by AI. Keep fonts, layout, and formatting perfectly intact.', c:'#e0327f', g:'tr', isNew:true, cat:'intelligence'},
+    {n:'PDF to Markdown', d:'Easily turn PDFs into Markdown files. Perfect for notes, docs, and LLMs. Headings, tables, lists, and links preserved automatically.', c:'#e0327f', g:'md', isNew:true, cat:'intelligence'}
   ];
 
   var html = TOOLS.map(function(t){
-    return '<a class="tool" href="' + (t.href || '#') + '">' + (t.isNew ? '<span class="new">New!</span>' : '') + icon(t) + '<h3>' + t.n + '</h3><p>' + t.d + '</p></a>';
+    return '<a class="tool" data-cat="' + t.cat + '" href="' + (t.href || '#') + '">' + (t.isNew ? '<span class="new">New!</span>' : '') + icon(t) + '<h3>' + t.n + '</h3><p>' + t.d + '</p></a>';
   }).join('');
 
   // Workflow cards
-  html += '<div class="tool wf">' +
+  html += '<div class="tool wf" data-cat="workflows">' +
     '<div class="ico-wf"><svg viewBox="0 0 32 32"><circle cx="7" cy="8" r="3"/><circle cx="25" cy="8" r="3"/><circle cx="16" cy="24" r="3"/><path d="M10 8h12M8.500 10.500l6 11M23.500 10.500l-6 11"/></svg></div>' +
     '<h3>Create a workflow</h3><p>Create custom workflows with your favorite tools, automate tasks, and reuse them anytime.</p>' +
     '<button class="btn-o" type="button">Create workflow</button></div>';
-  html += '<a class="tool wf wf-add" href="#">' +
+  html += '<a class="tool wf wf-add" data-cat="workflows" href="#">' +
     '<div class="ico-wf"><svg viewBox="0 0 32 32"><path d="M16 7v18M7 16h18"/></svg></div>' +
     '<h3>Add a workflow</h3>' +
     '<div class="wf-meta"><span>1 of 6</span><span class="pill">1 x free</span></div></a>';
   document.getElementById('grid').innerHTML = html;
+
+  // ---------- Category tabs ----------
+  var TAB_CAT = {
+    'All': 'all',
+    'Workflows': 'workflows',
+    'Organize PDF': 'organize',
+    'Optimize PDF': 'optimize',
+    'Convert PDF': 'convert',
+    'Edit PDF': 'edit',
+    'PDF Security': 'security',
+    'PDF Intelligence': 'intelligence'
+  };
+  var tabs = document.querySelectorAll('.tab');
+  var cards = document.querySelectorAll('#grid .tool');
+  tabs.forEach(function(tab){
+    tab.addEventListener('click', function(){
+      tabs.forEach(function(t){ t.classList.remove('on'); });
+      tab.classList.add('on');
+      var cat = TAB_CAT[tab.textContent.trim()] || 'all';
+      cards.forEach(function(card){
+        var show = (cat === 'all') || (card.getAttribute('data-cat') === cat);
+        card.style.display = show ? '' : 'none';
+      });
+    });
+  });
 
   // ---------- Mega menu ----------
   // Optional per-item href lookup. Anything not listed here still renders "#".
