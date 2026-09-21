@@ -3,11 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>ConvertKit Lite | Free online PDF tools</title>
-<link rel="icon" href="/favicon.ico" sizes="48x48">
-<link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<title>iLovePDF | Online PDF tools for PDF lovers</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -53,10 +49,10 @@ button{font:inherit;color:inherit;cursor:pointer}
 /* ---------- Header ---------- */
 .hdr{position:relative;z-index:50;background:var(--surface);box-shadow:0 1px 0 var(--line),0 4px 14px rgba(40,30,50,.05)}
 .hdr-in{max-width:1400px;margin:0 auto;height:72px;padding:0 24px;display:flex;align-items:stretch;gap:20px}
-.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:23px;letter-spacing:-.5px;white-space:nowrap;margin-right:8px}
+.logo{display:flex;align-items:center;gap:1px;font-weight:700;font-size:25px;letter-spacing:-.5px;white-space:nowrap;margin-right:8px}
 .logo b{font-weight:700}
 .logo .pdf{color:var(--brand)}
-.logo svg{width:28px;height:auto;flex:none}
+.logo svg{width:24px;height:24px;margin:0 1px;position:relative;top:1px}
 .hdr nav{display:flex;flex:1}
 .nav{display:flex;align-items:stretch}
 .nav>li{display:flex;align-items:center}
@@ -66,6 +62,10 @@ button{font:inherit;color:inherit;cursor:pointer}
 .has-menu:hover>button .chev,.has-menu:focus-within>button .chev{transform:rotate(180deg)}
 .hdr-r{display:flex;align-items:stretch;margin-left:auto;gap:6px}
 .hdr-r>*{display:flex;align-items:center}
+.login{padding:0 12px;font-size:14px;font-weight:500}
+.login:hover{color:var(--brand)}
+.signup{align-self:center;height:42px;padding:0 20px;background:var(--brand);color:#fff;border-radius:8px;font-size:14px;font-weight:600}
+.signup:hover{background:var(--brand-d)}
 .burger>button{height:100%;padding:0 12px;background:none;border:0}
 .burger>button svg{width:26px;height:26px;stroke:var(--text)}
 
@@ -77,8 +77,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .m-all>.panel{left:0;right:0}
 .m-all>.panel .wrap{max-width:1400px;margin:0 auto;padding:30px 24px 34px;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:20px}
 .mh{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin:0 0 12px}
-.mlist li a{display:flex;align-items:center;gap:10px;padding:6px 0;font-size:14.5px;font-weight:500}
-.mi{width:26px;height:26px;flex:none;display:block}
+.mlist li a{display:block;padding:6px 0;font-size:14.5px;font-weight:500}
 .mlist li a:hover{color:var(--brand)}
 .burger>.panel{right:16px;width:min(780px,calc(100vw - 32px));max-height:calc(100vh - 90px);overflow:auto;padding:28px;border-radius:0 0 14px 14px}
 .burger:hover>.panel,.burger:focus-within>.panel{display:grid;grid-template-columns:1fr 1fr 1fr;gap:28px}
@@ -210,12 +209,16 @@ footer{background:var(--footer);color:var(--footer-text);padding:56px 24px 34px}
 }
 @media (max-width:560px){
   .hdr-in{padding:0 14px;gap:8px}
-  .logo{font-size:19px}
-  .logo svg{width:24px}
+  .logo{font-size:22px}
+  .login{padding:0 8px}
+  .signup{padding:0 14px}
   .grid{grid-template-columns:1fr}
   .hero{padding-top:44px}
   .burger:hover>.panel,.burger:focus-within>.panel{grid-template-columns:1fr}
   .f-cols{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:380px){
+  .signup{display:none}
 }
 </style>
 </head>
@@ -224,9 +227,10 @@ footer{background:var(--footer);color:var(--footer-text);padding:56px 24px 34px}
 <!-- ================= HEADER ================= -->
 <header class="hdr">
   <div class="hdr-in">
-    <a class="logo" href="/" aria-label="ConvertKit Lite home">
-      <svg viewBox="100 75 200 232" aria-hidden="true"><polygon points="204,85 252,200 172,222" fill="#3E8FE0"/><polygon points="112,238 288,238 244,296 156,296" fill="#3E8FE0"/></svg>
-      <span><b>ConvertKit</b> <b class="pdf">Lite</b></span>
+    <a class="logo" href="#" aria-label="iLovePDF">
+      <b>I</b>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#e5322d" d="M12 21.2C4.6 15.6 2 12.2 2 8.7 2 5.9 4.2 3.8 6.9 3.8c1.9 0 3.7 1 5.1 3 1.4-2 3.2-3 5.1-3C19.8 3.8 22 5.9 22 8.7c0 3.5-2.6 6.9-10 12.5z"/></svg>
+      <b class="pdf">PDF</b>
     </a>
     <nav aria-label="Main">
       <ul class="nav">
@@ -244,6 +248,8 @@ footer{background:var(--footer);color:var(--footer-text);padding:56px 24px 34px}
       </ul>
     </nav>
     <div class="hdr-r">
+      <a class="login" href="#">Login</a>
+      <a class="signup" href="#">Sign up</a>
       <div class="burger has-menu">
         <button type="button" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
         <div class="panel">
@@ -353,7 +359,7 @@ footer{background:var(--footer);color:var(--footer-text);padding:56px 24px 34px}
       <div class="txt">
         <h2>Get more with Premium</h2>
         <ul>
-          <li>Get full access to ConvertKit Lite and work offline with Desktop</li>
+          <li>Get full access to iLovePDF and work offline with Desktop</li>
           <li>Edit PDFs, get advanced OCR for scanned documents and request secure e-Signatures</li>
           <li>Connect tools and create custom workflows</li>
         </ul>
@@ -367,7 +373,7 @@ footer{background:var(--footer);color:var(--footer-text);padding:56px 24px 34px}
     <div class="pn img">
       <div class="txt">
         <h2>Image editing made simple with iLoveIMG</h2>
-        <p>Experience the speed, simplicity, and security you expect from ConvertKit Lite tailored for image editing. Compress, resize, and enhance your images with AI.</p>
+        <p>Experience the speed, simplicity, and security you expect from iLovePDF tailored for image editing. Compress, resize, and enhance your images with AI.</p>
         <a class="btn blue" href="#">Go to iLoveIMG</a>
       </div>
       <svg class="vis" viewBox="0 0 480 330" role="img" aria-label="Image editing illustration">
@@ -390,7 +396,7 @@ footer{background:var(--footer);color:var(--footer-text);padding:56px 24px 34px}
   <!-- ================= TRUST ================= -->
   <section class="trust">
     <h2>The PDF software trusted by millions of users</h2>
-    <p>ConvertKit Lite is your number one web app for editing PDF with ease. Enjoy all the tools you need to work efficiently with your digital documents while keeping your data safe and secure.</p>
+    <p>iLovePDF is your number one web app for editing PDF with ease. Enjoy all the tools you need to work efficiently with your digital documents while keeping your data safe and secure.</p>
     <div class="badges">
       <div class="badge">
         <svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="15" fill="none" stroke="#33302e" stroke-width="2" style="stroke:var(--text)"/><text x="17" y="15" text-anchor="middle" font-family="Poppins,Arial,sans-serif" font-size="8" font-weight="700" fill="currentColor">ISO</text><text x="17" y="24" text-anchor="middle" font-family="Poppins,Arial,sans-serif" font-size="6.5" font-weight="600" fill="currentColor">27001</text></svg>
@@ -413,7 +419,7 @@ footer{background:var(--footer);color:var(--footer-text);padding:56px 24px 34px}
   <div class="f-in">
     <div class="f-cols">
       <div><h4>Product</h4><a href="#">Home</a><a href="#">Features</a><a href="#">Pricing</a><a href="#">Tools</a><a href="#">FAQ</a></div>
-      <div><h4>Resources</h4><a href="#">ConvertKit Lite Desktop</a><a href="#">ConvertKit Lite Mobile</a><a href="#">iLoveSign</a><a href="#">iLoveAPI</a><a href="#">iLoveIMG</a></div>
+      <div><h4>Resources</h4><a href="#">iLovePDF Desktop</a><a href="#">iLovePDF Mobile</a><a href="#">iLoveSign</a><a href="#">iLoveAPI</a><a href="#">iLoveIMG</a></div>
       <div><h4>Solutions</h4><a href="#">Business</a><a href="#">Education</a></div>
       <div><h4>Legal</h4><a href="#">Security</a><a href="#">Privacy policy</a><a href="#">Terms &amp; conditions</a><a href="#">Cookies</a></div>
       <div><h4>Company</h4><a href="#">About us</a><a href="#">Contact us</a><a href="#">Blog</a><a href="#">Press</a></div>
@@ -441,7 +447,7 @@ footer{background:var(--footer);color:var(--footer-text);padding:56px 24px 34px}
         </div>
       </div>
     </div>
-    <div class="copy">&copy; ConvertKit Lite 2026 - Your PDF Editor</div>
+    <div class="copy">&copy; iLovePDF 2026 &reg; - Your PDF Editor</div>
   </div>
 </footer>
 
@@ -492,9 +498,7 @@ footer{background:var(--footer);color:var(--footer-text);padding:56px 24px 34px}
     forms: g('<rect x="22" y="28" width="7" height="7" rx="1.500"/><path d="M32 31.500h10"/><rect x="22" y="41" width="7" height="7" rx="1.500"/><path d="M32 44.500h10"/><path d="M23.500 31.500l1.500 1.500 2.500-3"/>'),
     ai:   g('<path d="M30 26l2.600 7.400L40 36l-7.400 2.600L30 46l-2.600-7.400L20 36l7.400-2.600z"/><path d="M41 25v5M38.500 27.500h5"/>'),
     tr:   T('文A',14,42),
-    md:   T('MD',13,40) + AR,
-    remove: g('<path d="M23 31h18"/><path d="M26 31v15a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V31"/><path d="M29 27h6"/>'),
-    extract: g('<rect x="21" y="29" width="14" height="19" rx="2"/><path d="M38 38h7m-3-3 3 3-3 3"/>')
+    md:   T('MD',13,40) + AR
   };
   var PAGE = 'M17 8h22l10 10v36a3 3 0 0 1-3 3H17a3 3 0 0 1-3-3V11a3 3 0 0 1 3-3z';
   function icon(t){
@@ -561,22 +565,8 @@ footer{background:var(--footer);color:var(--footer-text);padding:56px 24px 34px}
     {h:'PDF security', i:['Unlock PDF','Protect PDF','Sign PDF','Redact PDF','Compare PDF']},
     {h:'PDF Intelligence', i:['AI Summarizer','Translate PDF','PDF to Markdown']}
   ];
-  var MI = {
-    'Merge PDF':['merge','#e5322d'],'Split PDF':['split','#e5322d'],'Remove pages':['remove','#e5322d'],'Extract pages':['extract','#e5322d'],'Organize PDF':['org','#e5322d'],'Scan to PDF':['scan','#e5322d'],
-    'Compress PDF':['compress','#3fa34d'],'Repair PDF':['repair','#3fa34d'],'OCR PDF':['ocr','#3fa34d'],
-    'JPG to PDF':['j2p','#f2a900'],'WORD to PDF':['w2p','#2b6fd6'],'POWERPOINT to PDF':['pp2p','#e8642c'],'EXCEL to PDF':['x2p','#1f9d55'],'HTML to PDF':['html','#f2a900'],
-    'PDF to JPG':['p2j','#f2a900'],'PDF to WORD':['p2w','#2b6fd6'],'PDF to POWERPOINT':['p2p','#e8642c'],'PDF to EXCEL':['p2x','#1f9d55'],'PDF to PDF/A':['pdfa','#2f80ed'],
-    'Rotate PDF':['rot','#9b51e0'],'Add page numbers':['num','#9b51e0'],'Add watermark':['wm','#9b51e0'],'Crop PDF':['crop','#9b51e0'],'Edit PDF':['edit','#9b51e0'],'PDF Forms':['forms','#9b51e0'],
-    'Unlock PDF':['unlock','#2c4a9a'],'Protect PDF':['lock','#2c4a9a'],'Sign PDF':['sign','#2f80ed'],'Redact PDF':['redact','#2c4a9a'],'Compare PDF':['cmp','#2c4a9a'],
-    'AI Summarizer':['ai','#e0327f'],'Translate PDF':['tr','#e0327f'],'PDF to Markdown':['md','#e0327f']
-  };
-  function miniIcon(label){
-    var m = MI[label];
-    if (!m) return '';
-    return '<svg class="mi" viewBox="0 0 64 64" aria-hidden="true"><path d="' + PAGE + '" fill="' + m[1] + '"/><path d="M39 8v7a3 3 0 0 0 3 3h7z" fill="#fff" opacity=".35"/>' + G[m[0]] + '</svg>';
-  }
   function col(m){
-    return '<div><p class="mh">' + m.h + '</p><ul class="mlist">' + m.i.map(function(x){ return '<li><a href="#">' + miniIcon(x) + '<span>' + x + '</span></a></li>'; }).join('') + '</ul></div>';
+    return '<div><p class="mh">' + m.h + '</p><ul class="mlist">' + m.i.map(function(x){ return '<li><a href="#">' + x + '</a></li>'; }).join('') + '</ul></div>';
   }
   document.getElementById('allPanel').innerHTML = MENU.map(col).join('');
   document.getElementById('convertPanel').innerHTML = col(MENU[2]) + col(MENU[3]);

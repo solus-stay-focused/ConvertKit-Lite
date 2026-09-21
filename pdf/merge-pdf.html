@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Merge PDF | ConvertKit Lite</title>
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#f3f0f5;
+  --surface:#ffffff;
+  --text:#33302e;
+  --muted:#6f6a73;
+  --line:#e7e3ea;
+  --brand:#e5322d;
+  --brand-d:#c9241f;
+  --soft:#f7f5f8;
+  --accent:#e5322d;
+  --accent-d:#c9241f;
+  --shadow:0 8px 26px rgba(40,30,50,.13);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#1b191e;--surface:#26232a;--text:#f1eef3;--muted:#aaa5b0;--line:#383440;--soft:#2d2a33;
+    --shadow:0 8px 26px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#1b191e;--surface:#26232a;--text:#f1eef3;--muted:#aaa5b0;--line:#383440;--soft:#2d2a33;
+  --shadow:0 8px 26px rgba(0,0,0,.45);
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px);background:var(--bg)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Poppins,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+ul{list-style:none;margin:0;padding:0}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+
+.hdr{position:relative;z-index:50;background:var(--surface);box-shadow:0 1px 0 var(--line),0 4px 14px rgba(40,30,50,.05)}
+.hdr-in{max-width:1400px;margin:0 auto;height:72px;padding:0 24px;display:flex;align-items:stretch;gap:20px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:23px;letter-spacing:-.5px;white-space:nowrap;margin-right:8px}
+.logo .pdf{color:var(--brand)}
+.logo svg{width:28px;height:auto;flex:none}
+.hdr nav{display:flex;flex:1}
+.nav{display:flex;align-items:stretch}
+.nav>li{display:flex;align-items:center}
+.nav>li>a{display:flex;align-items:center;gap:6px;height:100%;padding:0 14px;background:none;border:0;font-size:14px;font-weight:500;text-transform:uppercase;letter-spacing:.2px;color:var(--text)}
+.nav>li:hover>a{color:var(--brand)}
+.crumb{max-width:1240px;margin:22px auto 0;padding:0 24px;font-size:13.5px;color:var(--muted)}
+.crumb a:hover{color:var(--brand)}
+
+/* ---- Tool hero ---- */
+.tool-hero{max-width:900px;margin:26px auto 0;padding:0 24px;text-align:center}
+.tool-badge{width:76px;height:76px;border-radius:20px;background:var(--accent);display:grid;place-items:center;margin:0 auto 22px;box-shadow:var(--shadow)}
+.tool-badge svg{width:40px;height:40px}
+.tool-hero h1{margin:0 0 14px;font-size:clamp(28px,4vw,40px);font-weight:600;letter-spacing:-.6px;line-height:1.2}
+.tool-hero p{margin:0 auto;max-width:620px;font-size:16.5px;color:var(--muted);line-height:1.6}
+
+.drop{max-width:760px;margin:34px auto 0;padding:0 24px}
+.drop-in{border:2px dashed var(--line);border-radius:18px;background:var(--surface);padding:52px 28px;text-align:center}
+.drop-in svg{width:46px;height:46px;stroke:var(--accent);fill:none;stroke-width:1.8;margin-bottom:16px}
+.drop-btn{display:inline-block;padding:15px 36px;border-radius:10px;background:var(--accent);color:#fff;font-size:16px;font-weight:600}
+.drop-btn:hover{background:var(--accent-d)}
+.drop-sub{margin:16px 0 0;font-size:13.5px;color:var(--muted)}
+
+/* ---- Feature list ---- */
+.feat{max-width:1100px;margin:76px auto 0;padding:0 24px}
+.feat h2{text-align:center;margin:0 0 34px;font-size:clamp(22px,2.8vw,28px);font-weight:600;letter-spacing:-.4px}
+.feat-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.feat-card{background:var(--surface);border-radius:14px;padding:24px 22px}
+.feat-ico{width:42px;height:42px;border-radius:11px;background:var(--soft);display:grid;place-items:center;margin-bottom:14px}
+.feat-ico svg{width:22px;height:22px;stroke:var(--accent);fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.feat-card h3{margin:0 0 6px;font-size:15.5px;font-weight:600}
+.feat-card p{margin:0;font-size:13.5px;line-height:1.5;color:var(--muted)}
+
+/* ---- How-to steps ---- */
+.steps{max-width:900px;margin:70px auto 0;padding:0 24px}
+.steps h2{text-align:center;margin:0 0 30px;font-size:clamp(22px,2.8vw,28px);font-weight:600;letter-spacing:-.4px}
+.step-row{display:flex;gap:18px;align-items:flex-start;padding:18px 4px}
+.step-n{flex:none;width:34px;height:34px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;font-weight:600;font-size:14.5px}
+.step-row h3{margin:2px 0 4px;font-size:16px;font-weight:600}
+.step-row p{margin:0;font-size:14.5px;color:var(--muted);line-height:1.55}
+
+/* ---- Other tools rail ---- */
+.more{max-width:1240px;margin:80px auto 0;padding:0 24px}
+.more h2{text-align:center;margin:0 0 26px;font-size:clamp(22px,2.8vw,28px);font-weight:600;letter-spacing:-.4px}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+.tool{position:relative;display:block;background:var(--surface);border-radius:12px;padding:24px 20px 22px;transition:box-shadow .2s,transform .2s}
+.tool:hover{box-shadow:var(--shadow);transform:translateY(-2px)}
+.ico{width:52px;height:52px;display:block}
+.tool h3{margin:14px 0 6px;font-size:16.5px;font-weight:600;letter-spacing:-.2px}
+.tool p{margin:0;font-size:13.5px;line-height:1.5;color:var(--muted)}
+
+footer{background:#2f2c31;color:#cfcad3;padding:44px 24px 28px;margin-top:90px}
+.f-in{max-width:1240px;margin:0 auto;text-align:center}
+.f-in a{opacity:.9}
+.copy{margin-top:18px;font-size:13.5px;opacity:.85}
+
+@media (max-width:1100px){ .grid{grid-template-columns:repeat(3,minmax(0,1fr))} .feat-grid{grid-template-columns:repeat(2,minmax(0,1fr))} }
+@media (max-width:960px){ .hdr nav{display:none} }
+@media (max-width:800px){ .grid{grid-template-columns:repeat(2,minmax(0,1fr))} }
+@media (max-width:560px){ .hdr-in{padding:0 14px} .logo{font-size:19px} .logo svg{width:24px} .grid{grid-template-columns:1fr} .feat-grid{grid-template-columns:1fr} .drop-in{padding:38px 18px} }
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-in">
+    <a class="logo" href="index.html" aria-label="ConvertKit Lite home">
+      <svg viewBox="100 75 200 232" aria-hidden="true"><polygon points="204,85 252,200 172,222" fill="#3E8FE0"/><polygon points="112,238 288,238 244,296 156,296" fill="#3E8FE0"/></svg>
+      <span><b>ConvertKit</b> <b class="pdf">Lite</b></span>
+    </a>
+    <nav aria-label="Main">
+      <ul class="nav">
+        <li><a href="merge-pdf.html">Merge PDF</a></li>
+        <li><a href="split-pdf.html">Split PDF</a></li>
+        <li><a href="compress-pdf.html">Compress PDF</a></li>
+        <li><a href="pdf-to-word.html">PDF to Word</a></li>
+        <li><a href="index.html">All PDF tools</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<p class="crumb"><a href="index.html">Home</a> / Merge PDF files</p>
+
+<main>
+  <section class="tool-hero">
+    <div class="tool-badge"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 8h5c3 0 4 5 8 5"/><path d="M8 16h5c3 0 4-5 8-5"/></svg></div>
+    <h1>Merge PDF files</h1>
+    <p>Combine two or more PDFs into a single document, in exactly the order you choose.</p>
+  </section>
+
+  <section class="drop">
+    <div class="drop-in">
+      <svg viewBox="0 0 24 24"><path d="M12 16V4M12 4l-5 5M12 4l5 5" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3" stroke-linecap="round" stroke-linejoin="round"/></svg><br>
+      <a class="drop-btn" href="#">Select PDF files</a>
+      <p class="drop-sub">or drop your PDF file here — no install, no signup, files removed after 2 hours</p>
+    </div>
+  </section>
+
+  <section class="feat">
+    <h2>What you can do with this tool</h2>
+    <div class="feat-grid">
+      <div class="feat-card">
+        <div class="feat-ico"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></div>
+        <h3>Combine unlimited files</h3>
+        <p>Add as many PDFs as you need in one batch — no per-file limit.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-ico"><svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="1.4"/><circle cx="9" cy="12" r="1.4"/><circle cx="9" cy="17" r="1.4"/><path d="M13 7h6M13 12h6M13 17h6" stroke-linecap="round"/></svg></div>
+        <h3>Drag to reorder</h3>
+        <p>Rearrange pages and files by dragging thumbnails before merging.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-ico"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1"/><rect x="13" y="4" width="7" height="7" rx="1"/><rect x="4" y="13" width="7" height="7" rx="1"/><rect x="13" y="13" width="7" height="7" rx="1"/></svg></div>
+        <h3>Mix file types</h3>
+        <p>Bring in PDFs alongside Word, Excel or image files in the same merge.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-ico"><svg viewBox="0 0 24 24"><path d="M9 3v18M3 9h6" stroke-linecap="round"/></svg></div>
+        <h3>Select specific pages</h3>
+        <p>Choose exactly which pages of each source file are included.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-ico"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 4v16" /></svg></div>
+        <h3>Add a cover page</h3>
+        <p>Insert a blank or custom cover page at the start of the merged file.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-ico"><svg viewBox="0 0 24 24"><path d="M12 4v16m-6-6 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h3>Instant download</h3>
+        <p>Get your merged PDF in seconds, ready to save or share.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="steps">
+    <h2>How it works</h2>
+    <div class="step-row">
+      <div class="step-n">1</div>
+      <div><h3>Upload your files</h3><p>Select or drag in every PDF (and other document) you want to combine.</p></div>
+    </div>
+    <div class="step-row">
+      <div class="step-n">2</div>
+      <div><h3>Arrange the order</h3><p>Drag the file thumbnails into the order you want them to appear.</p></div>
+    </div>
+    <div class="step-row">
+      <div class="step-n">3</div>
+      <div><h3>Merge and download</h3><p>Click merge — your single combined PDF is ready to download instantly.</p></div>
+    </div>
+  </section>
+
+  <section class="more">
+    <h2>Other people also use</h2>
+    <div class="grid" id="grid"></div>
+  </section>
+</main>
+
+<footer>
+  <div class="f-in">
+    <p>
+      <a href="merge-pdf.html">Merge PDF</a> &nbsp;·&nbsp;
+      <a href="split-pdf.html">Split PDF</a> &nbsp;·&nbsp;
+      <a href="compress-pdf.html">Compress PDF</a> &nbsp;·&nbsp;
+      <a href="pdf-to-word.html">PDF to Word</a> &nbsp;·&nbsp;
+      <a href="index.html">All PDF tools</a>
+    </p>
+    <div class="copy">&copy; ConvertKit Lite 2026 - Your PDF Editor</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  document.addEventListener('click', function(e){
+    var a = e.target.closest('a[href="#"]');
+    if (a) e.preventDefault();
+  });
+
+  var S = 'fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"';
+  var g = function(d){ return '<g ' + S + '>' + d + '</g>'; };
+  var PAGE = 'M17 8h22l10 10v36a3 3 0 0 1-3 3H17a3 3 0 0 1-3-3V11a3 3 0 0 1 3-3z';
+  var G = {
+    merge:  g('<path d="M22 30h6c5 0 6 8 12 8h4"/><path d="M22 46h6c5 0 6-8 12-8"/><path d="M41 34l4 4-4 4"/>'),
+    split:  g('<path d="M22 38h6c5 0 6-8 12-8h4"/><path d="M28 38c5 0 6 8 12 8h4"/><path d="M41 26l4 4-4 4"/><path d="M41 42l4 4-4 4"/>'),
+    compress: g('<path d="M31.500 25v10m-4-4 4 4 4-4"/><path d="M31.500 53V43m-4 4 4-4 4 4"/><path d="M23 39h17"/>'),
+    p2w: '<text x="31.5" y="40" text-anchor="middle" font-family="Poppins,Arial,sans-serif" font-weight="700" font-size="17" fill="#fff">W</text><path fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" d="M24 49h15m-5-4 5 4-5 4"/>',
+    edit: g('<path d="M23 47l1.800-7 14-14 5.200 5.200-14 14z"/><path d="M36 28.500l5.200 5.200"/>'),
+    sign: g('<path d="M22 42c2-9 5-9 6-1s3 5 6-1 4-4 8-1"/><path d="M22 50h20"/>'),
+    wm:   g('<path d="M31.500 26c5 7 9 11 9 16a9 9 0 0 1-18 0c0-5 4-9 9-16z"/>'),
+    rot:  g('<path d="M41 33a10 10 0 1 0 1.500 8"/><path d="M42 27v7h-7"/>'),
+    unlock: g('<rect x="23" y="38" width="18" height="13" rx="2.500"/><circle cx="32" cy="44.500" r="1.600" fill="#fff" stroke="none"/><path d="M27 38v-5a5 5 0 0 1 9.500-2.200"/>'),
+    org:  g('<rect x="22" y="27" width="8.500" height="8.500" rx="1.500"/><rect x="33" y="27" width="8.500" height="8.500" rx="1.500"/><rect x="22" y="38.500" width="8.500" height="8.500" rx="1.500"/><rect x="33" y="38.500" width="8.500" height="8.500" rx="1.500"/>'),
+    ocr:  '<text x="31.5" y="42" text-anchor="middle" font-family="Poppins,Arial,sans-serif" font-weight="700" font-size="12" fill="#fff">OCR</text>',
+    p2j:  '<text x="31.5" y="40" text-anchor="middle" font-family="Poppins,Arial,sans-serif" font-weight="700" font-size="11" fill="#fff">JPG</text><path fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" d="M24 49h15m-5-4 5 4-5 4"/>'
+  };
+  function icon(g_key,c){
+    return '<svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><path d="' + PAGE + '" fill="' + c + '"/><path d="M39 8v7a3 3 0 0 0 3 3h7z" fill="#fff" opacity=".35"/>' + G[g_key] + '</svg>';
+  }
+  var OTHERS = [{g:"split",c:"#e5322d",href:"split-pdf.html",n:"Split PDF",d:"Separate one page or a whole set into independent PDF files."},{g:"compress",c:"#3fa34d",href:"compress-pdf.html",n:"Compress PDF",d:"Reduce file size while optimizing for maximal PDF quality."},{g:"p2w",c:"#2b6fd6",href:"pdf-to-word.html",n:"PDF to Word",d:"Convert PDF files into easy to edit DOC and DOCX documents."},{g:"org",c:"#e5322d",href:"index.html",n:"Organize PDF",d:"Sort, delete or add pages to your PDF document."}];
+  document.getElementById('grid').innerHTML = OTHERS.map(function(t){
+    return '<a class="tool" href="' + t.href + '">' + icon(t.g, t.c) + '<h3>' + t.n + '</h3><p>' + t.d + '</p></a>';
+  }).join('');
+})();
+</script>
+</body>
+</html>
