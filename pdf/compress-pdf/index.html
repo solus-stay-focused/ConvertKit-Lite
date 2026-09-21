@@ -113,23 +113,23 @@ footer{background:#2f2c31;color:#cfcad3;padding:44px 24px 28px;margin-top:90px}
 
 <header class="hdr">
   <div class="hdr-in">
-    <a class="logo" href="index.html" aria-label="ConvertKit Lite home">
+    <a class="logo" href="../" aria-label="ConvertKit Lite home">
       <svg viewBox="100 75 200 232" aria-hidden="true"><polygon points="204,85 252,200 172,222" fill="#3E8FE0"/><polygon points="112,238 288,238 244,296 156,296" fill="#3E8FE0"/></svg>
       <span><b>ConvertKit</b> <b class="pdf">Lite</b></span>
     </a>
     <nav aria-label="Main">
       <ul class="nav">
-        <li><a href="merge-pdf.html">Merge PDF</a></li>
-        <li><a href="split-pdf.html">Split PDF</a></li>
-        <li><a href="compress-pdf.html">Compress PDF</a></li>
-        <li><a href="pdf-to-word.html">PDF to Word</a></li>
-        <li><a href="index.html">All PDF tools</a></li>
+        <li><a href="../merge-pdf/">Merge PDF</a></li>
+        <li><a href="../split-pdf/">Split PDF</a></li>
+        <li><a href="../compress-pdf/">Compress PDF</a></li>
+        <li><a href="../pdf-to-word/">PDF to Word</a></li>
+        <li><a href="../">All PDF tools</a></li>
       </ul>
     </nav>
   </div>
 </header>
 
-<p class="crumb"><a href="index.html">Home</a> / Compress PDF files</p>
+<p class="crumb"><a href="../">Home</a> / Compress PDF files</p>
 
 <main>
   <section class="tool-hero">
@@ -207,11 +207,11 @@ footer{background:#2f2c31;color:#cfcad3;padding:44px 24px 28px;margin-top:90px}
 <footer>
   <div class="f-in">
     <p>
-      <a href="merge-pdf.html">Merge PDF</a> &nbsp;·&nbsp;
-      <a href="split-pdf.html">Split PDF</a> &nbsp;·&nbsp;
-      <a href="compress-pdf.html">Compress PDF</a> &nbsp;·&nbsp;
-      <a href="pdf-to-word.html">PDF to Word</a> &nbsp;·&nbsp;
-      <a href="index.html">All PDF tools</a>
+      <a href="../merge-pdf/">Merge PDF</a> &nbsp;·&nbsp;
+      <a href="../split-pdf/">Split PDF</a> &nbsp;·&nbsp;
+      <a href="../compress-pdf/">Compress PDF</a> &nbsp;·&nbsp;
+      <a href="../pdf-to-word/">PDF to Word</a> &nbsp;·&nbsp;
+      <a href="../">All PDF tools</a>
     </p>
     <div class="copy">&copy; ConvertKit Lite 2026 - Your PDF Editor</div>
   </div>
@@ -244,7 +244,7 @@ footer{background:#2f2c31;color:#cfcad3;padding:44px 24px 28px;margin-top:90px}
   function icon(g_key,c){
     return '<svg class="ico" viewBox="0 0 64 64" aria-hidden="true"><path d="' + PAGE + '" fill="' + c + '"/><path d="M39 8v7a3 3 0 0 0 3 3h7z" fill="#fff" opacity=".35"/>' + G[g_key] + '</svg>';
   }
-  var OTHERS = [{g:"merge",c:"#e5322d",href:"merge-pdf.html",n:"Merge PDF",d:"Combine PDFs in the order you want."},{g:"split",c:"#e5322d",href:"split-pdf.html",n:"Split PDF",d:"Separate one page or a whole set into independent PDF files."},{g:"ocr",c:"#3fa34d",href:"index.html",n:"OCR PDF",d:"Convert scanned PDFs into searchable, selectable documents."},{g:"p2w",c:"#2b6fd6",href:"pdf-to-word.html",n:"PDF to Word",d:"Convert PDF files into easy to edit DOC and DOCX documents."}];
+  var OTHERS = [{g:"merge",c:"#e5322d",href:"../merge-pdf/",n:"Merge PDF",d:"Combine PDFs in the order you want."},{g:"split",c:"#e5322d",href:"../split-pdf/",n:"Split PDF",d:"Separate one page or a whole set into independent PDF files."},{g:"ocr",c:"#3fa34d",href:"../",n:"OCR PDF",d:"Convert scanned PDFs into searchable, selectable documents."},{g:"p2w",c:"#2b6fd6",href:"../pdf-to-word/",n:"PDF to Word",d:"Convert PDF files into easy to edit DOC and DOCX documents."}];
   document.getElementById('grid').innerHTML = OTHERS.map(function(t){
     return '<a class="tool" href="' + t.href + '">' + icon(t.g, t.c) + '<h3>' + t.n + '</h3><p>' + t.d + '</p></a>';
   }).join('');
