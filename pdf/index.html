@@ -224,15 +224,15 @@ footer{background:var(--footer);color:var(--footer-text);padding:56px 24px 34px}
 <!-- ================= HEADER ================= -->
 <header class="hdr">
   <div class="hdr-in">
-    <a class="logo" href="/" aria-label="ConvertKit Lite home">
+    <a class="logo" href="index.html" aria-label="ConvertKit Lite home">
       <svg viewBox="100 75 200 232" aria-hidden="true"><polygon points="204,85 252,200 172,222" fill="#3E8FE0"/><polygon points="112,238 288,238 244,296 156,296" fill="#3E8FE0"/></svg>
       <span><b>ConvertKit</b> <b class="pdf">Lite</b></span>
     </a>
     <nav aria-label="Main">
       <ul class="nav">
-        <li><a href="#">Merge PDF</a></li>
-        <li><a href="#">Split PDF</a></li>
-        <li><a href="#">Compress PDF</a></li>
+        <li><a href="merge-pdf.html">Merge PDF</a></li>
+        <li><a href="split-pdf.html">Split PDF</a></li>
+        <li><a href="compress-pdf.html">Compress PDF</a></li>
         <li class="has-menu m-convert">
           <button type="button">Convert PDF <svg class="chev" viewBox="0 0 10 10"><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
           <div class="panel" id="convertPanel"></div>
@@ -502,11 +502,13 @@ footer{background:var(--footer);color:var(--footer-text);padding:56px 24px 34px}
   }
 
   // ---------- Tools (in the order shown on the page) ----------
+  // href: the page each card links to. Tools without a dedicated page yet
+  // still point at "#" so they stay inert until their page is built.
   var TOOLS = [
-    {n:'Merge PDF', d:'Combine PDFs in the order you want with the easiest PDF merger available.', c:'#e5322d', g:'merge'},
-    {n:'Split PDF', d:'Separate one page or a whole set for easy conversion into independent PDF files.', c:'#e5322d', g:'split'},
-    {n:'Compress PDF', d:'Reduce file size while optimizing for maximal PDF quality.', c:'#3fa34d', g:'compress'},
-    {n:'PDF to Word', d:'Easily convert your PDF files into easy to edit DOC and DOCX documents. The converted WORD document is almost 100% accurate.', c:'#2b6fd6', g:'p2w'},
+    {n:'Merge PDF', d:'Combine PDFs in the order you want with the easiest PDF merger available.', c:'#e5322d', g:'merge', href:'merge-pdf.html'},
+    {n:'Split PDF', d:'Separate one page or a whole set for easy conversion into independent PDF files.', c:'#e5322d', g:'split', href:'split-pdf.html'},
+    {n:'Compress PDF', d:'Reduce file size while optimizing for maximal PDF quality.', c:'#3fa34d', g:'compress', href:'compress-pdf.html'},
+    {n:'PDF to Word', d:'Easily convert your PDF files into easy to edit DOC and DOCX documents. The converted WORD document is almost 100% accurate.', c:'#2b6fd6', g:'p2w', href:'pdf-to-word.html'},
     {n:'PDF to PowerPoint', d:'Turn your PDF files into easy to edit PPT and PPTX slideshows.', c:'#e8642c', g:'p2p'},
     {n:'PDF to Excel', d:'Pull data straight from PDFs into Excel spreadsheets in a few short seconds.', c:'#1f9d55', g:'p2x'},
     {n:'Word to PDF', d:'Make DOC and DOCX files easy to read by converting them to PDF.', c:'#2b6fd6', g:'w2p'},
@@ -537,7 +539,7 @@ footer{background:var(--footer);color:var(--footer-text);padding:56px 24px 34px}
   ];
 
   var html = TOOLS.map(function(t){
-    return '<a class="tool" href="#">' + (t.isNew ? '<span class="new">New!</span>' : '') + icon(t) + '<h3>' + t.n + '</h3><p>' + t.d + '</p></a>';
+    return '<a class="tool" href="' + (t.href || '#') + '">' + (t.isNew ? '<span class="new">New!</span>' : '') + icon(t) + '<h3>' + t.n + '</h3><p>' + t.d + '</p></a>';
   }).join('');
 
   // Workflow cards
@@ -552,6 +554,13 @@ footer{background:var(--footer);color:var(--footer-text);padding:56px 24px 34px}
   document.getElementById('grid').innerHTML = html;
 
   // ---------- Mega menu ----------
+  // Optional per-item href lookup. Anything not listed here still renders "#".
+  var LINKS = {
+    'Merge PDF':'merge-pdf.html',
+    'Split PDF':'split-pdf.html',
+    'Compress PDF':'compress-pdf.html',
+    'PDF to WORD':'pdf-to-word.html'
+  };
   var MENU = [
     {h:'Organize PDF', i:['Merge PDF','Split PDF','Remove pages','Extract pages','Organize PDF','Scan to PDF']},
     {h:'Optimize PDF', i:['Compress PDF','Repair PDF','OCR PDF']},
@@ -576,7 +585,7 @@ footer{background:var(--footer);color:var(--footer-text);padding:56px 24px 34px}
     return '<svg class="mi" viewBox="0 0 64 64" aria-hidden="true"><path d="' + PAGE + '" fill="' + m[1] + '"/><path d="M39 8v7a3 3 0 0 0 3 3h7z" fill="#fff" opacity=".35"/>' + G[m[0]] + '</svg>';
   }
   function col(m){
-    return '<div><p class="mh">' + m.h + '</p><ul class="mlist">' + m.i.map(function(x){ return '<li><a href="#">' + miniIcon(x) + '<span>' + x + '</span></a></li>'; }).join('') + '</ul></div>';
+    return '<div><p class="mh">' + m.h + '</p><ul class="mlist">' + m.i.map(function(x){ return '<li><a href="' + (LINKS[x] || '#') + '">' + miniIcon(x) + '<span>' + x + '</span></a></li>'; }).join('') + '</ul></div>';
   }
   document.getElementById('allPanel').innerHTML = MENU.map(col).join('');
   document.getElementById('convertPanel').innerHTML = col(MENU[2]) + col(MENU[3]);
