@@ -486,6 +486,29 @@ h1 .grad{background:linear-gradient(90deg,#fff,#ff667d,#ff174f);-webkit-backgrou
 .mega-heading svg{color:#ff657b}.mega-col a:hover{color:#fff}
 .conv-chevron:hover{color:#fff;border-color:#ff667d}
 </style>
+
+<style id="upload-source-box-design">
+/* Compact upload source menu — matches the supplied reference */
+.source-picker{position:relative;display:inline-flex;z-index:80;width:176px}
+.source-button-group{display:flex;width:176px;height:42px}
+.source-button-group button{box-sizing:border-box;height:42px;border:1px solid #3b3b42;background:#d14b59;color:#fff;cursor:pointer;box-shadow:none}
+.source-button-group .select-main{width:136px;border-radius:3px 0 0 3px;border-right:0;display:grid;grid-template-columns:28px 1fr;align-items:center;padding:0 10px;font:800 14px/1 inherit}
+.source-button-group .select-main span:first-child{font-size:13px;line-height:1}
+.source-button-group .select-main span:nth-child(2){justify-self:start}
+.source-button-group .select-toggle{width:40px;border-radius:0 3px 3px 0;display:grid;place-items:center;padding:0;border-left:1px solid rgba(255,255,255,.28)}
+.source-button-group .select-toggle:hover,.source-button-group .select-main:hover{background:#d95360}
+.source-select-caret{font-size:19px;line-height:1;transform:translateY(-1px)}
+.source-menu{box-sizing:border-box;position:absolute;top:42px;left:0;transform:translateY(-4px);width:176px;min-width:176px;padding:0;background:#19191d;border:1px solid #34343b;border-top:0;border-radius:0 0 2px 2px;box-shadow:0 12px 28px rgba(0,0,0,.55);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .12s ease,transform .12s ease;overflow:hidden}
+.source-menu.open{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0)}
+.source-option{box-sizing:border-box;width:100%;height:43px;min-height:43px;padding:0 10px;border:0;border-bottom:1px solid #303037;background:#19191d;color:#eeeeef;display:grid;grid-template-columns:20px 1fr;align-items:center;gap:7px;text-align:left;cursor:pointer}
+.source-option:last-child{border-bottom:0}
+.source-option:hover{background:#242429}
+.source-option-icon{width:20px;height:20px;display:grid;place-items:center;color:#9d9da5;font-size:14px;line-height:1}
+.source-option-icon svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.source-option b{display:block;font-size:13px;line-height:1;font-weight:750;color:#ededee}
+.source-option small{display:none!important}
+@media(max-width:520px){.source-picker,.source-button-group,.source-menu{width:176px;min-width:176px}.source-button-group .select-main{width:136px}.source-button-group .select-toggle{width:40px}}
+</style>
 </head>
 <body>
 <div class="stars"></div>
@@ -546,8 +569,40 @@ h1 .grad{background:linear-gradient(90deg,#fff,#ff667d,#ff174f);-webkit-backgrou
       <div class="cloud">☁</div>
       <h2>Select your file to convert</h2>
       <p>or drag and drop your file here.</p>
-      <label class="select" for="file">▣ &nbsp; Select File</label>
-      <input id="file" type="file">
+      <div class="source-picker">
+        <div class="source-button-group">
+          <button class="select-main" id="sourceSelectMain" type="button">
+            <span>▣</span><span>Select File</span>
+          </button>
+          <button class="select-toggle" id="sourcePickerBtn" type="button" aria-haspopup="menu" aria-expanded="false" aria-label="More upload options">
+            <span class="source-select-caret">⌄</span>
+          </button>
+        </div>
+        <div class="source-menu" id="sourceMenu" role="menu" aria-hidden="true">
+          <button type="button" class="source-option" data-source="computer"><span class="source-option-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7.5h7l2-2h9v13H3z"/></svg></span><span><b>From my computer</b></span></button>
+          <button type="button" class="source-option" data-source="url"><span class="source-option-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 13.5l-1.5 1.5a4 4 0 0 1-5.7-5.7l3-3a4 4 0 0 1 5.7 0"/><path d="M14 10.5l1.5-1.5a4 4 0 0 1 5.7 5.7l-3 3a4 4 0 0 1-5.7 0"/><path d="M8 16l8-8"/></svg></span><span><b>By URL</b></span></button>
+          <button type="button" class="source-option" data-source="google"><span class="source-option-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7.5l3-3h5l8 8-7 7-9-9z"/><circle cx="8" cy="8" r="1.2"/></svg></span><span><b>From Google Drive</b></span></button>
+          <button type="button" class="source-option" data-source="dropbox"><span class="source-option-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4l5 4-5 4-5-4zM17 4l5 4-5 4-5-4zM7 12l5 4-5 4-5-4zM17 12l5 4-5 4-5-4zM7 20h10"/></svg></span><span><b>From Dropbox</b></span></button>
+          <button type="button" class="source-option" data-source="onedrive"><span class="source-option-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.2 17.5h9a3.8 3.8 0 1 0-.7-7.5 5.2 5.2 0 0 0-9.8-1.2A4.1 4.1 0 0 0 9.2 17.5z"/></svg></span><span><b>From OneDrive</b></span></button>
+        </div>
+      </div>
+      <input id="file" type="file" hidden>
+
+      <div class="source-modal" id="urlModal" hidden>
+        <div class="source-modal-backdrop" data-close-url></div>
+        <form class="source-modal-card" id="urlForm">
+          <button class="source-modal-close" type="button" data-close-url aria-label="Close">×</button>
+          <div class="source-modal-icon">↗</div>
+          <h3>Upload from URL</h3>
+          <p>Paste a direct link to the file you want to convert.</p>
+          <input id="urlInput" type="url" placeholder="https://example.com/file.pdf" required>
+          <div class="source-modal-actions">
+            <button type="button" class="source-modal-cancel" data-close-url>Cancel</button>
+            <button type="submit" class="source-modal-submit" id="urlSubmit">Fetch file</button>
+          </div>
+          <div class="source-modal-status" id="urlStatus"></div>
+        </form>
+      </div>
     </div>
 
     <!-- CloudConvert-style post-upload workspace -->
@@ -1118,6 +1173,7 @@ function resetFileSelection(){
 
 window.setPostUploadOutputFormat=setOutputFormat;
 input.addEventListener('change',()=>showFile(input.files[0]));
+window.__cklShowFile = showFile;
 removeFileBtn.addEventListener('click',resetFileSelection);
 
 // The large format preview/selector remains available on hover, while this compact
@@ -1225,6 +1281,262 @@ upload.addEventListener('drop',ev=>showFile(ev.dataTransfer.files[0]));
   .format-select-btn{min-width:118px;height:40px;border-radius:9px}
 }
 </style>
+
+<style id="multi-source-upload-css">
+.source-modal[hidden]{display:none}.source-modal{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;padding:20px}
+.source-modal-backdrop{position:absolute;inset:0;background:#000a;backdrop-filter:blur(7px)}
+.source-modal-card{position:relative;width:min(470px,100%);padding:26px;border:1px solid #34343b;border-radius:16px;background:linear-gradient(180deg,#19191e,#101014);box-shadow:0 30px 90px #000a}
+.source-modal-close{position:absolute;right:13px;top:10px;border:0;background:transparent;color:#8d8d96;font-size:27px;cursor:pointer}
+.source-modal-icon{width:42px;height:42px;border-radius:11px;display:grid;place-items:center;margin-bottom:14px;background:#22252b;border:1px solid #353a43;color:#9dceff;font-weight:900}
+.source-modal-card h3{margin:0 0 6px;font-size:21px;color:#f7f7f8}.source-modal-card p{margin:0 0 18px;color:#9999a2;font-size:13px;line-height:1.5}
+.source-modal-card input{width:100%;height:45px;padding:0 13px;border-radius:9px;border:1px solid #33343b;background:#0d0e12;color:#f4f4f6;outline:none}
+.source-modal-card input:focus{border-color:#5787b7;box-shadow:0 0 0 3px #52a6eb1f}
+.source-modal-actions{display:flex;justify-content:flex-end;gap:9px;margin-top:16px}.source-modal-actions button{height:38px;padding:0 15px;border-radius:8px;font:750 13px inherit;cursor:pointer}
+.source-modal-cancel{border:1px solid #33343b;background:#202126;color:#c9c9cf}.source-modal-submit{border:0;background:#d04a5a;color:#fff}
+.source-modal-submit:disabled{opacity:.55;cursor:wait}.source-modal-status{min-height:18px;margin-top:10px;font-size:12px;color:#9fa0a8}.source-modal-status.error{color:#ff7586}.source-modal-status.success{color:#79d7b0}
+</style>
+
+
+<script id="multi-source-upload-js">
+(() => {
+  /* Replace these three provider values with your own app credentials. */
+  const CLOUD = {
+    google:{clientId:'YOUR_GOOGLE_OAUTH_CLIENT_ID.apps.googleusercontent.com',apiKey:'YOUR_GOOGLE_API_KEY',appId:'YOUR_GOOGLE_CLOUD_PROJECT_NUMBER'},
+    dropbox:{appKey:'YOUR_DROPBOX_APP_KEY'},
+    onedrive:{clientId:'YOUR_ONEDRIVE_APP_ID'}
+  };
+  const MAX=200*1024*1024;
+  const btn=document.getElementById('sourcePickerBtn'), mainBtn=document.getElementById('sourceSelectMain'), menu=document.getElementById('sourceMenu');
+  const input=document.getElementById('file'), upload=document.getElementById('upload');
+  const modal=document.getElementById('urlModal'), form=document.getElementById('urlForm');
+  const urlInput=document.getElementById('urlInput'), urlStatus=document.getElementById('urlStatus'), urlSubmit=document.getElementById('urlSubmit');
+  if(!btn||!menu||!input)return;
+
+  const closeMenu=()=>{menu.classList.remove('open');btn.setAttribute('aria-expanded','false');menu.setAttribute('aria-hidden','true')};
+  const openMenu=()=>{menu.classList.add('open');btn.setAttribute('aria-expanded','true');menu.setAttribute('aria-hidden','false')};
+  mainBtn.addEventListener('click',e=>{e.stopPropagation();closeMenu();input.click()});
+  btn.addEventListener('click',e=>{e.stopPropagation();menu.classList.contains('open')?closeMenu():openMenu()});
+  document.addEventListener('click',e=>{if(!menu.contains(e.target)&&!btn.contains(e.target)&&!mainBtn.contains(e.target))closeMenu()});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeMenu();closeUrl()}});
+
+  function configured(x){return Object.values(CLOUD[x]).every(v=>v&&!String(v).startsWith('YOUR_'))}
+  function status(msg,error=true){
+    const el=document.getElementById('convertStatus');
+    if(el){el.textContent=msg;el.style.display='block';el.style.color=error?'#ff6b7f':'#79d7b0'}
+  }
+  function show(file){if(!file)return;if(file.size>MAX)return status('That file is over 200MB.');window.__cklSelectedFile=file;window.__cklShowFile(file)}
+  function load(src){
+    return new Promise((ok,no)=>{if([...document.scripts].some(s=>s.src===src))return ok();const s=document.createElement('script');s.src=src;s.onload=ok;s.onerror=no;document.head.appendChild(s)})
+  }
+  function wait(fn){
+    return new Promise((ok,no)=>{let n=0;const t=setInterval(()=>{try{if(fn()){clearInterval(t);ok();return}}catch{}if(++n>150){clearInterval(t);no()}},80)})
+  }
+
+  function openUrl(){closeMenu();modal.hidden=false;urlStatus.textContent='';urlStatus.className='source-modal-status';setTimeout(()=>urlInput.focus(),30)}
+  function closeUrl(){if(!modal)return;modal.hidden=true;form.reset();urlStatus.textContent='';urlStatus.className='source-modal-status';urlSubmit.disabled=false;urlSubmit.textContent='Fetch file'}
+  modal.querySelectorAll('[data-close-url]').forEach(x=>x.addEventListener('click',closeUrl));
+
+  form.addEventListener('submit',async e=>{
+    e.preventDefault();const raw=urlInput.value.trim();if(!raw)return;
+    urlSubmit.disabled=true;urlSubmit.textContent='Fetching…';urlStatus.textContent='Downloading the file…';
+    try{
+      const u=new URL(raw);if(!/^https?:$/.test(u.protocol))throw Error('Only HTTP and HTTPS URLs are supported.');
+      const r=await fetch(u.href,{mode:'cors',credentials:'omit'});if(!r.ok)throw Error('The server returned HTTP '+r.status+'.');
+      const b=await r.blob();if(!b.size)throw Error('The URL returned an empty file.');if(b.size>MAX)throw Error('That file is over 200MB.');
+      let name=decodeURIComponent(u.pathname.split('/').pop()||'').trim();
+      if(!name||!name.includes('.'))name='download.'+((b.type.split('/')[1]||'bin').replace('jpeg','jpg'));
+      show(new File([b],name,{type:b.type||'application/octet-stream',lastModified:Date.now()}));
+      urlStatus.textContent='File loaded successfully.';urlStatus.className='source-modal-status success';setTimeout(closeUrl,300);
+    }catch(err){urlStatus.textContent=err.message||'Could not fetch this URL. The server may block browser downloads (CORS).';urlStatus.className='source-modal-status error';urlSubmit.disabled=false;urlSubmit.textContent='Fetch file'}
+  });
+
+  async function googleDrive(){
+    if(!configured('google'))return status('Google Drive is not configured yet.');
+    try{
+      await load('https://apis.google.com/js/api.js');await load('https://accounts.google.com/gsi/client');await wait(()=>window.gapi?.load&&window.google?.accounts?.oauth2);
+      await new Promise(r=>gapi.load('picker',r));
+      let tokenClient=google.accounts.oauth2.initTokenClient({client_id:CLOUD.google.clientId,scope:'https://www.googleapis.com/auth/drive.readonly',callback:()=>{}});
+      tokenClient.callback=async r=>{
+        if(r.error)return status('Google Drive authorization failed.');
+        const token=r.access_token;
+        const view=new google.picker.DocsView(google.picker.ViewId.DOCS).setIncludeFolders(false).setSelectFolderEnabled(false);
+        new google.picker.PickerBuilder().addView(view).setOAuthToken(token).setDeveloperKey(CLOUD.google.apiKey).setAppId(CLOUD.google.appId).setCallback(async data=>{
+          if(data.action!==google.picker.Action.PICKED)return;
+          const d=data.docs?.[0];if(!d?.id)return;
+          try{
+            status('Downloading the selected Google Drive file…',false);
+            const m=await fetch('https://www.googleapis.com/drive/v3/files/'+encodeURIComponent(d.id)+'?fields=name,mimeType',{headers:{Authorization:'Bearer '+token}}).then(x=>x.json());
+            const u=m.mimeType?.startsWith('application/vnd.google-apps.')
+              ?'https://www.googleapis.com/drive/v3/files/'+encodeURIComponent(d.id)+'/export?mimeType=application/pdf'
+              :'https://www.googleapis.com/drive/v3/files/'+encodeURIComponent(d.id)+'?alt=media';
+            const r2=await fetch(u,{headers:{Authorization:'Bearer '+token}});if(!r2.ok)throw Error('Drive download failed.');
+            show(new File([await r2.blob()],m.name||d.name||'drive-file',{type:m.mimeType||'application/octet-stream',lastModified:Date.now()}));
+          }catch(e){console.error(e);status(e.message||'Could not import the Drive file.')}
+        }).build().setVisible(true);
+      };
+      tokenClient.requestAccessToken({prompt:'consent'});
+    }catch(e){console.error(e);status('Google Drive could not be opened. Check API key, client ID and allowed origin.')}
+  }
+
+  async function dropbox(){
+    if(!configured('dropbox'))return status('Dropbox is not configured yet.');
+    try{
+      await load('https://www.dropbox.com/static/api/2/dropins.js');await wait(()=>window.Dropbox?.choose);
+      Dropbox.choose({success:async files=>{
+        const f=files?.[0];if(!f?.link)return;
+        try{
+          status('Downloading the selected Dropbox file…',false);
+          const u=f.link+(f.link.includes('?')?'&':'?')+'dl=1';
+          const r=await fetch(u,{mode:'cors'});if(!r.ok)throw Error('Dropbox download failed.');
+          show(new File([await r.blob()],f.name||'dropbox-file',{type:'application/octet-stream',lastModified:Date.now()}));
+        }catch(e){console.error(e);status('Dropbox selected the file, but the browser could not download it. Use a direct/public link or a server-side Dropbox API download endpoint.')}
+      },cancel:()=>{},linkType:'direct',multiselect:false});
+    }catch(e){console.error(e);status('Dropbox could not be opened. Check the app key and registered domain.')}
+  }
+
+  async function oneDrive(){
+    if(!configured('onedrive'))return status('OneDrive is not configured yet.');
+    try{
+      await load('https://js.live.net/v7.2/OneDrive.js');await wait(()=>window.OneDrive?.open);
+      OneDrive.open({clientId:CLOUD.onedrive.clientId,action:'download',multiSelect:false,viewType:'files',
+        success:files=>{
+          const f=files?.value?.[0],u=f?.['@microsoft.graph.downloadUrl'];if(!u)return status('OneDrive did not return a download URL.');
+          fetch(u).then(r=>{if(!r.ok)throw Error('OneDrive download failed.');return r.blob()}).then(b=>show(new File([b],f.name||'onedrive-file',{type:b.type||'application/octet-stream',lastModified:Date.now()}))).catch(e=>status(e.message||'Could not import the OneDrive file.'));
+        },cancel:()=>{},error:e=>{console.error(e);status('OneDrive picker failed.')}
+      });
+    }catch(e){console.error(e);status('OneDrive could not be opened. Check the app ID and redirect URI.')}
+  }
+
+  menu.querySelectorAll('.source-option').forEach(o=>o.addEventListener('click',()=>{
+    const s=o.dataset.source;closeMenu();
+    if(s==='computer')input.click();else if(s==='url')openUrl();else if(s==='google')googleDrive();else if(s==='dropbox')dropbox();else if(s==='onedrive')oneDrive();
+  }));
+  upload.addEventListener('drop',closeMenu);
+})();
+</script>
+
+
+<style id="exact-upload-source-design">
+/* Match the uploaded reference: compact CloudConvert-style source selector. */
+.upload{
+  max-width:674px !important;
+  min-height:270px;
+  padding:0 !important;
+  margin:58px auto 0;
+  border:1px solid rgba(255,255,255,.13) !important;
+  border-radius:11px !important;
+  background:linear-gradient(180deg,#18181c 0%,#151519 100%) !important;
+  box-shadow:0 18px 45px rgba(0,0,0,.38) !important;
+}
+.upload-inner{
+  min-height:268px !important;
+  border:0 !important;
+  border-radius:10px !important;
+  display:flex !important;
+  flex-direction:column !important;
+  justify-content:center !important;
+  align-items:center !important;
+  padding:0 !important;
+  gap:0 !important;
+}
+.upload-inner .cloud{display:block !important; color:#d04752 !important; font-size:43px !important; line-height:1 !important; margin:0 0 25px !important; text-shadow:none !important;}
+.upload h2{
+  margin:0 0 8px !important;
+  font-size:25px !important;
+  line-height:1.15 !important;
+  font-weight:800 !important;
+  letter-spacing:-.55px !important;
+  color:#f4f4f5 !important;
+}
+.upload p{
+  display:block !important;
+  margin:0 0 24px !important;
+  color:#9b9ba1 !important;
+  font-size:16px !important;
+  line-height:1.2 !important;
+}
+.source-picker{
+  position:relative !important;
+  display:inline-flex !important;
+}
+.source-picker .select{
+  width:176px !important;
+  min-width:176px !important;
+  height:42px !important;
+  padding:0 !important;
+  border:1px solid rgba(255,255,255,.08) !important;
+  border-radius:3px !important;
+  background:#d04752 !important;
+  color:#fff !important;
+  box-shadow:none !important;
+  font-size:14px !important;
+  font-weight:800 !important;
+  gap:8px !important;
+  transform:none !important;
+}
+.source-picker .select:hover{
+  background:#da4d58 !important;
+  filter:none !important;
+  transform:none !important;
+}
+.source-picker .select>span:first-child{font-size:18px;line-height:1}
+.source-select-caret{
+  width:39px !important;
+  height:40px !important;
+  margin-left:3px !important;
+  padding:0 !important;
+  border-left:1px solid rgba(255,255,255,.16) !important;
+  display:grid !important;
+  place-items:center !important;
+  font-size:19px !important;
+  line-height:1 !important;
+}
+.source-menu{
+  top:100% !important;
+  left:50% !important;
+  width:176px !important;
+  padding:0 !important;
+  transform:translateX(-50%) translateY(-3px) !important;
+  border:1px solid #2b2b31 !important;
+  border-radius:2px !important;
+  background:#19191d !important;
+  box-shadow:0 18px 38px rgba(0,0,0,.52) !important;
+}
+.source-menu.open{transform:translateX(-50%) translateY(0) !important}
+.source-option{
+  width:100% !important;
+  height:42px !important;
+  min-height:42px !important;
+  padding:0 11px !important;
+  border:0 !important;
+  border-bottom:1px solid #2b2b30 !important;
+  background:#19191d !important;
+  color:#e9e9eb !important;
+  gap:9px !important;
+  font-size:13px !important;
+  font-weight:700 !important;
+  text-align:left !important;
+}
+.source-option:last-child{border-bottom:0 !important}
+.source-option:hover{background:#25252a !important;color:#fff !important}
+.source-option-icon{
+  width:17px !important;
+  height:20px !important;
+  flex:0 0 17px !important;
+  display:grid !important;
+  place-items:center !important;
+  color:#8f9096 !important;
+}
+.source-option-icon svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.source-option[data-source="computer"] .source-option-icon svg,.source-option[data-source="google"] .source-option-icon svg,.source-option[data-source="dropbox"] .source-option-icon svg{fill:currentColor;stroke:none}
+.source-option b{font-size:13px !important;font-weight:700 !important;line-height:1 !important}
+.source-option small{display:none !important}
+@media(max-width:700px){
+  .upload{width:calc(100% - 28px) !important;min-height:245px}
+  .upload-inner{min-height:243px !important}
+}
+</style>
+
 </body>
 </html>
 
@@ -1308,4 +1620,74 @@ upload.addEventListener('drop',ev=>showFile(ev.dataTransfer.files[0]));
   background:#0d1520;
 }
 @media(max-width:520px){.format-select-btn{min-width:118px}}
+</style>
+<style id="source-split-final">
+/* Final split upload control: left = computer, right = source menu */
+.source-button-group{
+  display:flex !important;
+  width:176px !important;
+  height:42px !important;
+}
+.source-button-group .select-main{
+  width:136px !important;
+  min-width:136px !important;
+  height:42px !important;
+  margin:0 !important;
+  padding:0 9px !important;
+  border:1px solid rgba(255,255,255,.08) !important;
+  border-right:0 !important;
+  border-radius:3px 0 0 3px !important;
+  background:#d04752 !important;
+  color:#fff !important;
+  display:grid !important;
+  grid-template-columns:28px 1fr !important;
+  align-items:center !important;
+  font:800 14px/1 inherit !important;
+  cursor:pointer !important;
+  box-shadow:none !important;
+}
+.source-button-group .select-main span:first-child{font-size:17px !important;line-height:1 !important}
+.source-button-group .select-main span:nth-child(2){justify-self:start !important}
+.source-button-group .select-main:hover{background:#da4d58 !important}
+.source-button-group .select-toggle{
+  width:40px !important;
+  min-width:40px !important;
+  height:42px !important;
+  margin:0 !important;
+  padding:0 !important;
+  border:1px solid rgba(255,255,255,.08) !important;
+  border-left:1px solid rgba(255,255,255,.18) !important;
+  border-radius:0 3px 3px 0 !important;
+  background:#d04752 !important;
+  color:#fff !important;
+  display:grid !important;
+  place-items:center !important;
+  cursor:pointer !important;
+}
+.source-button-group .select-toggle:hover{background:#da4d58 !important}
+.source-button-group .source-select-caret{
+  width:auto !important;
+  height:auto !important;
+  margin:0 !important;
+  padding:0 !important;
+  border:0 !important;
+  display:block !important;
+  font-size:19px !important;
+  line-height:1 !important;
+}
+.source-menu{
+  top:42px !important;
+  left:0 !important;
+  right:auto !important;
+  width:176px !important;
+  min-width:176px !important;
+  padding:0 !important;
+  transform:translateY(-3px) !important;
+  border:1px solid #2b2b31 !important;
+  border-top:0 !important;
+  border-radius:0 0 2px 2px !important;
+  background:#19191d !important;
+  box-shadow:0 18px 38px rgba(0,0,0,.52) !important;
+}
+.source-menu.open{transform:translateY(0) !important}
 </style>
