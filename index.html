@@ -246,6 +246,56 @@ h1 .grad{background:linear-gradient(90deg,#1b8fff,#884cff,#f23cff);-webkit-backg
 footer{padding:35px 7vw;background:#02050a;color:#71839a;text-align:center;font-size:13px}
 @media(max-width:950px){.scene{opacity:.28;right:-80px}.cards{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:700px){.links{display:none}.nav{padding:0 18px}.hero{padding:55px 20px 30px;min-height:720px}h1{letter-spacing:-2.5px}.lead{font-size:16px}.scene{display:none}.upload{margin-top:50px;padding:14px}.upload-inner{min-height:245px}.features{gap:0}.feature{padding:0 12px}.feature span{display:none}.cards{grid-template-columns:1fr}}
+
+/* Post-upload conversion workspace — CloudConvert-inspired layout */
+.uploaded-workspace{display:none}
+.upload.has-file{max-width:1400px;padding:0;background:transparent;border:0;box-shadow:none;margin-top:24px}
+.upload.has-file .upload-inner{display:none}
+.upload.has-file .uploaded-workspace{display:block}
+.uploaded-file-row{min-height:80px;padding:14px 18px 14px 24px;border:1px solid rgba(255,255,255,.07);border-radius:7px;background:linear-gradient(180deg,rgba(30,29,33,.96),rgba(24,23,27,.96));box-shadow:inset 0 1px 0 rgba(255,255,255,.02);display:flex;align-items:center;justify-content:space-between;gap:20px}
+.uploaded-file-main{display:flex;align-items:center;gap:13px;min-width:0}
+.uploaded-file-icon{width:45px;height:45px;flex:0 0 45px;border-radius:4px;background:#2a292e;color:#dedde0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0}
+.uploaded-file-icon svg{width:20px;height:20px}
+.uploaded-file-icon span{font-size:8px;font-weight:900;line-height:9px;letter-spacing:.2px}
+.uploaded-file-info{min-width:0;display:flex;flex-direction:column;gap:3px}
+.uploaded-file-info strong{font-size:15px;line-height:20px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:min(48vw,560px);color:#f3f2f4}
+.uploaded-file-info span{font-size:12px;color:#77747b}
+.uploaded-file-actions{display:flex;align-items:center;gap:11px;flex:0 0 auto;color:#99969d}
+.inline-convert-label{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:600;margin-right:1px}
+.inline-refresh{font-size:22px;line-height:1;color:#aaa7ad}
+.inline-source-badge{height:34px;min-width:70px;padding:0 11px;border-radius:4px;background:#29282d;display:inline-flex;align-items:center;justify-content:center;color:#f0eef0;font-size:13px;font-weight:850}
+.inline-arrow{font-size:25px;color:#9d9aa1;line-height:1}
+.format-select-btn{height:34px;min-width:140px;padding:0 11px;border:1px solid rgba(255,75,100,.5);border-radius:4px;background:#21181b;color:#ff6178;display:flex;align-items:center;justify-content:space-between;gap:12px;font:700 13px inherit;cursor:pointer}
+.format-select-btn:hover{border-color:#ff7185;background:#28191d;box-shadow:0 0 18px rgba(255,49,88,.12)}
+.format-caret{font-size:18px;line-height:1}
+.remove-file-btn{width:34px;height:34px;border:0;background:transparent;color:#77747b;font-size:27px;line-height:1;cursor:pointer;border-radius:5px}
+.remove-file-btn:hover{color:#eee;background:#302c30}
+.upload-bottom-bar{min-height:66px;margin-top:280px;padding:0 14px 0 23px;border:1px solid rgba(255,255,255,.08);border-radius:7px;background:linear-gradient(180deg,rgba(40,39,44,.94),rgba(34,33,38,.94));display:flex;align-items:center;justify-content:space-between;gap:16px}
+.upload-hint{display:flex;align-items:center;gap:10px;color:#9a979e;font-size:13px}
+.hint-icon{width:16px;height:16px;border-radius:50%;background:#aaa7ad;color:#353339;display:inline-grid;place-items:center;font-size:11px;font-weight:900}
+.bottom-actions{display:flex;align-items:center;gap:10px}
+.add-files-btn{height:36px;padding:0 10px 0 13px;border:1px solid rgba(255,255,255,.11);border-radius:4px;background:#302f34;color:#dddade;display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;cursor:pointer}
+.add-files-btn:hover{background:#38373c;border-color:rgba(255,255,255,.18)}
+.add-files-caret{padding-left:7px;margin-left:2px;border-left:1px solid rgba(255,255,255,.1);font-size:17px}
+.bottom-convert-btn{height:36px;padding:0 17px;border:0;border-radius:4px;background:linear-gradient(100deg,#d04a5a,#a93545);color:#f1dfe2;font:800 14px inherit;cursor:pointer;display:inline-flex;align-items:center;gap:7px;opacity:.62}
+.bottom-convert-btn:not(:disabled):hover{opacity:1;box-shadow:0 0 24px rgba(255,49,88,.22);transform:translateY(-1px)}
+.bottom-convert-btn:disabled{cursor:not-allowed}
+.upload-convert-status{display:none;margin:9px 2px 0;font-size:13px;color:#aaa7ad;text-align:right}
+.upload.has-file .format-select-btn.selected{color:#f4f2f3;border-color:#ff667d;background:#3a2025}
+@media(max-width:800px){
+  .uploaded-file-row{align-items:flex-start;flex-direction:column;padding:14px}
+  .uploaded-file-actions{width:100%;flex-wrap:wrap}
+  .uploaded-file-info strong{max-width:calc(100vw - 100px)}
+  .upload-bottom-bar{margin-top:80px;flex-direction:column;align-items:stretch;padding:12px}
+  .bottom-actions{justify-content:flex-end}
+}
+@media(max-width:520px){
+  .inline-convert-label{display:none}
+  .format-select-btn{flex:1;min-width:110px}
+  .uploaded-file-actions{gap:7px}
+  .bottom-actions{width:100%}
+  .add-files-btn,.bottom-convert-btn{flex:1;justify-content:center}
+}
 </style>
 
 <style id="red-black-bg-theme">
@@ -374,17 +424,63 @@ h1 .grad{background:linear-gradient(90deg,#fff,#ff667d,#ff174f);-webkit-backgrou
   <div class="converter-widget" id="converterWidget"><div class="conv-energy" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="conv-row"><div class="conv-card conv-source" id="fromCard"><div class="conv-corner"></div><div class="conv-scan"></div><div class="conv-icon-wrap"><svg viewBox="0 0 40 40" fill="none" stroke="#55c5ff" stroke-width="2.5"><path d="M9 4h15l8 8v24H9z"/><path d="M24 4v9h8"/></svg><span class="icon-pulse"></span></div><div class="conv-label">SOURCE</div><div class="conv-ext" id="fromExt">FILE</div><div class="conv-status"><span></span> READY</div><button class="conv-chevron" type="button" data-target="from">⌄</button></div><div class="conv-transfer"><div class="transfer-ring"><span class="ring-dot d1"></span><span class="ring-dot d2"></span><span class="ring-dot d3"></span><div class="transfer-core">⇄</div></div><div class="transfer-beam"><b></b><b></b><b></b></div><span class="transfer-text">CONVERTING</span></div><div class="conv-card conv-card-to" id="toCard"><div class="conv-corner"></div><div class="conv-scan"></div><div class="conv-icon-wrap"><svg viewBox="0 0 40 40" fill="none" stroke="#e98cff" stroke-width="2.5"><path d="M9 4h15l8 8v24H9z"/><path d="M24 4v9h8"/><path d="m12 29 6-7 4 4 4-5"/></svg><span class="icon-pulse"></span></div><div class="conv-label">OUTPUT</div><div class="conv-ext" id="toExt">Choose</div><div class="conv-status output"><span></span> READY</div><button class="conv-chevron" type="button" data-target="to">⌄</button></div></div><div class="format-picker" id="formatPicker"><div class="fp-search"><span>🔍</span><input type="text" id="fpSearch" placeholder="Search Format" autocomplete="off"></div><div class="fp-body"><ul class="fp-categories" id="fpCategories"></ul><div class="fp-formats" id="fpFormats"></div></div></div></div>
 
   <div class="upload" id="upload">
-    <div class="upload-inner">
+    <div class="upload-inner" id="uploadEmptyState">
       <div class="cloud">☁</div>
       <h2>Select your file to convert</h2>
       <p>or drag and drop your file here.</p>
       <label class="select" for="file">▣ &nbsp; Select File &nbsp;⌄</label>
       <input id="file" type="file">
-      <div id="chosen"></div>
-      <button class="select" id="convertBtn" type="button" style="display:none;margin-top:14px;background:linear-gradient(100deg,#00d9ff,#087fff)">
-        ▸ &nbsp; Convert &nbsp;→
-      </button>
-      <div id="convertStatus" style="display:none;margin-top:10px;font-size:13px;color:#a8b5c8"></div>
+    </div>
+
+    <!-- CloudConvert-style post-upload workspace -->
+    <div class="uploaded-workspace" id="uploadedWorkspace" aria-live="polite">
+      <div class="uploaded-file-row">
+        <div class="uploaded-file-main">
+          <div class="uploaded-file-icon" id="uploadedFileIcon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <path d="M6 2h8l4 4v16H6z"/>
+              <path d="M14 2v5h5"/>
+              <path d="M8.5 15h7M8.5 18h5"/>
+            </svg>
+            <span id="uploadedFileExt">FILE</span>
+          </div>
+          <div class="uploaded-file-info">
+            <strong id="uploadedFileName">Selected file</strong>
+            <span id="uploadedFileMeta">0 MB · File</span>
+          </div>
+        </div>
+
+        <div class="uploaded-file-actions">
+          <div class="inline-convert-label">
+            <span class="inline-refresh">↻</span>
+            <span>Convert</span>
+          </div>
+          <span class="inline-source-badge"><span id="inlineSourceExt">FILE</span></span>
+          <span class="inline-arrow">→</span>
+          <button class="format-select-btn" id="formatSelectBtn" type="button" aria-haspopup="true">
+            <span id="inlineTargetExt">Select Format</span>
+            <span class="format-caret">⌄</span>
+          </button>
+          <button class="remove-file-btn" id="removeFileBtn" type="button" aria-label="Remove selected file">×</button>
+        </div>
+      </div>
+
+      <div class="upload-bottom-bar">
+        <div class="upload-hint" id="uploadHint">
+          <span class="hint-icon">i</span>
+          <span id="uploadHintText">Please select output format</span>
+        </div>
+        <div class="bottom-actions">
+          <label class="add-files-btn" for="file">
+            <span>▣</span> Add more files <span class="add-files-caret">⌄</span>
+          </label>
+          <button class="bottom-convert-btn" id="convertBtn" type="button" disabled>
+            <span>↻</span> Convert
+          </button>
+        </div>
+      </div>
+
+      <div id="convertStatus" class="upload-convert-status"></div>
     </div>
   </div>
 
@@ -611,10 +707,9 @@ const FORMATS_BY_CATEGORY={
 
     if(activeField==='from'){
       fromExt.textContent=f;
-      document.getElementById('previewFromLabel').textContent=f;
     } else {
       toExt.textContent=f;
-      document.getElementById('previewToLabel').textContent=f;
+      if(window.setPostUploadOutputFormat) window.setPostUploadOutputFormat(f);
     }
     closePicker();
   }
@@ -632,6 +727,8 @@ const FORMATS_BY_CATEGORY={
     picker.classList.remove('open');
     activeField=null;
   }
+
+  window.openConversionFormatPicker=openPicker;
 
   function toggleFor(field,e){
     e.stopPropagation();
@@ -738,7 +835,7 @@ document.addEventListener('keydown',(e)=>{
     const to   = (document.getElementById('toExt').textContent || '').trim().toUpperCase();
 
     if(!file){ setStatus('Select a file first.', true); return; }
-    if(!to || to === 'CHOOSE'){ setStatus('Choose an output format first.', true); return; }
+    if(!to || to === 'CHOOSE' || to === 'SELECT FORMAT'){ setStatus('Choose an output format first.', true); return; }
     if(file.size > MAX_SIZE_MB * 1024 * 1024){
       setStatus('That file is over ' + MAX_SIZE_MB + 'MB — try a smaller one for now.', true);
       return;
@@ -770,25 +867,92 @@ document.addEventListener('keydown',(e)=>{
   });
 })();
 
-const input=document.getElementById('file'), chosen=document.getElementById('chosen'), upload=document.getElementById('upload');
+const input=document.getElementById('file'), upload=document.getElementById('upload');
+const uploadEmptyState=document.getElementById('uploadEmptyState');
+const uploadedWorkspace=document.getElementById('uploadedWorkspace');
+const uploadedFileName=document.getElementById('uploadedFileName');
+const uploadedFileMeta=document.getElementById('uploadedFileMeta');
+const uploadedFileExt=document.getElementById('uploadedFileExt');
+const inlineSourceExt=document.getElementById('inlineSourceExt');
+const inlineTargetExt=document.getElementById('inlineTargetExt');
+const formatSelectBtn=document.getElementById('formatSelectBtn');
+const removeFileBtn=document.getElementById('removeFileBtn');
+const bottomConvertBtn=document.getElementById('convertBtn');
+const uploadHintText=document.getElementById('uploadHintText');
+const convertStatus=document.getElementById('convertStatus');
+
+function getFileExt(name){
+ const dot=name.lastIndexOf('.');
+ return dot>-1 ? name.slice(dot+1).toUpperCase() : 'FILE';
+}
+
+function formatBytes(bytes){
+ if(bytes<1024) return bytes+' B';
+ if(bytes<1024*1024) return (bytes/1024).toFixed(1)+' KB';
+ return (bytes/1024/1024).toFixed(2)+' MB';
+}
+
+function setOutputFormat(format){
+ const value=(format||'').trim().toUpperCase();
+ const selected=!!value && value!=='CHOOSE' && value!=='SELECT FORMAT';
+ inlineTargetExt.textContent=selected ? value : 'Select Format';
+ formatSelectBtn.classList.toggle('selected',selected);
+ bottomConvertBtn.disabled=!selected;
+ uploadHintText.textContent=selected ? 'Ready to convert' : 'Please select output format';
+}
+
 function showFile(f){
  if(!f)return;
  window.__cklSelectedFile = f;
- chosen.style.display='block';
- chosen.textContent='✓ '+f.name+' selected · '+(f.size/1024/1024).toFixed(2)+' MB';
- const dot=f.name.lastIndexOf('.');
- if(dot>-1){
-   const ext=f.name.slice(dot+1).toUpperCase();
-   const fromExt=document.getElementById('fromExt');
-   if(fromExt) fromExt.textContent=ext;
-   if(window.stopConversionPairAnimation) window.stopConversionPairAnimation();
- }
- const convertBtn=document.getElementById('convertBtn');
- if(convertBtn) convertBtn.style.display='inline-flex';
+ const ext=getFileExt(f.name);
+ uploadedFileName.textContent=f.name;
+ uploadedFileMeta.textContent=formatBytes(f.size)+' · '+(f.type || 'File');
+ uploadedFileExt.textContent=ext;
+ inlineSourceExt.textContent=ext;
+
+ const fromExt=document.getElementById('fromExt');
+ if(fromExt) fromExt.textContent=ext;
+ if(window.stopConversionPairAnimation) window.stopConversionPairAnimation();
+
+ setOutputFormat('');
+ upload.classList.add('has-file');
+ if(uploadEmptyState) uploadEmptyState.style.display='none';
+ if(uploadedWorkspace) uploadedWorkspace.style.display='block';
+ if(convertStatus) convertStatus.style.display='none';
 }
+
+function resetFileSelection(){
+ window.__cklSelectedFile=null;
+ input.value='';
+ upload.classList.remove('has-file');
+ if(uploadEmptyState) uploadEmptyState.style.display='flex';
+ if(uploadedWorkspace) uploadedWorkspace.style.display='none';
+ setOutputFormat('');
+ const fromExt=document.getElementById('fromExt');
+ if(fromExt) fromExt.textContent='FILE';
+ if(window.startConversionPairAnimation) window.startConversionPairAnimation();
+}
+
+window.setPostUploadOutputFormat=setOutputFormat;
 input.addEventListener('change',()=>showFile(input.files[0]));
+removeFileBtn.addEventListener('click',resetFileSelection);
+
+// The large format preview/selector remains available on hover, while this compact
+// selector opens the exact same picker when clicked.
+formatSelectBtn.addEventListener('click',(e)=>{
+ e.stopPropagation();
+ const picker=document.getElementById('formatPicker');
+ if(picker && window.openConversionFormatPicker){
+   window.openConversionFormatPicker('to',true);
+ } else {
+   const toCard=document.getElementById('toCard');
+   if(toCard) toCard.click();
+ }
+});
+
+
 ['dragenter','dragover'].forEach(e=>upload.addEventListener(e,ev=>{ev.preventDefault();upload.style.borderColor='#e03cff'}));
-['dragleave','drop'].forEach(e=>upload.addEventListener(e,ev=>{ev.preventDefault();upload.style.borderColor='#258dff80'}));
+['dragleave','drop'].forEach(e=>upload.addEventListener(e,ev=>{ev.preventDefault();upload.style.borderColor=''}));
 upload.addEventListener('drop',ev=>showFile(ev.dataTransfer.files[0]));
 </script>
 </body>
