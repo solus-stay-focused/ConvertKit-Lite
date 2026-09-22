@@ -252,6 +252,7 @@ footer{padding:35px 7vw;background:#02050a;color:#71839a;text-align:center;font-
 .upload.has-file{max-width:1400px;padding:0;background:transparent;border:0;box-shadow:none;margin-top:24px}
 .upload.has-file .upload-inner{display:none}
 .upload.has-file .uploaded-workspace{display:block}
+.uploaded-files-list{display:flex;flex-direction:column;gap:8px}
 .uploaded-file-row{min-height:80px;padding:14px 18px 14px 24px;border:1px solid rgba(255,255,255,.07);border-radius:7px;background:linear-gradient(180deg,rgba(30,29,33,.96),rgba(24,23,27,.96));box-shadow:inset 0 1px 0 rgba(255,255,255,.02);display:flex;align-items:center;justify-content:space-between;gap:20px}
 .uploaded-file-main{display:flex;align-items:center;gap:13px;min-width:0}
 .uploaded-file-icon{width:45px;height:45px;flex:0 0 45px;border-radius:4px;background:#2a292e;color:#dedde0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0}
@@ -429,46 +430,17 @@ h1 .grad{background:linear-gradient(90deg,#fff,#ff667d,#ff174f);-webkit-backgrou
       <h2>Select your file to convert</h2>
       <p>or drag and drop your file here.</p>
       <label class="select" for="file">▣ &nbsp; Select File &nbsp;⌄</label>
-      <input id="file" type="file">
+      <input id="file" type="file" multiple>
     </div>
 
     <!-- CloudConvert-style post-upload workspace -->
     <div class="uploaded-workspace" id="uploadedWorkspace" aria-live="polite">
-      <div class="uploaded-file-row">
-        <div class="uploaded-file-main">
-          <div class="uploaded-file-icon" id="uploadedFileIcon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-              <path d="M6 2h8l4 4v16H6z"/>
-              <path d="M14 2v5h5"/>
-              <path d="M8.5 15h7M8.5 18h5"/>
-            </svg>
-            <span id="uploadedFileExt">FILE</span>
-          </div>
-          <div class="uploaded-file-info">
-            <strong id="uploadedFileName">Selected file</strong>
-            <span id="uploadedFileMeta">0 MB · File</span>
-          </div>
-        </div>
-
-        <div class="uploaded-file-actions">
-          <div class="inline-convert-label">
-            <span class="inline-refresh">↻</span>
-            <span>Convert</span>
-          </div>
-          <span class="inline-source-badge"><span id="inlineSourceExt">FILE</span></span>
-          <span class="inline-arrow">→</span>
-          <button class="format-select-btn" id="formatSelectBtn" type="button" aria-haspopup="true">
-            <span id="inlineTargetExt">Select Format</span>
-            <span class="format-caret">⌄</span>
-          </button>
-          <button class="remove-file-btn" id="removeFileBtn" type="button" aria-label="Remove selected file">×</button>
-        </div>
-      </div>
+      <div class="uploaded-files-list" id="uploadedFilesList"></div>
 
       <div class="upload-bottom-bar">
         <div class="upload-hint" id="uploadHint">
           <span class="hint-icon">i</span>
-          <span id="uploadHintText">Please select output format</span>
+          <span id="uploadHintText">Please select output format for all files</span>
         </div>
         <div class="bottom-actions">
           <label class="add-files-btn" for="file">
@@ -870,16 +842,13 @@ document.addEventListener('keydown',(e)=>{
 const input=document.getElementById('file'), upload=document.getElementById('upload');
 const uploadEmptyState=document.getElementById('uploadEmptyState');
 const uploadedWorkspace=document.getElementById('uploadedWorkspace');
-const uploadedFileName=document.getElementById('uploadedFileName');
-const uploadedFileMeta=document.getElementById('uploadedFileMeta');
-const uploadedFileExt=document.getElementById('uploadedFileExt');
-const inlineSourceExt=document.getElementById('inlineSourceExt');
-const inlineTargetExt=document.getElementById('inlineTargetExt');
-const formatSelectBtn=document.getElementById('formatSelectBtn');
-const removeFileBtn=document.getElementById('removeFileBtn');
+const uploadedFilesList=document.getElementById('uploadedFilesList');
 const bottomConvertBtn=document.getElementById('convertBtn');
 const uploadHintText=document.getElementById('uploadHintText');
 const convertStatus=document.getElementById('convertStatus');
+
+let selectedFiles=[];
+let activeFileIndex=0;
 
 function getFileExt(name){
  const dot=name.lastIndexOf('.');
@@ -892,68 +861,133 @@ function formatBytes(bytes){
  return (bytes/1024/1024).toFixed(2)+' MB';
 }
 
-function setOutputFormat(format){
- const value=(format||'').trim().toUpperCase();
- const selected=!!value && value!=='CHOOSE' && value!=='SELECT FORMAT';
- inlineTargetExt.textContent=selected ? value : 'Select Format';
- formatSelectBtn.classList.toggle('selected',selected);
- bottomConvertBtn.disabled=!selected;
- uploadHintText.textContent=selected ? 'Ready to convert' : 'Please select output format';
+function allFormatsSelected(){
+ return selectedFiles.length>0 && selectedFiles.every(item=>item.outputFormat);
 }
 
-function showFile(f){
- if(!f)return;
- window.__cklSelectedFile = f;
- const ext=getFileExt(f.name);
- uploadedFileName.textContent=f.name;
- uploadedFileMeta.textContent=formatBytes(f.size)+' · '+(f.type || 'File');
- uploadedFileExt.textContent=ext;
- inlineSourceExt.textContent=ext;
+function updateWorkspaceState(){
+ const ready=allFormatsSelected();
+ bottomConvertBtn.disabled=!ready;
+ uploadHintText.textContent=ready
+   ? `${selectedFiles.length} file${selectedFiles.length===1?'':'s'} ready to convert`
+   : `Please select output format for ${selectedFiles.filter(item=>!item.outputFormat).length} file${selectedFiles.filter(item=>!item.outputFormat).length===1?'':'s'}`;
+}
 
+function setOutputFormat(format, index=activeFileIndex){
+ const value=(format||'').trim().toUpperCase();
+ const selected=!!value && value!=='CHOOSE' && value!=='SELECT FORMAT';
+ if(selectedFiles[index]) selectedFiles[index].outputFormat=selected ? value : '';
+ renderUploadedFiles();
+ updateWorkspaceState();
+}
+
+function makeFileRow(item,index){
+ const row=document.createElement('div');
+ row.className='uploaded-file-row';
+ row.dataset.index=index;
+ row.innerHTML=`
+   <div class="uploaded-file-main">
+     <div class="uploaded-file-icon">
+       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+         <path d="M6 2h8l4 4v16H6z"/><path d="M14 2v5h5"/><path d="M8.5 15h7M8.5 18h5"/>
+       </svg>
+       <span>${getFileExt(item.file.name)}</span>
+     </div>
+     <div class="uploaded-file-info">
+       <strong title="${item.file.name.replace(/"/g,'&quot;')}">${item.file.name}</strong>
+       <span>${formatBytes(item.file.size)} · ${item.file.type || 'File'}</span>
+     </div>
+   </div>
+   <div class="uploaded-file-actions">
+     <div class="inline-convert-label"><span class="inline-refresh">↻</span><span>Convert</span></div>
+     <span class="inline-source-badge">${getFileExt(item.file.name)}</span>
+     <span class="inline-arrow">→</span>
+     <button class="format-select-btn ${item.outputFormat?'selected':''}" type="button" aria-haspopup="true">
+       <span>${item.outputFormat || 'Select Format'}</span><span class="format-caret">⌄</span>
+     </button>
+     <button class="remove-file-btn" type="button" aria-label="Remove ${item.file.name}">×</button>
+   </div>`;
+
+ const formatBtn=row.querySelector('.format-select-btn');
+ const removeBtn=row.querySelector('.remove-file-btn');
+ formatBtn.addEventListener('click',(e)=>{
+   e.stopPropagation();
+   activeFileIndex=index;
+   const toCard=document.getElementById('toCard');
+   if(window.openConversionFormatPicker) window.openConversionFormatPicker('to',true);
+   else if(toCard) toCard.click();
+ });
+ removeBtn.addEventListener('click',()=>{
+   selectedFiles.splice(index,1);
+   if(activeFileIndex>=selectedFiles.length) activeFileIndex=Math.max(0,selectedFiles.length-1);
+   renderUploadedFiles();
+   if(!selectedFiles.length) resetFileSelection();
+   else updateWorkspaceState();
+ });
+ return row;
+}
+
+function renderUploadedFiles(){
+ uploadedFilesList.innerHTML='';
+ selectedFiles.forEach((item,index)=>uploadedFilesList.appendChild(makeFileRow(item,index)));
+}
+
+function addFiles(fileList){
+ const incoming=[...fileList];
+ incoming.forEach(f=>{
+   const duplicate=selectedFiles.some(item=>item.file.name===f.name && item.file.size===f.size && item.file.lastModified===f.lastModified);
+   if(!duplicate) selectedFiles.push({file:f,outputFormat:''});
+ });
+ if(!selectedFiles.length) return;
+ window.__cklSelectedFiles=selectedFiles.map(item=>item.file);
+ window.__cklSelectedFile=selectedFiles[0].file;
+ const firstExt=getFileExt(selectedFiles[0].file.name);
  const fromExt=document.getElementById('fromExt');
- if(fromExt) fromExt.textContent=ext;
+ if(fromExt) fromExt.textContent=selectedFiles.length===1 ? firstExt : `${firstExt} +${selectedFiles.length-1}`;
  if(window.stopConversionPairAnimation) window.stopConversionPairAnimation();
-
- setOutputFormat('');
  upload.classList.add('has-file');
- if(uploadEmptyState) uploadEmptyState.style.display='none';
- if(uploadedWorkspace) uploadedWorkspace.style.display='block';
- if(convertStatus) convertStatus.style.display='none';
+ uploadEmptyState.style.display='none';
+ uploadedWorkspace.style.display='block';
+ convertStatus.style.display='none';
+ renderUploadedFiles();
+ updateWorkspaceState();
 }
 
 function resetFileSelection(){
+ selectedFiles=[];
+ activeFileIndex=0;
+ window.__cklSelectedFiles=[];
  window.__cklSelectedFile=null;
  input.value='';
  upload.classList.remove('has-file');
- if(uploadEmptyState) uploadEmptyState.style.display='flex';
- if(uploadedWorkspace) uploadedWorkspace.style.display='none';
- setOutputFormat('');
+ uploadEmptyState.style.display='flex';
+ uploadedWorkspace.style.display='none';
+ uploadHintText.textContent='Please select output format for all files';
+ bottomConvertBtn.disabled=true;
  const fromExt=document.getElementById('fromExt');
  if(fromExt) fromExt.textContent='FILE';
  if(window.startConversionPairAnimation) window.startConversionPairAnimation();
 }
 
 window.setPostUploadOutputFormat=setOutputFormat;
-input.addEventListener('change',()=>showFile(input.files[0]));
-removeFileBtn.addEventListener('click',resetFileSelection);
-
-// The large format preview/selector remains available on hover, while this compact
-// selector opens the exact same picker when clicked.
-formatSelectBtn.addEventListener('click',(e)=>{
- e.stopPropagation();
- const picker=document.getElementById('formatPicker');
- if(picker && window.openConversionFormatPicker){
-   window.openConversionFormatPicker('to',true);
- } else {
-   const toCard=document.getElementById('toCard');
-   if(toCard) toCard.click();
- }
+input.addEventListener('change',()=>{
+ if(input.files && input.files.length) addFiles(input.files);
+ input.value='';
 });
-
 
 ['dragenter','dragover'].forEach(e=>upload.addEventListener(e,ev=>{ev.preventDefault();upload.style.borderColor='#e03cff'}));
 ['dragleave','drop'].forEach(e=>upload.addEventListener(e,ev=>{ev.preventDefault();upload.style.borderColor=''}));
-upload.addEventListener('drop',ev=>showFile(ev.dataTransfer.files[0]));
+upload.addEventListener('drop',ev=>{
+ if(ev.dataTransfer.files && ev.dataTransfer.files.length) addFiles(ev.dataTransfer.files);
+});
+
+bottomConvertBtn.addEventListener('click',()=>{
+ if(!allFormatsSelected()) return;
+ const summary=selectedFiles.map(item=>`${item.file.name} → ${item.outputFormat}`).join('\n');
+ convertStatus.textContent=`Ready to convert ${selectedFiles.length} file${selectedFiles.length===1?'':'s'}.`;
+ convertStatus.style.display='block';
+ console.log('Conversion queue:',summary);
+});
 </script>
 </body>
 </html>
