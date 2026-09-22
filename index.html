@@ -247,6 +247,77 @@ footer{padding:35px 7vw;background:#02050a;color:#71839a;text-align:center;font-
 @media(max-width:950px){.scene{opacity:.28;right:-80px}.cards{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:700px){.links{display:none}.nav{padding:0 18px}.hero{padding:55px 20px 30px;min-height:720px}h1{letter-spacing:-2.5px}.lead{font-size:16px}.scene{display:none}.upload{margin-top:50px;padding:14px}.upload-inner{min-height:245px}.features{gap:0}.feature{padding:0 12px}.feature span{display:none}.cards{grid-template-columns:1fr}}
 </style>
+
+<style id="red-black-bg-theme">
+:root{
+  --bg:#050507;
+  --panel:rgba(10,10,13,.78);
+  --line:rgba(255,55,95,.30);
+  --blue:#ff3158;
+  --cyan:#ff6b7f;
+  --purple:#ff3f72;
+  --pink:#ff174f;
+  --text:#f7f7f8;
+  --muted:#b7b4b8;
+}
+body{
+  background:#050507 url('background.png') center top/cover fixed no-repeat !important;
+  color:#f7f7f8;
+}
+body:before{
+  background:
+    radial-gradient(circle at 78% 20%,rgba(255,35,75,.10),transparent 25%),
+    radial-gradient(circle at 20% 78%,rgba(255,20,55,.055),transparent 30%),
+    linear-gradient(180deg,rgba(4,4,7,.12),rgba(4,4,7,.42));
+}
+body:after{display:none}
+.stars{display:none}
+.nav{background:rgba(7,7,10,.70);border-bottom:1px solid rgba(255,255,255,.08)}
+.brand span{background:linear-gradient(90deg,#fff,#ffb4bf 58%,#ff3158);-webkit-background-clip:text;color:transparent}
+.links a,.right a,.tools-trigger{color:#eeeef0}
+.links a:hover,.tools-trigger:hover,.nav-item.open .tools-trigger{color:#ff667d}
+.kicker{color:#ff7186}
+h1 .grad{background:linear-gradient(90deg,#fff,#ff667d,#ff174f);-webkit-background-clip:text;color:transparent}
+.lead{color:#c6c3c7}
+.orbit{border-color:rgba(255,70,95,.18);box-shadow:0 0 70px rgba(255,35,65,.08)}
+.orbit:before{border-color:rgba(255,60,90,.13)}
+.orbit:after{border-color:rgba(255,120,135,.12)}
+.file-card,.conv-card{
+  background:linear-gradient(145deg,rgba(24,20,23,.96),rgba(8,8,11,.98));
+  border-color:rgba(255,78,100,.38);
+  box-shadow:0 0 35px rgba(255,35,65,.10),inset 0 0 30px rgba(255,35,65,.055);
+}
+.file-card.b,.conv-card-to{
+  border-color:rgba(255,78,100,.55);
+  box-shadow:0 0 35px rgba(255,35,65,.14),inset 0 0 30px rgba(255,35,65,.06);
+}
+.conv-card:hover{border-color:#ff667d;box-shadow:0 12px 30px #0008}
+.conv-preview,.format-picker,.mega-menu{background:#100d10;border-color:#3a2027}
+.conv-preview .preview-search,.fp-search{background:#171115;border-color:#42252d}
+.conv-preview .preview-categories,.fp-categories{border-color:#302027}
+.conv-preview .preview-categories li.active,.fp-categories li.active{background:#32161d}
+.conv-preview .preview-chip,.fp-formats .fp-chip{background:#191115;border-color:#42252d;color:#ded9dc}
+.conv-preview .preview-chip:hover,.fp-formats .fp-chip:hover{border-color:#ff667d;color:#fff}
+.conv-icon-wrap{background:rgba(255,50,80,.07);border-color:rgba(255,100,120,.22)}
+.conv-card-to .conv-icon-wrap{background:rgba(255,50,80,.08);border-color:rgba(255,100,120,.25)}
+.conv-scan,.transfer-beam b{background:linear-gradient(90deg,transparent,#ff526d,transparent);box-shadow:0 0 16px #ff526d}
+.conv-card-to .conv-scan{background:linear-gradient(90deg,transparent,#ff2f5d,transparent);box-shadow:0 0 16px #ff2f5d}
+.conv-arrow{color:#ff526d}.conv-arrow-icon{text-shadow:0 0 20px #ff526d}.conv-arrow span:last-child{color:#b58b94}
+.transfer-ring{border-color:rgba(255,85,110,.28);box-shadow:0 0 28px rgba(255,45,75,.14)}
+.transfer-core{color:#ffb1bd;text-shadow:0 0 14px #ff526d;box-shadow:0 0 22px rgba(255,45,75,.22)}
+.conv-ext{text-shadow:0 0 16px rgba(255,90,110,.35)}
+.conv-card-to .conv-ext{text-shadow:0 0 16px rgba(255,75,100,.35)}
+.conv-status{color:#ff9baa}.conv-status.output{color:#ff8095}
+.conv-status span{background:#ff526d;box-shadow:0 0 9px #ff526d}.conv-status.output span{background:#ff3158;box-shadow:0 0 9px #ff3158}
+.upload{border-color:rgba(255,75,100,.38);background:linear-gradient(145deg,rgba(18,13,16,.90),rgba(7,7,10,.86));box-shadow:0 25px 80px #000b,inset 0 0 50px rgba(255,35,65,.05)}
+.upload-inner{border-color:rgba(255,80,100,.42)}
+.cloud{color:#ff526d;text-shadow:0 0 24px rgba(255,45,75,.7)}
+.select{background:linear-gradient(100deg,#ff3158,#c91645);box-shadow:0 0 28px rgba(255,45,75,.25)}
+.select:hover{box-shadow:0 0 35px rgba(255,45,75,.45)}
+.signup{background:linear-gradient(100deg,#ff3158,#c91645);box-shadow:0 0 24px rgba(255,45,75,.25)}
+.mega-heading svg{color:#ff657b}.mega-col a:hover{color:#fff}
+.conv-chevron:hover{color:#fff;border-color:#ff667d}
+</style>
 </head>
 <body>
 <div class="stars"></div>
