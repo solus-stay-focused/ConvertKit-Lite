@@ -381,6 +381,10 @@ h1 .grad{background:linear-gradient(90deg,#fff,#ff667d,#ff174f);-webkit-backgrou
       <label class="select" for="file">▣ &nbsp; Select File &nbsp;⌄</label>
       <input id="file" type="file">
       <div id="chosen"></div>
+      <button class="select" id="convertBtn" type="button" style="display:none;margin-top:14px;background:linear-gradient(100deg,#00d9ff,#087fff)">
+        ▸ &nbsp; Convert &nbsp;→
+      </button>
+      <div id="convertStatus" style="display:none;margin-top:10px;font-size:13px;color:#a8b5c8"></div>
     </div>
   </div>
 
@@ -453,6 +457,8 @@ h1 .grad{background:linear-gradient(90deg,#fff,#ff667d,#ff174f);-webkit-backgrou
 </main>
 
 <footer id="api">ConvertKit Lite © 2026 — Frontend prototype. Connect a conversion backend/API to enable real file conversion.</footer>
+
+<script src="/assets/file-transfer.js"></script>
 
 <script>
 const FORMATS_BY_CATEGORY={
@@ -548,77 +554,6 @@ const FORMATS_BY_CATEGORY={
   }
 
   window.stopConversionPairAnimation = stopPairAnimation;
-  startPairAnimation();
-})();
-
-(function(){
-  const fromEl = document.getElementById('fromExt');
-  const toEl = document.getElementById('toExt');
-  const fromCard = document.getElementById('fromCard');
-  const toCard = document.getElementById('toCard');
-
-  const conversionPairs = [
-    ['JPG', 'PNG'],
-    ['PNG', 'WEBP'],
-    ['WEBP', 'JPG'],
-    ['HEIC', 'JPG'],
-    ['DOCX', 'PDF'],
-    ['PDF', 'DOCX'],
-    ['XLSX', 'CSV'],
-    ['PPTX', 'PDF'],
-    ['MP4', 'GIF'],
-    ['MOV', 'MP4'],
-    ['MP3', 'WAV']
-  ];
-
-  let pairIndex = 0;
-  let pairTimer = null;
-  let pairAnimationStopped = false;
-
-  function showPair(from, to){
-    fromEl.classList.add('pair-out');
-    toEl.classList.add('pair-out');
-
-    setTimeout(() => {
-      fromEl.textContent = from;
-      toEl.textContent = to;
-
-      fromEl.classList.remove('pair-out');
-      toEl.classList.remove('pair-out');
-      fromEl.classList.add('pair-in');
-      toEl.classList.add('pair-in');
-
-      setTimeout(() => {
-        fromEl.classList.remove('pair-in');
-        toEl.classList.remove('pair-in');
-      }, 240);
-    }, 220);
-  }
-
-  function startPairAnimation(){
-    if(pairAnimationStopped || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    fromCard.classList.add('pair-active');
-    toCard.classList.add('pair-active');
-
-    showPair(conversionPairs[0][0], conversionPairs[0][1]);
-
-    pairTimer = setInterval(() => {
-      pairIndex = (pairIndex + 1) % conversionPairs.length;
-      showPair(conversionPairs[pairIndex][0], conversionPairs[pairIndex][1]);
-    }, 2200);
-  }
-
-  function stopPairAnimation(){
-    pairAnimationStopped = true;
-    if(pairTimer) clearInterval(pairTimer);
-    fromCard.classList.remove('pair-active');
-    toCard.classList.remove('pair-active');
-  }
-
-  // Expose this so the existing format-selection code can stop the demo animation.
-  window.stopConversionPairAnimation = stopPairAnimation;
-
   startPairAnimation();
 })();
 
@@ -760,9 +695,85 @@ document.addEventListener('keydown',(e)=>{
   if(e.key==='Escape'){toolsNav.classList.remove('open');toolsTrigger.setAttribute('aria-expanded','false');}
 });
 
+(function(){
+  const MAX_SIZE_MB = 200;
+
+  const IMAGE_FORMATS = new Set(['JPG','PNG','GIF','WEBP','BMP','SVG','HEIC','TIFF']);
+
+  const TOOL_ROUTES = {
+    'PDF>DOCX': '/tools/pdf-to-word.html',
+    'PDF>DOC':  '/tools/pdf-to-word.html',
+    'PDF>PPTX': '/tools/pdf-to-ppt.html',
+    'PDF>PPT':  '/tools/pdf-to-ppt.html',
+    'PDF>XLSX': '/tools/pdf-to-excel.html',
+    'PDF>XLS':  '/tools/pdf-to-excel.html',
+    'DOCX>PDF': '/tools/word-to-pdf.html',
+    'DOC>PDF':  '/tools/word-to-pdf.html',
+    'PPTX>PDF': '/tools/ppt-to-pdf.html',
+    'PPT>PDF':  '/tools/ppt-to-pdf.html',
+  };
+
+  function resolveRoute(from, to){
+    const key = from + '>' + to;
+    if(TOOL_ROUTES[key]) return TOOL_ROUTES[key];
+    if(IMAGE_FORMATS.has(from) && IMAGE_FORMATS.has(to) && from !== to){
+      return '/tools/image-converter.html';
+    }
+    return null;
+  }
+
+  const btn = document.getElementById('convertBtn');
+  const status = document.getElementById('convertStatus');
+  if(!btn) return;
+
+  function setStatus(msg, isError){
+    status.style.display = msg ? 'block' : 'none';
+    status.textContent = msg || '';
+    status.style.color = isError ? '#ff6b7f' : '#a8b5c8';
+  }
+
+  btn.addEventListener('click', async () => {
+    const file = window.__cklSelectedFile;
+    const from = (document.getElementById('fromExt').textContent || '').trim().toUpperCase();
+    const to   = (document.getElementById('toExt').textContent || '').trim().toUpperCase();
+
+    if(!file){ setStatus('Select a file first.', true); return; }
+    if(!to || to === 'CHOOSE'){ setStatus('Choose an output format first.', true); return; }
+    if(file.size > MAX_SIZE_MB * 1024 * 1024){
+      setStatus('That file is over ' + MAX_SIZE_MB + 'MB — try a smaller one for now.', true);
+      return;
+    }
+
+    const route = resolveRoute(from, to);
+    if(!route){
+      setStatus(from + ' → ' + to + " isn't supported yet.", true);
+      return;
+    }
+
+    btn.disabled = true;
+    setStatus('Preparing your file…');
+
+    try {
+      if(window.CKLTransfer && window.CKLTransfer.isSupported()){
+        await window.CKLTransfer.saveFileForTransfer(file, { from, to });
+        location.href = route + '?transfer=1&from=' + encodeURIComponent(from) + '&to=' + encodeURIComponent(to);
+      } else {
+        location.href = route + '?from=' + encodeURIComponent(from) + '&to=' + encodeURIComponent(to);
+      }
+    } catch (err) {
+      console.error(err);
+      setStatus("Couldn't carry the file over — taking you to the tool page.", true);
+      setTimeout(() => {
+        location.href = route + '?from=' + encodeURIComponent(from) + '&to=' + encodeURIComponent(to);
+      }, 1200);
+    }
+  });
+})();
+
 const input=document.getElementById('file'), chosen=document.getElementById('chosen'), upload=document.getElementById('upload');
 function showFile(f){
  if(!f)return;
+ window.__cklSelectedFile = f;
  chosen.style.display='block';
  chosen.textContent='✓ '+f.name+' selected · '+(f.size/1024/1024).toFixed(2)+' MB';
  const dot=f.name.lastIndexOf('.');
@@ -770,7 +781,10 @@ function showFile(f){
    const ext=f.name.slice(dot+1).toUpperCase();
    const fromExt=document.getElementById('fromExt');
    if(fromExt) fromExt.textContent=ext;
+   if(window.stopConversionPairAnimation) window.stopConversionPairAnimation();
  }
+ const convertBtn=document.getElementById('convertBtn');
+ if(convertBtn) convertBtn.style.display='inline-flex';
 }
 input.addEventListener('change',()=>showFile(input.files[0]));
 ['dragenter','dragover'].forEach(e=>upload.addEventListener(e,ev=>{ev.preventDefault();upload.style.borderColor='#e03cff'}));
