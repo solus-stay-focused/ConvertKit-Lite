@@ -167,6 +167,9 @@ h1 .grad{background:linear-gradient(90deg,#1b8fff,#884cff,#f23cff);-webkit-backg
 }
 }
 
+/* Enhanced conversion chamber */
+.converter-widget{filter:drop-shadow(0 18px 45px rgba(0,0,0,.35))}.conv-row{position:relative;gap:26px}.conv-card{overflow:hidden;width:145px;height:172px;border-radius:20px;background:linear-gradient(145deg,rgba(10,29,50,.96),rgba(4,10,21,.98));border-color:rgba(57,166,255,.55);box-shadow:0 0 0 1px rgba(57,166,255,.05),0 0 35px rgba(8,125,255,.2);transition:transform .35s ease,box-shadow .35s ease}.conv-card-to{border-color:rgba(225,76,255,.55);box-shadow:0 0 35px rgba(209,44,255,.2)}.conv-card:hover{transform:translateY(-6px) scale(1.025)}.conv-corner{position:absolute;inset:9px;border:1px solid rgba(100,190,255,.09);border-radius:13px}.conv-scan{position:absolute;left:0;right:0;top:-20%;height:2px;background:linear-gradient(90deg,transparent,#42d9ff,transparent);box-shadow:0 0 16px #24caff;animation:convScan 3s linear infinite}.conv-card-to .conv-scan{background:linear-gradient(90deg,transparent,#e85cff,transparent);box-shadow:0 0 16px #e85cff}@keyframes convScan{to{top:120%}}.conv-icon-wrap{position:relative;width:48px;height:48px;display:grid;place-items:center;border-radius:14px;background:rgba(24,139,255,.08);border:1px solid rgba(74,183,255,.22)}.conv-card-to .conv-icon-wrap{background:rgba(220,61,255,.08);border-color:rgba(233,140,255,.22)}.conv-icon-wrap svg{width:32px;height:32px;z-index:2}.icon-pulse{position:absolute;inset:-5px;border:1px solid rgba(75,193,255,.4);border-radius:17px;animation:iconPulse 2s ease-out infinite}.conv-card-to .icon-pulse{border-color:rgba(233,95,255,.4)}@keyframes iconPulse{to{transform:scale(1.35);opacity:0}}.conv-label{font-size:9px;letter-spacing:2px;color:#6f91b4;font-weight:900}.conv-ext{font-size:19px;letter-spacing:.7px;font-weight:900;text-shadow:0 0 16px rgba(85,197,255,.45)}.conv-card-to .conv-ext{text-shadow:0 0 16px rgba(233,140,255,.45)}.conv-status{display:flex;align-items:center;gap:5px;font-size:8px;letter-spacing:1.3px;color:#75cfff;font-weight:900}.conv-status.output{color:#ef9dff}.conv-status span{width:5px;height:5px;border-radius:50%;background:#39c7ff;box-shadow:0 0 9px #39c7ff;animation:statusBlink 1.2s infinite}.conv-status.output span{background:#ed65ff;box-shadow:0 0 9px #ed65ff}@keyframes statusBlink{50%{opacity:.25}}.conv-transfer{width:72px;height:112px;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px}.transfer-ring{width:58px;height:58px;border-radius:50%;position:relative;display:grid;place-items:center;border:1px solid rgba(64,188,255,.25);box-shadow:0 0 28px rgba(0,177,255,.16);animation:coreFloat 2.8s ease-in-out infinite}.transfer-ring:before,.transfer-ring:after{content:"";position:absolute;border-radius:50%;border:1px dashed rgba(75,200,255,.25);inset:5px;animation:spin 7s linear infinite}.transfer-ring:after{inset:-5px;border-style:solid;border-color:rgba(226,80,255,.12);animation:spinReverse 9s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}@keyframes spinReverse{to{transform:rotate(-360deg)}}@keyframes coreFloat{50%{transform:translateY(-4px)}}.transfer-core{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle,#142e4a,#07111e);color:#9be8ff;font-size:22px;text-shadow:0 0 14px #29cfff;box-shadow:0 0 22px rgba(0,190,255,.25);animation:corePulse 1.8s ease-in-out infinite}@keyframes corePulse{50%{transform:scale(1.1)}}.ring-dot{position:absolute;width:5px;height:5px;border-radius:50%;background:#58d5ff;box-shadow:0 0 10px #58d5ff}.d1{top:2px;left:50%;animation:dotOrbit 2.2s linear infinite}.d2{bottom:9px;right:5px;background:#e766ff;box-shadow:0 0 10px #e766ff;animation:dotOrbit 3s linear infinite reverse}.d3{left:5px;bottom:13px;animation:dotOrbit 2.6s linear infinite}@keyframes dotOrbit{to{transform:rotate(360deg) translateX(24px) rotate(-360deg)}}.transfer-beam{position:absolute;left:-14px;right:-14px;top:50%;height:2px;overflow:hidden}.transfer-beam b{position:absolute;width:22px;height:2px;background:#45d9ff;box-shadow:0 0 8px #45d9ff;animation:beamTravel 1.35s linear infinite}.transfer-beam b:nth-child(2){animation-delay:.45s}.transfer-beam b:nth-child(3){animation-delay:.9s;background:#ec65ff}@keyframes beamTravel{from{left:-25%}to{left:110%}}.transfer-text{font-size:7px;letter-spacing:1.8px;color:#7598ba;font-weight:900}.conv-energy{position:absolute;inset:-35px;pointer-events:none;z-index:-1}.conv-energy i{position:absolute;width:2px;height:2px;border-radius:50%;background:#4fd8ff;box-shadow:0 0 8px #4fd8ff;animation:energyFloat 3s ease-in-out infinite}.conv-energy i:nth-child(1){left:12%;top:20%}.conv-energy i:nth-child(2){left:35%;top:5%;animation-delay:.7s}.conv-energy i:nth-child(3){left:62%;top:90%;animation-delay:1.2s;background:#e968ff}.conv-energy i:nth-child(4){right:5%;top:35%;animation-delay:1.7s}.conv-energy i:nth-child(5){left:78%;top:8%;animation-delay:2s;background:#e968ff}.conv-energy i:nth-child(6){left:3%;top:75%;animation-delay:2.4s}@keyframes energyFloat{50%{transform:translateY(-15px) scale(1.7);opacity:1}}@media(max-width:700px){.conv-row{gap:9px}.conv-card{width:120px;height:155px}.conv-transfer{width:50px}.transfer-ring{width:46px;height:46px}.transfer-core{width:28px;height:28px;font-size:18px}.conv-ext{font-size:16px}}@media(prefers-reduced-motion:reduce){.conv-scan,.icon-pulse,.transfer-ring,.transfer-ring:before,.transfer-ring:after,.transfer-core,.ring-dot,.transfer-beam b,.conv-energy i{animation:none!important}}
+
 .conv-chevron{
   position:absolute;bottom:-14px;width:30px;height:30px;border-radius:50%;border:1px solid #2a4568;
   background:#0d1626;color:#9db3cf;font-size:13px;cursor:pointer;display:grid;place-items:center;
@@ -292,54 +295,7 @@ footer{padding:35px 7vw;background:#02050a;color:#71839a;text-align:center;font-
     <div class="orbit"></div>
   </div>
 
-  <div class="converter-widget" id="converterWidget">
-    <div class="conv-row">
-      <div class="conv-card" id="fromCard">
-        <svg viewBox="0 0 40 40" fill="none" stroke="#55c5ff" stroke-width="2.5"><path d="M9 4h15l8 8v24H9z"/><path d="M24 4v9h8"/></svg>
-        <div class="conv-ext" id="fromExt">FILE</div>
-        <button class="conv-chevron" type="button" data-target="from" aria-label="Choose source format">⌄</button>
-        <div class="conv-preview">
-          <div class="preview-search"><span>🔍</span><input type="text" placeholder="Search Format" tabindex="-1"></div>
-          <div class="preview-body">
-            <ul class="preview-categories">
-              <li class="active">Image</li><li>Document</li><li>Spreadsheet</li><li>Presentation</li><li>Audio</li><li>Video</li><li>Archive</li><li>Ebook</li>
-            </ul>
-            <div class="preview-formats">
-              <div class="preview-chip">JPG</div><div class="preview-chip">PNG</div><div class="preview-chip">GIF</div>
-              <div class="preview-chip">WEBP</div><div class="preview-chip">BMP</div><div class="preview-chip">SVG</div>
-              <div class="preview-chip">HEIC</div><div class="preview-chip">TIFF</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="conv-arrow"><span class="conv-arrow-icon pair-arrow-pulse">⟳</span><span>TO</span></div>
-      <div class="conv-card conv-card-to" id="toCard">
-        <svg viewBox="0 0 40 40" fill="none" stroke="#e98cff" stroke-width="2.5"><path d="M9 4h15l8 8v24H9z"/><path d="M24 4v9h8"/><path d="m12 29 6-7 4 4 4-5"/></svg>
-        <div class="conv-ext" id="toExt">Choose</div>
-        <button class="conv-chevron" type="button" data-target="to" aria-label="Choose target format">⌄</button>
-        <div class="conv-preview">
-          <div class="preview-search"><span>🔍</span><input type="text" placeholder="Search Format" tabindex="-1"></div>
-          <div class="preview-body">
-            <ul class="preview-categories">
-              <li class="active">Image</li><li>Document</li><li>Spreadsheet</li><li>Presentation</li><li>Audio</li><li>Video</li><li>Archive</li><li>Ebook</li>
-            </ul>
-            <div class="preview-formats">
-              <div class="preview-chip">JPG</div><div class="preview-chip">PNG</div><div class="preview-chip">GIF</div>
-              <div class="preview-chip">WEBP</div><div class="preview-chip">BMP</div><div class="preview-chip">SVG</div>
-              <div class="preview-chip">HEIC</div><div class="preview-chip">TIFF</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="format-picker" id="formatPicker">
-      <div class="fp-search"><span>🔍</span><input type="text" id="fpSearch" placeholder="Search Format" autocomplete="off"></div>
-      <div class="fp-body">
-        <ul class="fp-categories" id="fpCategories"></ul>
-        <div class="fp-formats" id="fpFormats"></div>
-      </div>
-    </div>
-  </div>
+  <div class="converter-widget" id="converterWidget"><div class="conv-energy" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="conv-row"><div class="conv-card conv-source" id="fromCard"><div class="conv-corner"></div><div class="conv-scan"></div><div class="conv-icon-wrap"><svg viewBox="0 0 40 40" fill="none" stroke="#55c5ff" stroke-width="2.5"><path d="M9 4h15l8 8v24H9z"/><path d="M24 4v9h8"/></svg><span class="icon-pulse"></span></div><div class="conv-label">SOURCE</div><div class="conv-ext" id="fromExt">FILE</div><div class="conv-status"><span></span> READY</div><button class="conv-chevron" type="button" data-target="from">⌄</button></div><div class="conv-transfer"><div class="transfer-ring"><span class="ring-dot d1"></span><span class="ring-dot d2"></span><span class="ring-dot d3"></span><div class="transfer-core">⇄</div></div><div class="transfer-beam"><b></b><b></b><b></b></div><span class="transfer-text">CONVERTING</span></div><div class="conv-card conv-card-to" id="toCard"><div class="conv-corner"></div><div class="conv-scan"></div><div class="conv-icon-wrap"><svg viewBox="0 0 40 40" fill="none" stroke="#e98cff" stroke-width="2.5"><path d="M9 4h15l8 8v24H9z"/><path d="M24 4v9h8"/><path d="m12 29 6-7 4 4 4-5"/></svg><span class="icon-pulse"></span></div><div class="conv-label">OUTPUT</div><div class="conv-ext" id="toExt">Choose</div><div class="conv-status output"><span></span> READY</div><button class="conv-chevron" type="button" data-target="to">⌄</button></div></div><div class="format-picker" id="formatPicker"><div class="fp-search"><span>🔍</span><input type="text" id="fpSearch" placeholder="Search Format" autocomplete="off"></div><div class="fp-body"><ul class="fp-categories" id="fpCategories"></ul><div class="fp-formats" id="fpFormats"></div></div></div></div>
 
   <div class="upload" id="upload">
     <div class="upload-inner">
