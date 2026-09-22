@@ -185,7 +185,12 @@ h1 .grad{background:linear-gradient(90deg,#1b8fff,#884cff,#f23cff);-webkit-backg
   background:#0a1526;border:1px solid #1b2c47;box-shadow:0 25px 60px #000d;padding:14px;
   opacity:0;visibility:hidden;transform:translateY(-8px);pointer-events:none;transition:opacity .15s ease,transform .15s ease;z-index:50;
 }
-.format-picker.open{opacity:1;visibility:visible;transform:translateY(0);pointer-events:auto}
+/* Show the format preview as soon as the cursor enters either conversion card. */
+.converter-widget.hover-preview .format-picker,
+.converter-widget.hover-preview .format-picker:hover,
+.format-picker.open{
+  opacity:1;visibility:visible;transform:translateY(0);pointer-events:auto;
+}
 .fp-search{display:flex;align-items:center;gap:9px;background:#0d1a30;border:1px solid #1e3455;border-radius:9px;padding:9px 12px;margin-bottom:10px}
 .fp-search span{font-size:13px;opacity:.7}
 .fp-search input{flex:1;background:none;border:0;outline:0;color:#f7fbff;font-size:14px;font-family:inherit}
@@ -608,13 +613,13 @@ const FORMATS_BY_CATEGORY={
     closePicker();
   }
 
-  function openPicker(field){
+  function openPicker(field, focusSearch=false){
     activeField=field;
     picker.classList.add('open');
     search.value='';
     renderCategories();
     renderFormats();
-    setTimeout(()=>search.focus(),50);
+    if(focusSearch) setTimeout(()=>search.focus(),50);
   }
 
   function closePicker(){
@@ -625,14 +630,35 @@ const FORMATS_BY_CATEGORY={
   function toggleFor(field,e){
     e.stopPropagation();
     if(picker.classList.contains('open') && activeField===field){closePicker();}
-    else{openPicker(field);}
+    else{openPicker(field,true);}
   }
+
+  // Hover preview: moving the cursor over either conversion card opens the
+  // same format chooser without requiring a click.
+  let hoverTimer=null;
+  function startHoverPreview(field){
+    clearTimeout(hoverTimer);
+    openPicker(field,false);
+    widget.classList.add('hover-preview');
+  }
+  function stopHoverPreview(){
+    clearTimeout(hoverTimer);
+    hoverTimer=setTimeout(()=>{
+      if(!widget.matches(':hover')) {
+        widget.classList.remove('hover-preview');
+        closePicker();
+      }
+    },80);
+  }
+
+  fromCard.addEventListener('mouseenter',()=>startHoverPreview('from'));
+  toCard.addEventListener('mouseenter',()=>startHoverPreview('to'));
+  widget.addEventListener('mouseleave',stopHoverPreview);
+  picker.addEventListener('mouseenter',()=>clearTimeout(hoverTimer));
 
   widget.querySelectorAll('.conv-chevron').forEach(btn=>{
     btn.addEventListener('click',(e)=>toggleFor(btn.getAttribute('data-target'),e));
   });
-  fromCard.addEventListener('click',(e)=>toggleFor('from',e));
-  toCard.addEventListener('click',(e)=>toggleFor('to',e));
 
   search.addEventListener('input',()=>renderFormats(search.value.trim()));
   document.addEventListener('click',(e)=>{if(!widget.contains(e.target)) closePicker();});
