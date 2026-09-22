@@ -101,8 +101,28 @@ h1 .grad{background:linear-gradient(90deg,#1b8fff,#884cff,#f23cff);-webkit-backg
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:11px;font-weight:850;
   cursor:pointer;transition:border-color .15s,box-shadow .15s;
 }
-.conv-card:hover{border-color:#4fa8ff}
+.conv-card:hover{border-color:#4fa8ff;transform:translateY(-2px);box-shadow:0 12px 30px #0007}
 .conv-card svg{width:40px;height:40px}
+.conv-card:before{content:"";position:absolute;top:100%;left:0;right:0;height:24px}
+.conv-preview{
+  position:absolute;top:calc(100% + 24px);left:50%;transform:translateX(-50%) translateY(-8px);
+  width:420px;max-width:90vw;border-radius:14px;background:#0a1526;border:1px solid #1b2c47;
+  box-shadow:0 25px 60px #000d;padding:14px;opacity:0;visibility:hidden;pointer-events:none;
+  transition:opacity .15s ease,transform .15s ease;z-index:60;text-align:left;
+}
+.conv-card:hover .conv-preview,.conv-preview:hover{
+  opacity:1;visibility:visible;pointer-events:auto;transform:translateX(-50%) translateY(0);
+}
+.conv-preview .preview-search{display:flex;align-items:center;gap:9px;background:#0d1a30;border:1px solid #1e3455;border-radius:9px;padding:9px 12px;margin-bottom:10px}
+.conv-preview .preview-search span{font-size:13px;opacity:.7}
+.conv-preview .preview-search input{width:100%;background:none;border:0;outline:0;color:#f7fbff;font-size:14px;font-family:inherit}
+.conv-preview .preview-search input::placeholder{color:#5f7794}
+.conv-preview .preview-body{display:flex;gap:4px;height:280px}
+.conv-preview .preview-categories{list-style:none;margin:0;padding:0;width:130px;flex-shrink:0;overflow:hidden;border-right:1px solid #16233a}
+.conv-preview .preview-categories li{padding:9px 10px;font-size:13.5px;color:#9db3cf;border-radius:7px;font-weight:600}
+.conv-preview .preview-categories li.active{background:#132542;color:#fff}
+.conv-preview .preview-formats{flex:1;display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;align-content:start;padding:2px 4px}
+.conv-preview .preview-chip{background:#0f1c33;border:1px solid #1e3455;border-radius:8px;padding:9px 4px;text-align:center;font-size:12.5px;font-weight:700;color:#c4d1e4}
 .conv-card.conv-card-to{border-color:#db3dff70;box-shadow:0 0 35px #d12cff2b,inset 0 0 30px #d12cff12}
 .conv-ext{font-size:15px;letter-spacing:.3px}
 .conv-chevron{
@@ -152,7 +172,27 @@ h1 .grad{background:linear-gradient(90deg,#1b8fff,#884cff,#f23cff);-webkit-backg
 .features{display:flex;justify-content:center;gap:0;max-width:850px;margin:28px auto 0;color:#8f9fb5}
 .feature{padding:0 35px;text-align:center;border-right:1px solid #26384c}.feature:last-child{border:0}.feature b{display:block;color:#dfeeff;font-size:13px;margin-bottom:5px}.feature span{font-size:12px}
 .section{padding:85px 7vw;background:#050a13;border-top:1px solid #172337}.section h2{text-align:center;font-size:38px;margin:0 0 12px}.section p{text-align:center;color:#8fa1b7}
-.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;max-width:1100px;margin:35px auto}.card{border:1px solid #1d3652;background:#09111d;border-radius:15px;padding:23px}.card b{display:block;margin-bottom:8px}.card span{font-size:13px;color:#8092aa}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;max-width:1100px;margin:35px auto;position:relative}
+.card{position:relative;border:1px solid #1d3652;background:#09111d;border-radius:15px;padding:23px;cursor:pointer;transition:border-color .15s,transform .15s,box-shadow .15s}
+.card:hover{border-color:#4fa8ff;transform:translateY(-2px);box-shadow:0 12px 30px #0007}
+.card b{display:block;margin-bottom:8px}.card span{font-size:13px;color:#8092aa}
+
+.card:before{content:"";position:absolute;top:100%;left:0;right:0;height:14px}
+.card-preview{
+  position:absolute;top:calc(100% + 12px);left:50%;transform:translateX(-50%) translateY(-6px);
+  width:250px;padding:20px 18px;border-radius:14px;background:#0a1526;border:1px solid #1b2c47;
+  box-shadow:0 25px 60px #000d;opacity:0;visibility:hidden;pointer-events:none;
+  transition:opacity .12s ease,transform .12s ease;z-index:30;text-align:left;
+}
+.card:hover .card-preview,.card-preview:hover{opacity:1;visibility:visible;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+.cp-row{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:14px}
+.cp-badge{display:flex;flex-direction:column;align-items:center;gap:6px}
+.cp-badge svg{width:30px;height:30px}
+.cp-badge span{font-size:11px;font-weight:800;color:#c4d1e4;letter-spacing:.3px}
+.cp-arrow{color:#14b9ff;font-size:18px}
+.card-preview p{margin:0 0 12px;font-size:12.5px;color:#8092aa;line-height:1.5;text-align:center}
+.cp-cta{display:flex;align-items:center;justify-content:center;gap:6px;font-size:12.5px;font-weight:700;color:#4fc4ff}
+.cp-cta svg{width:13px;height:13px}
 footer{padding:35px 7vw;background:#02050a;color:#71839a;text-align:center;font-size:13px}
 @media(max-width:950px){.scene{opacity:.28;right:-80px}.cards{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:700px){.links{display:none}.nav{padding:0 18px}.hero{padding:55px 20px 30px;min-height:720px}h1{letter-spacing:-2.5px}.lead{font-size:16px}.scene{display:none}.upload{margin-top:50px;padding:14px}.upload-inner{min-height:245px}.features{gap:0}.feature{padding:0 12px}.feature span{display:none}.cards{grid-template-columns:1fr}}
@@ -216,12 +256,38 @@ footer{padding:35px 7vw;background:#02050a;color:#71839a;text-align:center;font-
         <svg viewBox="0 0 40 40" fill="none" stroke="#55c5ff" stroke-width="2.5"><path d="M9 4h15l8 8v24H9z"/><path d="M24 4v9h8"/></svg>
         <div class="conv-ext" id="fromExt">FILE</div>
         <button class="conv-chevron" type="button" data-target="from" aria-label="Choose source format">⌄</button>
+        <div class="conv-preview">
+          <div class="preview-search"><span>🔍</span><input type="text" placeholder="Search Format" tabindex="-1"></div>
+          <div class="preview-body">
+            <ul class="preview-categories">
+              <li class="active">Image</li><li>Document</li><li>Spreadsheet</li><li>Presentation</li><li>Audio</li><li>Video</li><li>Archive</li><li>Ebook</li>
+            </ul>
+            <div class="preview-formats">
+              <div class="preview-chip">JPG</div><div class="preview-chip">PNG</div><div class="preview-chip">GIF</div>
+              <div class="preview-chip">WEBP</div><div class="preview-chip">BMP</div><div class="preview-chip">SVG</div>
+              <div class="preview-chip">HEIC</div><div class="preview-chip">TIFF</div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="conv-arrow"><span class="conv-arrow-icon">⟳</span><span>TO</span></div>
       <div class="conv-card conv-card-to" id="toCard">
         <svg viewBox="0 0 40 40" fill="none" stroke="#e98cff" stroke-width="2.5"><path d="M9 4h15l8 8v24H9z"/><path d="M24 4v9h8"/><path d="m12 29 6-7 4 4 4-5"/></svg>
         <div class="conv-ext" id="toExt">Choose</div>
         <button class="conv-chevron" type="button" data-target="to" aria-label="Choose target format">⌄</button>
+        <div class="conv-preview">
+          <div class="preview-search"><span>🔍</span><input type="text" placeholder="Search Format" tabindex="-1"></div>
+          <div class="preview-body">
+            <ul class="preview-categories">
+              <li class="active">Image</li><li>Document</li><li>Spreadsheet</li><li>Presentation</li><li>Audio</li><li>Video</li><li>Archive</li><li>Ebook</li>
+            </ul>
+            <div class="preview-formats">
+              <div class="preview-chip">JPG</div><div class="preview-chip">PNG</div><div class="preview-chip">GIF</div>
+              <div class="preview-chip">WEBP</div><div class="preview-chip">BMP</div><div class="preview-chip">SVG</div>
+              <div class="preview-chip">HEIC</div><div class="preview-chip">TIFF</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="format-picker" id="formatPicker">
@@ -255,10 +321,54 @@ footer{padding:35px 7vw;background:#02050a;color:#71839a;text-align:center;font-
   <h2>Popular conversion tools</h2>
   <p>Everything you need for common file conversions.</p>
   <div class="cards">
-    <div class="card"><b>PDF → Word</b><span>Convert PDF documents into editable files.</span></div>
-    <div class="card"><b>JPG → PNG</b><span>Change image formats quickly.</span></div>
-    <div class="card"><b>MP4 → MP3</b><span>Extract audio from video.</span></div>
-    <div class="card"><b>DOCX → PDF</b><span>Create shareable PDF documents.</span></div>
+    <div class="card" data-from="PDF" data-to="DOCX">
+      <b>PDF → Word</b><span>Convert PDF documents into editable files.</span>
+      <div class="card-preview">
+        <div class="cp-row">
+          <div class="cp-badge"><svg viewBox="0 0 40 40" fill="none" stroke="#55c5ff" stroke-width="2.5"><path d="M9 4h15l8 8v24H9z"/><path d="M24 4v9h8"/></svg><span>PDF</span></div>
+          <span class="cp-arrow">→</span>
+          <div class="cp-badge"><svg viewBox="0 0 40 40" fill="none" stroke="#e98cff" stroke-width="2.5"><path d="M9 4h15l8 8v24H9z"/><path d="M24 4v9h8"/><path d="m12 29 6-7 4 4 4-5"/></svg><span>DOCX</span></div>
+        </div>
+        <p>Turn a PDF into a fully editable Word document — layout and text preserved.</p>
+        <div class="cp-cta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>Click to use this conversion</div>
+      </div>
+    </div>
+    <div class="card" data-from="JPG" data-to="PNG">
+      <b>JPG → PNG</b><span>Change image formats quickly.</span>
+      <div class="card-preview">
+        <div class="cp-row">
+          <div class="cp-badge"><svg viewBox="0 0 40 40" fill="none" stroke="#55c5ff" stroke-width="2.5"><path d="M9 4h15l8 8v24H9z"/><path d="M24 4v9h8"/></svg><span>JPG</span></div>
+          <span class="cp-arrow">→</span>
+          <div class="cp-badge"><svg viewBox="0 0 40 40" fill="none" stroke="#e98cff" stroke-width="2.5"><path d="M9 4h15l8 8v24H9z"/><path d="M24 4v9h8"/><path d="m12 29 6-7 4 4 4-5"/></svg><span>PNG</span></div>
+        </div>
+        <p>Convert JPG images to PNG for lossless quality and transparency support.</p>
+        <div class="cp-cta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>Click to use this conversion</div>
+      </div>
+    </div>
+    <div class="card" data-from="MP4" data-to="MP3">
+      <b>MP4 → MP3</b><span>Extract audio from video.</span>
+      <div class="card-preview">
+        <div class="cp-row">
+          <div class="cp-badge"><svg viewBox="0 0 40 40" fill="none" stroke="#55c5ff" stroke-width="2.5"><path d="M9 4h15l8 8v24H9z"/><path d="M24 4v9h8"/></svg><span>MP4</span></div>
+          <span class="cp-arrow">→</span>
+          <div class="cp-badge"><svg viewBox="0 0 40 40" fill="none" stroke="#e98cff" stroke-width="2.5"><path d="M9 4h15l8 8v24H9z"/><path d="M24 4v9h8"/><path d="m12 29 6-7 4 4 4-5"/></svg><span>MP3</span></div>
+        </div>
+        <p>Pull just the audio track out of a video file as a standalone MP3.</p>
+        <div class="cp-cta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>Click to use this conversion</div>
+      </div>
+    </div>
+    <div class="card" data-from="DOCX" data-to="PDF">
+      <b>DOCX → PDF</b><span>Create shareable PDF documents.</span>
+      <div class="card-preview">
+        <div class="cp-row">
+          <div class="cp-badge"><svg viewBox="0 0 40 40" fill="none" stroke="#55c5ff" stroke-width="2.5"><path d="M9 4h15l8 8v24H9z"/><path d="M24 4v9h8"/></svg><span>DOCX</span></div>
+          <span class="cp-arrow">→</span>
+          <div class="cp-badge"><svg viewBox="0 0 40 40" fill="none" stroke="#e98cff" stroke-width="2.5"><path d="M9 4h15l8 8v24H9z"/><path d="M24 4v9h8"/><path d="m12 29 6-7 4 4 4-5"/></svg><span>PDF</span></div>
+        </div>
+        <p>Lock in your Word document's formatting as a clean, shareable PDF.</p>
+        <div class="cp-cta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>Click to use this conversion</div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -333,8 +443,13 @@ const FORMATS_BY_CATEGORY={
   }
 
   function selectFormat(f){
-    if(activeField==='from') fromExt.textContent=f;
-    else toExt.textContent=f;
+    if(activeField==='from'){
+      fromExt.textContent=f;
+      document.getElementById('previewFromLabel').textContent=f;
+    } else {
+      toExt.textContent=f;
+      document.getElementById('previewToLabel').textContent=f;
+    }
     closePicker();
   }
 
@@ -367,6 +482,17 @@ const FORMATS_BY_CATEGORY={
   search.addEventListener('input',()=>renderFormats(search.value.trim()));
   document.addEventListener('click',(e)=>{if(!widget.contains(e.target)) closePicker();});
   document.addEventListener('keydown',(e)=>{if(e.key==='Escape') closePicker();});
+
+  document.querySelectorAll('.card[data-from]').forEach(card=>{
+    card.addEventListener('click',()=>{
+      fromExt.textContent=card.getAttribute('data-from');
+      toExt.textContent=card.getAttribute('data-to');
+      widget.scrollIntoView({behavior:'smooth',block:'center'});
+      widget.style.transition='box-shadow .3s';
+      widget.style.boxShadow='0 0 0 3px #4fa8ff88';
+      setTimeout(()=>{widget.style.boxShadow='';},900);
+    });
+  });
 })();
 
 const toolsNav=document.getElementById('toolsNav'), toolsTrigger=document.getElementById('toolsTrigger');
