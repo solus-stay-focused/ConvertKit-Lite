@@ -252,7 +252,6 @@ footer{padding:35px 7vw;background:#02050a;color:#71839a;text-align:center;font-
 .upload.has-file{max-width:1400px;padding:0;background:transparent;border:0;box-shadow:none;margin-top:24px}
 .upload.has-file .upload-inner{display:none}
 .upload.has-file .uploaded-workspace{display:block}
-.uploaded-files-list{display:flex;flex-direction:column;gap:8px}
 .uploaded-file-row{min-height:80px;padding:14px 18px 14px 24px;border:1px solid rgba(255,255,255,.07);border-radius:7px;background:linear-gradient(180deg,rgba(30,29,33,.96),rgba(24,23,27,.96));box-shadow:inset 0 1px 0 rgba(255,255,255,.02);display:flex;align-items:center;justify-content:space-between;gap:20px}
 .uploaded-file-main{display:flex;align-items:center;gap:13px;min-width:0}
 .uploaded-file-icon{width:45px;height:45px;flex:0 0 45px;border-radius:4px;background:#2a292e;color:#dedde0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0}
@@ -266,32 +265,17 @@ footer{padding:35px 7vw;background:#02050a;color:#71839a;text-align:center;font-
 .inline-refresh{font-size:22px;line-height:1;color:#aaa7ad}
 .inline-source-badge{height:34px;min-width:70px;padding:0 11px;border-radius:4px;background:#29282d;display:inline-flex;align-items:center;justify-content:center;color:#f0eef0;font-size:13px;font-weight:850}
 .inline-arrow{font-size:25px;color:#9d9aa1;line-height:1}
-.format-select-btn{
-  position:relative;height:40px;min-width:148px;padding:0 13px 0 14px;
-  border:1px solid rgba(255,255,255,.14);border-radius:8px;
-  background:linear-gradient(180deg,rgba(48,46,52,.98),rgba(35,33,39,.98));
-  color:#f3f1f3;display:flex;align-items:center;justify-content:space-between;
-  gap:14px;font:700 13px inherit;cursor:pointer;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.04),0 4px 12px rgba(0,0,0,.16);
-  transition:border-color .18s ease,background .18s ease,box-shadow .18s ease,transform .18s ease;
-}
-.format-select-btn:hover{
-  border-color:rgba(255,91,119,.72);
-  background:linear-gradient(180deg,rgba(57,45,50,.99),rgba(39,34,40,.99));
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 5px 18px rgba(255,49,88,.10);
-}
-.format-select-btn:focus-visible{outline:2px solid rgba(255,105,130,.75);outline-offset:2px}
-.format-select-btn.selected{
-  border-color:rgba(255,102,125,.62);
-  background:linear-gradient(180deg,rgba(62,39,46,.98),rgba(43,32,38,.98));
-}
-.format-caret{
-  width:8px;height:8px;flex:0 0 8px;
-  border-right:2px solid #aaa7ad;border-bottom:2px solid #aaa7ad;
-  transform:rotate(45deg) translateY(-2px);
-  transform-origin:center;transition:transform .18s ease,border-color .18s ease;
-}
-.format-select-btn:hover .format-caret{border-color:#fff;transform:rotate(45deg) translateY(1px)}
+.format-select-btn{position:relative;height:42px;min-width:154px;padding:0 12px 0 14px;border:1px solid rgba(92,180,255,.30);border-radius:12px;background:linear-gradient(135deg,rgba(20,31,48,.98),rgba(16,17,28,.98));color:#eef7ff;display:flex;align-items:center;justify-content:space-between;gap:12px;font:750 13px inherit;cursor:pointer;overflow:hidden;transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease,background .22s ease}
+.format-select-btn:before{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 25%,rgba(85,197,255,.13) 48%,transparent 70%);transform:translateX(-110%);transition:transform .55s ease}
+.format-select-btn:hover{transform:translateY(-1px);border-color:rgba(84,202,255,.72);background:linear-gradient(135deg,rgba(25,43,65,.98),rgba(20,18,35,.98));box-shadow:0 8px 24px rgba(20,157,255,.14),0 0 0 1px rgba(112,78,255,.08)}
+.format-select-btn:hover:before{transform:translateX(110%)}
+.format-select-btn.selected{border-color:rgba(122,111,255,.72);background:linear-gradient(135deg,rgba(25,43,61,.98),rgba(34,22,55,.98));box-shadow:0 0 22px rgba(111,84,255,.16)}
+.format-select-btn span:first-child{position:relative;z-index:1;display:flex;align-items:center;gap:8px;white-space:nowrap}
+.format-select-btn span:first-child:before{content:"⇩";width:21px;height:21px;border-radius:7px;display:grid;place-items:center;background:linear-gradient(135deg,#2aaeff,#8c5cff);color:white;font-size:11px;font-weight:900;box-shadow:0 0 12px rgba(72,160,255,.22)}
+.format-caret{position:relative;z-index:1;width:22px;height:22px;border-radius:7px;display:grid;place-items:center;background:rgba(255,255,255,.055);color:#8edbff;font-size:0;transition:transform .22s ease,background .22s ease}
+.format-caret:before{content:"";width:7px;height:7px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg) translate(-1px,-1px)}
+.format-select-btn:hover .format-caret{background:rgba(77,190,255,.12);color:#fff}
+.format-select-btn:focus-visible{outline:2px solid rgba(87,201,255,.65);outline-offset:3px}
 .remove-file-btn{width:34px;height:34px;border:0;background:transparent;color:#77747b;font-size:27px;line-height:1;cursor:pointer;border-radius:5px}
 .remove-file-btn:hover{color:#eee;background:#302c30}
 .upload-bottom-bar{min-height:66px;margin-top:280px;padding:0 14px 0 23px;border:1px solid rgba(255,255,255,.08);border-radius:7px;background:linear-gradient(180deg,rgba(40,39,44,.94),rgba(34,33,38,.94));display:flex;align-items:center;justify-content:space-between;gap:16px}
@@ -305,6 +289,7 @@ footer{padding:35px 7vw;background:#02050a;color:#71839a;text-align:center;font-
 .bottom-convert-btn:not(:disabled):hover{opacity:1;box-shadow:0 0 24px rgba(255,49,88,.22);transform:translateY(-1px)}
 .bottom-convert-btn:disabled{cursor:not-allowed}
 .upload-convert-status{display:none;margin:9px 2px 0;font-size:13px;color:#aaa7ad;text-align:right}
+.upload.has-file .format-select-btn.selected{color:#f4f2f3;border-color:#ff667d;background:#3a2025}
 @media(max-width:800px){
   .uploaded-file-row{align-items:flex-start;flex-direction:column;padding:14px}
   .uploaded-file-actions{width:100%;flex-wrap:wrap}
@@ -452,17 +437,46 @@ h1 .grad{background:linear-gradient(90deg,#fff,#ff667d,#ff174f);-webkit-backgrou
       <h2>Select your file to convert</h2>
       <p>or drag and drop your file here.</p>
       <label class="select" for="file">▣ &nbsp; Select File &nbsp;⌄</label>
-      <input id="file" type="file" multiple>
+      <input id="file" type="file">
     </div>
 
     <!-- CloudConvert-style post-upload workspace -->
     <div class="uploaded-workspace" id="uploadedWorkspace" aria-live="polite">
-      <div class="uploaded-files-list" id="uploadedFilesList"></div>
+      <div class="uploaded-file-row">
+        <div class="uploaded-file-main">
+          <div class="uploaded-file-icon" id="uploadedFileIcon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <path d="M6 2h8l4 4v16H6z"/>
+              <path d="M14 2v5h5"/>
+              <path d="M8.5 15h7M8.5 18h5"/>
+            </svg>
+            <span id="uploadedFileExt">FILE</span>
+          </div>
+          <div class="uploaded-file-info">
+            <strong id="uploadedFileName">Selected file</strong>
+            <span id="uploadedFileMeta">0 MB · File</span>
+          </div>
+        </div>
+
+        <div class="uploaded-file-actions">
+          <div class="inline-convert-label">
+            <span class="inline-refresh">↻</span>
+            <span>Convert</span>
+          </div>
+          <span class="inline-source-badge"><span id="inlineSourceExt">FILE</span></span>
+          <span class="inline-arrow">→</span>
+          <button class="format-select-btn" id="formatSelectBtn" type="button" aria-haspopup="true">
+            <span id="inlineTargetExt">Select Format</span>
+            <span class="format-caret" aria-hidden="true"></span>
+          </button>
+          <button class="remove-file-btn" id="removeFileBtn" type="button" aria-label="Remove selected file">×</button>
+        </div>
+      </div>
 
       <div class="upload-bottom-bar">
         <div class="upload-hint" id="uploadHint">
           <span class="hint-icon">i</span>
-          <span id="uploadHintText">Please select output format for all files</span>
+          <span id="uploadHintText">Please select output format</span>
         </div>
         <div class="bottom-actions">
           <label class="add-files-btn" for="file">
@@ -705,21 +719,54 @@ const FORMATS_BY_CATEGORY={
       toExt.textContent=f;
       if(window.setPostUploadOutputFormat) window.setPostUploadOutputFormat(f);
     }
-    closePicker();
+    closePicker(true);
   }
 
-  function openPicker(field, focusSearch=false){
+  let compactPinned=false;
+  let compactPreview=false;
+
+  function positionCompactPicker(){
+    if(!compactPreview) return;
+    const anchor=document.getElementById('formatSelectBtn');
+    if(!anchor) return;
+    const r=anchor.getBoundingClientRect();
+    const gap=10;
+    const pickerWidth=Math.min(420, window.innerWidth-24);
+    let left=r.right-pickerWidth;
+    if(left<12) left=12;
+    let top=r.bottom+gap;
+    const maxTop=window.innerHeight-picker.offsetHeight-12;
+    if(maxTop>12 && top>maxTop) top=Math.max(12,r.top-picker.offsetHeight-gap);
+    picker.style.left=Math.round(left)+'px';
+    picker.style.top=Math.round(top)+'px';
+  }
+
+  function openPicker(field, focusSearch=false, options={}){
     activeField=field;
+    compactPreview=!!options.compact;
+    if(compactPreview){
+      picker.classList.add('compact-preview');
+      picker.style.position='fixed';
+    }else{
+      picker.classList.remove('compact-preview');
+      picker.style.position='';
+      picker.style.left=''; picker.style.top='';
+    }
     picker.classList.add('open');
     search.value='';
     renderCategories();
     renderFormats();
+    if(compactPreview) requestAnimationFrame(positionCompactPicker);
     if(focusSearch) setTimeout(()=>search.focus(),50);
   }
 
-  function closePicker(){
-    picker.classList.remove('open');
+  function closePicker(force=false){
+    if(compactPinned && !force) return;
+    picker.classList.remove('open','compact-preview');
+    picker.style.position=''; picker.style.left=''; picker.style.top='';
     activeField=null;
+    compactPreview=false;
+    compactPinned=false;
   }
 
   window.openConversionFormatPicker=openPicker;
@@ -752,6 +799,38 @@ const FORMATS_BY_CATEGORY={
   toCard.addEventListener('mouseenter',()=>startHoverPreview('to'));
   widget.addEventListener('mouseleave',stopHoverPreview);
   picker.addEventListener('mouseenter',()=>clearTimeout(hoverTimer));
+
+  // Compact post-upload selector: hover shows a temporary format preview;
+  // click pins it open until the user chooses a format or clicks away.
+  const compactFormatBtn=document.getElementById('formatSelectBtn');
+  if(compactFormatBtn){
+    let compactTimer=null;
+    compactFormatBtn.addEventListener('mouseenter',()=>{
+      clearTimeout(compactTimer);
+      if(!compactPinned) openPicker('to',false,{compact:true});
+    });
+    compactFormatBtn.addEventListener('mouseleave',()=>{
+      if(compactPinned) return;
+      compactTimer=setTimeout(()=>{
+        if(!picker.matches(':hover')) closePicker(true);
+      },120);
+    });
+    compactFormatBtn.addEventListener('click',(e)=>{
+      e.stopPropagation();
+      clearTimeout(compactTimer);
+      if(compactPinned){ closePicker(true); return; }
+      compactPinned=true;
+      openPicker('to',false,{compact:true});
+    });
+    picker.addEventListener('mouseleave',()=>{
+      if(compactPinned) return;
+      compactTimer=setTimeout(()=>{
+        if(!compactFormatBtn.matches(':hover')) closePicker(true);
+      },120);
+    });
+    window.addEventListener('resize',positionCompactPicker);
+    window.addEventListener('scroll',positionCompactPicker,{passive:true});
+  }
 
   widget.querySelectorAll('.conv-chevron').forEach(btn=>{
     btn.addEventListener('click',(e)=>toggleFor(btn.getAttribute('data-target'),e));
@@ -864,13 +943,16 @@ document.addEventListener('keydown',(e)=>{
 const input=document.getElementById('file'), upload=document.getElementById('upload');
 const uploadEmptyState=document.getElementById('uploadEmptyState');
 const uploadedWorkspace=document.getElementById('uploadedWorkspace');
-const uploadedFilesList=document.getElementById('uploadedFilesList');
+const uploadedFileName=document.getElementById('uploadedFileName');
+const uploadedFileMeta=document.getElementById('uploadedFileMeta');
+const uploadedFileExt=document.getElementById('uploadedFileExt');
+const inlineSourceExt=document.getElementById('inlineSourceExt');
+const inlineTargetExt=document.getElementById('inlineTargetExt');
+const formatSelectBtn=document.getElementById('formatSelectBtn');
+const removeFileBtn=document.getElementById('removeFileBtn');
 const bottomConvertBtn=document.getElementById('convertBtn');
 const uploadHintText=document.getElementById('uploadHintText');
 const convertStatus=document.getElementById('convertStatus');
-
-let selectedFiles=[];
-let activeFileIndex=0;
 
 function getFileExt(name){
  const dot=name.lastIndexOf('.');
@@ -883,133 +965,59 @@ function formatBytes(bytes){
  return (bytes/1024/1024).toFixed(2)+' MB';
 }
 
-function allFormatsSelected(){
- return selectedFiles.length>0 && selectedFiles.every(item=>item.outputFormat);
-}
-
-function updateWorkspaceState(){
- const ready=allFormatsSelected();
- bottomConvertBtn.disabled=!ready;
- uploadHintText.textContent=ready
-   ? `${selectedFiles.length} file${selectedFiles.length===1?'':'s'} ready to convert`
-   : `Please select output format for ${selectedFiles.filter(item=>!item.outputFormat).length} file${selectedFiles.filter(item=>!item.outputFormat).length===1?'':'s'}`;
-}
-
-function setOutputFormat(format, index=activeFileIndex){
+function setOutputFormat(format){
  const value=(format||'').trim().toUpperCase();
  const selected=!!value && value!=='CHOOSE' && value!=='SELECT FORMAT';
- if(selectedFiles[index]) selectedFiles[index].outputFormat=selected ? value : '';
- renderUploadedFiles();
- updateWorkspaceState();
+ inlineTargetExt.textContent=selected ? value : 'Select Format';
+ formatSelectBtn.classList.toggle('selected',selected);
+ bottomConvertBtn.disabled=!selected;
+ uploadHintText.textContent=selected ? 'Ready to convert' : 'Please select output format';
 }
 
-function makeFileRow(item,index){
- const row=document.createElement('div');
- row.className='uploaded-file-row';
- row.dataset.index=index;
- row.innerHTML=`
-   <div class="uploaded-file-main">
-     <div class="uploaded-file-icon">
-       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-         <path d="M6 2h8l4 4v16H6z"/><path d="M14 2v5h5"/><path d="M8.5 15h7M8.5 18h5"/>
-       </svg>
-       <span>${getFileExt(item.file.name)}</span>
-     </div>
-     <div class="uploaded-file-info">
-       <strong title="${item.file.name.replace(/"/g,'&quot;')}">${item.file.name}</strong>
-       <span>${formatBytes(item.file.size)} · ${item.file.type || 'File'}</span>
-     </div>
-   </div>
-   <div class="uploaded-file-actions">
-     <div class="inline-convert-label"><span class="inline-refresh">↻</span><span>Convert</span></div>
-     <span class="inline-source-badge">${getFileExt(item.file.name)}</span>
-     <span class="inline-arrow">→</span>
-     <button class="format-select-btn ${item.outputFormat?'selected':''}" type="button" aria-haspopup="true">
-       <span>${item.outputFormat || 'Select Format'}</span><span class="format-caret">⌄</span>
-     </button>
-     <button class="remove-file-btn" type="button" aria-label="Remove ${item.file.name}">×</button>
-   </div>`;
+function showFile(f){
+ if(!f)return;
+ window.__cklSelectedFile = f;
+ const ext=getFileExt(f.name);
+ uploadedFileName.textContent=f.name;
+ uploadedFileMeta.textContent=formatBytes(f.size)+' · '+(f.type || 'File');
+ uploadedFileExt.textContent=ext;
+ inlineSourceExt.textContent=ext;
 
- const formatBtn=row.querySelector('.format-select-btn');
- const removeBtn=row.querySelector('.remove-file-btn');
- formatBtn.addEventListener('click',(e)=>{
-   e.stopPropagation();
-   activeFileIndex=index;
-   const toCard=document.getElementById('toCard');
-   if(window.openConversionFormatPicker) window.openConversionFormatPicker('to',true);
-   else if(toCard) toCard.click();
- });
- removeBtn.addEventListener('click',()=>{
-   selectedFiles.splice(index,1);
-   if(activeFileIndex>=selectedFiles.length) activeFileIndex=Math.max(0,selectedFiles.length-1);
-   renderUploadedFiles();
-   if(!selectedFiles.length) resetFileSelection();
-   else updateWorkspaceState();
- });
- return row;
-}
-
-function renderUploadedFiles(){
- uploadedFilesList.innerHTML='';
- selectedFiles.forEach((item,index)=>uploadedFilesList.appendChild(makeFileRow(item,index)));
-}
-
-function addFiles(fileList){
- const incoming=[...fileList];
- incoming.forEach(f=>{
-   const duplicate=selectedFiles.some(item=>item.file.name===f.name && item.file.size===f.size && item.file.lastModified===f.lastModified);
-   if(!duplicate) selectedFiles.push({file:f,outputFormat:''});
- });
- if(!selectedFiles.length) return;
- window.__cklSelectedFiles=selectedFiles.map(item=>item.file);
- window.__cklSelectedFile=selectedFiles[0].file;
- const firstExt=getFileExt(selectedFiles[0].file.name);
  const fromExt=document.getElementById('fromExt');
- if(fromExt) fromExt.textContent=selectedFiles.length===1 ? firstExt : `${firstExt} +${selectedFiles.length-1}`;
+ if(fromExt) fromExt.textContent=ext;
  if(window.stopConversionPairAnimation) window.stopConversionPairAnimation();
+
+ setOutputFormat('');
  upload.classList.add('has-file');
- uploadEmptyState.style.display='none';
- uploadedWorkspace.style.display='block';
- convertStatus.style.display='none';
- renderUploadedFiles();
- updateWorkspaceState();
+ if(uploadEmptyState) uploadEmptyState.style.display='none';
+ if(uploadedWorkspace) uploadedWorkspace.style.display='block';
+ if(convertStatus) convertStatus.style.display='none';
 }
 
 function resetFileSelection(){
- selectedFiles=[];
- activeFileIndex=0;
- window.__cklSelectedFiles=[];
  window.__cklSelectedFile=null;
  input.value='';
  upload.classList.remove('has-file');
- uploadEmptyState.style.display='flex';
- uploadedWorkspace.style.display='none';
- uploadHintText.textContent='Please select output format for all files';
- bottomConvertBtn.disabled=true;
+ if(uploadEmptyState) uploadEmptyState.style.display='flex';
+ if(uploadedWorkspace) uploadedWorkspace.style.display='none';
+ setOutputFormat('');
  const fromExt=document.getElementById('fromExt');
  if(fromExt) fromExt.textContent='FILE';
  if(window.startConversionPairAnimation) window.startConversionPairAnimation();
 }
 
 window.setPostUploadOutputFormat=setOutputFormat;
-input.addEventListener('change',()=>{
- if(input.files && input.files.length) addFiles(input.files);
- input.value='';
-});
+input.addEventListener('change',()=>showFile(input.files[0]));
+removeFileBtn.addEventListener('click',resetFileSelection);
+
+// The large format preview/selector remains available on hover, while this compact
+// selector opens the exact same picker when clicked.
+// The compact selector is handled by the hover/click preview above.
+
 
 ['dragenter','dragover'].forEach(e=>upload.addEventListener(e,ev=>{ev.preventDefault();upload.style.borderColor='#e03cff'}));
 ['dragleave','drop'].forEach(e=>upload.addEventListener(e,ev=>{ev.preventDefault();upload.style.borderColor=''}));
-upload.addEventListener('drop',ev=>{
- if(ev.dataTransfer.files && ev.dataTransfer.files.length) addFiles(ev.dataTransfer.files);
-});
-
-bottomConvertBtn.addEventListener('click',()=>{
- if(!allFormatsSelected()) return;
- const summary=selectedFiles.map(item=>`${item.file.name} → ${item.outputFormat}`).join('\n');
- convertStatus.textContent=`Ready to convert ${selectedFiles.length} file${selectedFiles.length===1?'':'s'}.`;
- convertStatus.style.display='block';
- console.log('Conversion queue:',summary);
-});
+upload.addEventListener('drop',ev=>showFile(ev.dataTransfer.files[0]));
 </script>
 </body>
 </html>
