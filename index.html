@@ -265,17 +265,15 @@ footer{padding:35px 7vw;background:#02050a;color:#71839a;text-align:center;font-
 .inline-refresh{font-size:22px;line-height:1;color:#aaa7ad}
 .inline-source-badge{height:34px;min-width:70px;padding:0 11px;border-radius:4px;background:#29282d;display:inline-flex;align-items:center;justify-content:center;color:#f0eef0;font-size:13px;font-weight:850}
 .inline-arrow{font-size:25px;color:#9d9aa1;line-height:1}
-.format-select-btn{position:relative;height:42px;min-width:154px;padding:0 12px 0 14px;border:1px solid rgba(92,180,255,.30);border-radius:12px;background:linear-gradient(135deg,rgba(20,31,48,.98),rgba(16,17,28,.98));color:#eef7ff;display:flex;align-items:center;justify-content:space-between;gap:12px;font:750 13px inherit;cursor:pointer;overflow:hidden;transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease,background .22s ease}
-.format-select-btn:before{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 25%,rgba(85,197,255,.13) 48%,transparent 70%);transform:translateX(-110%);transition:transform .55s ease}
-.format-select-btn:hover{transform:translateY(-1px);border-color:rgba(84,202,255,.72);background:linear-gradient(135deg,rgba(25,43,65,.98),rgba(20,18,35,.98));box-shadow:0 8px 24px rgba(20,157,255,.14),0 0 0 1px rgba(112,78,255,.08)}
-.format-select-btn:hover:before{transform:translateX(110%)}
-.format-select-btn.selected{border-color:rgba(122,111,255,.72);background:linear-gradient(135deg,rgba(25,43,61,.98),rgba(34,22,55,.98));box-shadow:0 0 22px rgba(111,84,255,.16)}
-.format-select-btn span:first-child{position:relative;z-index:1;display:flex;align-items:center;gap:8px;white-space:nowrap}
-.format-select-btn span:first-child:before{content:"⇩";width:21px;height:21px;border-radius:7px;display:grid;place-items:center;background:linear-gradient(135deg,#2aaeff,#8c5cff);color:white;font-size:11px;font-weight:900;box-shadow:0 0 12px rgba(72,160,255,.22)}
-.format-caret{position:relative;z-index:1;width:22px;height:22px;border-radius:7px;display:grid;place-items:center;background:rgba(255,255,255,.055);color:#8edbff;font-size:0;transition:transform .22s ease,background .22s ease}
-.format-caret:before{content:"";width:7px;height:7px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg) translate(-1px,-1px)}
-.format-select-btn:hover .format-caret{background:rgba(77,190,255,.12);color:#fff}
-.format-select-btn:focus-visible{outline:2px solid rgba(87,201,255,.65);outline-offset:3px}
+.format-select-btn{height:40px;min-width:148px;padding:0 10px 0 11px;border:1px solid rgba(125,150,180,.28);border-radius:9px;background:#151820;color:#f4f7fb;display:flex;align-items:center;justify-content:space-between;gap:10px;font:650 13px inherit;cursor:pointer;transition:border-color .18s ease,background .18s ease,box-shadow .18s ease}
+.format-select-btn:hover{border-color:rgba(76,156,255,.65);background:#1a202b;box-shadow:0 4px 14px rgba(0,0,0,.22)}
+.format-select-btn.selected{border-color:rgba(76,156,255,.75);background:#172131}
+.format-select-btn span:first-child{display:flex;align-items:center;gap:8px;white-space:nowrap}
+.format-select-btn span:first-child:before{content:"⇩";width:22px;height:22px;border-radius:6px;display:grid;place-items:center;background:#347cff;color:#fff;font-size:11px;font-weight:800}
+.format-caret{width:20px;height:20px;border-radius:6px;display:grid;place-items:center;background:rgba(255,255,255,.06);color:#9aa8ba;font-size:0;transition:background .18s ease,color .18s ease}
+.format-caret:before{content:"";width:6px;height:6px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg) translate(-1px,-1px)}
+.format-select-btn:hover .format-caret{background:rgba(76,156,255,.14);color:#dcecff}
+.format-select-btn:focus-visible{outline:2px solid rgba(76,156,255,.55);outline-offset:2px}
 .remove-file-btn{width:34px;height:34px;border:0;background:transparent;color:#77747b;font-size:27px;line-height:1;cursor:pointer;border-radius:5px}
 .remove-file-btn:hover{color:#eee;background:#302c30}
 .upload-bottom-bar{min-height:66px;margin-top:280px;padding:0 14px 0 23px;border:1px solid rgba(255,255,255,.08);border-radius:7px;background:linear-gradient(180deg,rgba(40,39,44,.94),rgba(34,33,38,.94));display:flex;align-items:center;justify-content:space-between;gap:16px}
@@ -304,6 +302,118 @@ footer{padding:35px 7vw;background:#02050a;color:#71839a;text-align:center;font-
   .bottom-actions{width:100%}
   .add-files-btn,.bottom-convert-btn{flex:1;justify-content:center}
 }
+
+/* Premium minimal format selector — clean, refined, low-noise UI */
+.format-select-btn{
+  position:relative;
+  height:42px;
+  min-width:158px;
+  padding:0 9px 0 10px;
+  border:1px solid #303640;
+  border-radius:11px;
+  background:linear-gradient(180deg,#171b21 0%,#11151a 100%);
+  color:#f4f6f8;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  font:600 13px/1 inherit;
+  letter-spacing:.05px;
+  cursor:pointer;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.055),0 1px 2px rgba(0,0,0,.25);
+  transition:all .18s ease;
+}
+.format-select-btn:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:11px;
+  pointer-events:none;
+  box-shadow:0 0 0 1px rgba(255,255,255,.015);
+}
+.format-select-btn:hover{
+  border-color:#4a5360;
+  background:linear-gradient(180deg,#1b2027 0%,#141920 100%);
+  transform:translateY(-1px);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 6px 18px rgba(0,0,0,.22);
+}
+.format-select-btn.selected{
+  border-color:#3d73b9;
+  background:linear-gradient(180deg,#182231 0%,#121b27 100%);
+}
+.format-select-btn span:first-child{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  white-space:nowrap;
+  min-width:0;
+}
+.format-select-btn span:first-child:before{
+  content:"";
+  width:24px;
+  height:24px;
+  flex:0 0 24px;
+  border-radius:7px;
+  display:grid;
+  place-items:center;
+  background:#202832;
+  border:1px solid #343d48;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06);
+  color:#8fc7ff;
+  font-size:0;
+}
+.format-select-btn span:first-child:after{
+  content:"↗";
+  position:absolute;
+  left:18px;
+  color:#8fc7ff;
+  font-size:12px;
+  font-weight:800;
+}
+.format-caret{
+  width:23px;
+  height:23px;
+  flex:0 0 23px;
+  border-radius:7px;
+  display:grid;
+  place-items:center;
+  background:#1d232b;
+  border:1px solid #303741;
+  color:#aeb8c5;
+  font-size:0;
+  transition:all .18s ease;
+}
+.format-caret:before{
+  content:"";
+  width:6px;
+  height:6px;
+  border-right:1.5px solid currentColor;
+  border-bottom:1.5px solid currentColor;
+  transform:rotate(45deg) translate(-1px,-1px);
+}
+.format-select-btn:hover .format-caret{
+  background:#252d37;
+  border-color:#414b58;
+  color:#e5edf6;
+}
+.format-select-btn.selected .format-caret{
+  background:#1d3653;
+  border-color:#365f89;
+  color:#9dceff;
+}
+.format-select-btn:focus-visible{
+  outline:2px solid rgba(92,163,235,.45);
+  outline-offset:3px;
+}
+.upload.has-file .format-select-btn.selected{
+  color:#f4f7fa;
+  border-color:#4a79ad;
+  background:linear-gradient(180deg,#192637 0%,#131e2b 100%);
+}
+@media(max-width:520px){
+  .format-select-btn{min-width:118px;height:40px;border-radius:10px}
+}
+
 </style>
 
 <style id="red-black-bg-theme">
@@ -436,7 +546,7 @@ h1 .grad{background:linear-gradient(90deg,#fff,#ff667d,#ff174f);-webkit-backgrou
       <div class="cloud">☁</div>
       <h2>Select your file to convert</h2>
       <p>or drag and drop your file here.</p>
-      <label class="select" for="file">▣ &nbsp; Select File &nbsp;⌄</label>
+      <label class="select" for="file">▣ &nbsp; Select File</label>
       <input id="file" type="file">
     </div>
 
@@ -1019,5 +1129,183 @@ removeFileBtn.addEventListener('click',resetFileSelection);
 ['dragleave','drop'].forEach(e=>upload.addEventListener(e,ev=>{ev.preventDefault();upload.style.borderColor=''}));
 upload.addEventListener('drop',ev=>showFile(ev.dataTransfer.files[0]));
 </script>
+
+<style id="simple-modern-premium-format">
+/* Simple modern premium format selector */
+.format-select-btn{
+  height:42px;
+  min-width:154px;
+  padding:0 9px 0 12px;
+  border:1px solid #2b2e34;
+  border-radius:10px;
+  background:#151619;
+  color:#f1f1f3;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  font:600 13px/1 inherit;
+  cursor:pointer;
+  box-shadow:0 1px 2px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.035);
+  transition:background .16s ease,border-color .16s ease,box-shadow .16s ease,transform .16s ease;
+}
+.format-select-btn:hover{
+  background:#1a1c20;
+  border-color:#3a3e46;
+  box-shadow:0 5px 16px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.045);
+  transform:translateY(-1px);
+}
+.format-select-btn.selected{
+  background:#17191d;
+  border-color:#3b4049;
+}
+.format-select-btn span:first-child{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  white-space:nowrap;
+  min-width:0;
+}
+.format-select-btn span:first-child:before{
+  content:"";
+  width:20px;
+  height:20px;
+  flex:0 0 20px;
+  border-radius:6px;
+  background:#6d5cff;
+  box-shadow:0 2px 8px rgba(109,92,255,.28);
+}
+.format-select-btn span:first-child:after{
+  content:"↓";
+  position:absolute;
+  left:17px;
+  color:#fff;
+  font-size:11px;
+  font-weight:800;
+  line-height:20px;
+}
+.format-caret{
+  width:22px;
+  height:22px;
+  flex:0 0 22px;
+  border:0;
+  border-radius:7px;
+  background:transparent;
+  color:#858a94;
+  display:grid;
+  place-items:center;
+  font-size:0;
+  transition:background .16s ease,color .16s ease;
+}
+.format-caret:before{
+  content:"";
+  width:6px;
+  height:6px;
+  border-right:1.5px solid currentColor;
+  border-bottom:1.5px solid currentColor;
+  transform:rotate(45deg) translate(-1px,-1px);
+}
+.format-select-btn:hover .format-caret{
+  background:#22252a;
+  color:#d7dae0;
+}
+.format-select-btn.selected .format-caret{
+  color:#aaaeb8;
+}
+.format-select-btn:focus-visible{
+  outline:2px solid rgba(109,92,255,.42);
+  outline-offset:2px;
+}
+.upload.has-file .format-select-btn.selected{
+  color:#f4f4f6;
+  border-color:#45414f;
+  background:#18171c;
+}
+@media(max-width:520px){
+  .format-select-btn{min-width:118px;height:40px;border-radius:9px}
+}
+</style>
 </body>
 </html>
+
+<style>
+/* V2 — clean premium format control */
+.format-select-btn{
+  position:relative;
+  height:42px;
+  min-width:164px;
+  padding:0 11px 0 10px;
+  border:1px solid #2b313b;
+  border-radius:12px;
+  background:#0c1016;
+  color:#f4f6f8;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  font:600 13px/1 inherit;
+  letter-spacing:.05px;
+  cursor:pointer;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.035),0 5px 16px rgba(0,0,0,.18);
+  transition:border-color .16s ease,background .16s ease,transform .16s ease,box-shadow .16s ease;
+}
+.format-select-btn:hover{
+  background:#10151d;
+  border-color:#46515f;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.045),0 7px 20px rgba(0,0,0,.24);
+  transform:translateY(-1px);
+}
+.format-select-btn:active{transform:translateY(0)}
+.format-select-btn.selected{
+  background:#0d1520;
+  border-color:#3d83c8;
+}
+.format-select-btn span:first-child{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  white-space:nowrap;
+}
+.format-select-btn span:first-child:before{
+  content:"↕";
+  width:24px;
+  height:24px;
+  border-radius:8px;
+  display:grid;
+  place-items:center;
+  background:#172536;
+  border:1px solid #29435e;
+  color:#7fc4ff;
+  font-size:12px;
+  font-weight:800;
+  line-height:1;
+}
+.format-caret{
+  width:22px;
+  height:22px;
+  border-radius:7px;
+  display:grid;
+  place-items:center;
+  background:transparent;
+  color:#7f8b9b;
+  font-size:0;
+  transition:color .16s ease,background .16s ease;
+}
+.format-caret:before{
+  content:"";
+  width:6px;
+  height:6px;
+  border-right:1.5px solid currentColor;
+  border-bottom:1.5px solid currentColor;
+  transform:rotate(45deg) translate(-1px,-1px);
+}
+.format-select-btn:hover .format-caret{color:#dce8f5;background:#151c25}
+.format-select-btn.selected .format-caret{color:#8bcaff}
+.format-select-btn:focus-visible{outline:2px solid rgba(82,166,235,.55);outline-offset:3px}
+.upload.has-file .format-select-btn.selected{
+  color:#f4f7fa;
+  border-color:#3d83c8;
+  background:#0d1520;
+}
+@media(max-width:520px){.format-select-btn{min-width:118px}}
+</style>
