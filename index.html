@@ -676,15 +676,36 @@ h1 .grad{background:linear-gradient(90deg,#fff,#ff667d,#ff174f);-webkit-backgrou
 
 <script>
 const FORMATS_BY_CATEGORY={
-  Image:['JPG','PNG','GIF','WEBP','BMP','SVG','HEIC','TIFF'],
-  Document:['PDF','DOCX','DOC','TXT','RTF','ODT'],
-  Spreadsheet:['XLSX','XLS','CSV','ODS'],
-  Presentation:['PPTX','PPT','ODP'],
-  Audio:['MP3','WAV','OGG','FLAC','AAC','M4A'],
-  Video:['MP4','MOV','AVI','MKV','WEBM'],
-  Archive:['ZIP','RAR','7Z','TAR','TAR.GZ','TAR.BZ2'],
-  Ebook:['EPUB','MOBI','AZW3','FB2'],
-  Font:['TTF','OTF','WOFF','WOFF2'],
+  Image:['3G2','3GP','3GPP','AVI','CAVS','DV','DVR','FLV','M2TS','M4V','MKV','MOD','MOV','MP4','MPEG','MPG','MTS','MXF','OGG','OGV','RM','RMVB','SWF','TS','VOB','WEBM','WMV','WTV'],
+  Document:['ABW','DJVU','DOC','DOCM','DOCX','DOT','DOTX','HTML','HWP','LWP','MD','ODT','PAGES','PDF','RST','RTF','TEX','TXT','WPD','WPS','ZABW'],
+  Spreadsheet:['CSV','ET','NUMBERS','ODS','XLS','XLSM','XLSX'],
+  Presentation:['DPS','KEY','ODP','POT','POTX','PPS','PPSX','PPT','PPTM','PPTX'],
+  Audio:[
+    'OPUS','AIF','MP3','CAF','WEBA',
+    'AAC','M4B','VOC','AIFF','DSS',
+    'WMA','M4A','AC3','OGA','AMR',
+    'AU','FLAC','AIFC','WAV'
+  ],
+  Video:['3G2','3GP','3GPP','AVI','CAVS','DV','DVR','FLV','M2TS','M4V','MKV','MOD','MOV','MP4','MPEG','MPG','MTS','MXF','OGG','OGV','RM','RMVB','SWF','TS','VOB','WEBM','WMV','WTV'],
+  Archive:[
+    '7Z','ACE','ALZ',
+    'ARC','ARJ','BZ',
+    'BZ2','CAB','CPIO',
+    'DEB','DMG','GZ',
+    'IMG','ISO','JAR',
+    'LHA','LZ','LZMA',
+    'LZO','RAR','RPM',
+    'RZ','TAR','TAR.7Z',
+    'TAR.BZ','TAR.BZ2','TAR.GZ',
+    'TAR.LZO','TAR.XZ','TAR.Z',
+    'TBZ','TBZ2','TGZ',
+    'TZ','TZO','XZ',
+    'Z','ZIP'
+  ],
+  Ebook:['AZW','AZW3','AZW4','CBC','CBR','CBZ','CHM','EPUB','FB2','HTM','HTMLZ','LIT','LRF','MOBI','PDB','PML','PRC','RB','SNB','TCR','TXTZ'],
+  Font:['EOT','OTF','TTF','WOFF','WOFF2'],
+  CAD:['DWF','DWG','DXF'],
+  Vector:['AI','CDR','CGM','EMF','SK','SK1','SVG','SVGZ','VSD','WMF'],
 };
 
 /* Slow, polished conversion-pair animation */
