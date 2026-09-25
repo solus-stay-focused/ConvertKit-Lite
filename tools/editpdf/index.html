@@ -3,67 +3,225 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Edit & Create PDF</title>
+<title>PDF Editor — ConvertKit Lite</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs" type="module"></script>
 <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;background:#f5f7fb;color:#172033}
-header{background:#fff;border-bottom:1px solid #e5e9f2;padding:14px 20px;display:flex;gap:12px;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:20}
-.logo{font-weight:800;font-size:20px}.actions{display:flex;gap:8px;flex-wrap:wrap}
-button,.upload{border:0;border-radius:10px;padding:10px 14px;background:#eef2f8;color:#172033;font-weight:700;cursor:pointer}
-button.primary,.upload.primary{background:#2563eb;color:#fff}.danger{background:#fee2e2!important;color:#b91c1c!important}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;min-height:100vh;font-family:Inter,Arial,sans-serif;color:#f5f8ff;
+  background:
+    radial-gradient(circle at 18% 18%,rgba(37,119,255,.12),transparent 30%),
+    radial-gradient(circle at 82% 72%,rgba(166,58,255,.13),transparent 34%),
+    linear-gradient(135deg,#020a19 0%,#03132b 58%,#071a39 100%);
+}
+body:after{
+  content:"";position:fixed;inset:0;pointer-events:none;
+  background:linear-gradient(140deg,transparent 69%,rgba(76,45,220,.15) 69%,transparent 85%);
+}
+button,.upload{font:inherit}
+button{border:0}
+.topbar{
+  height:74px;border-bottom:1px solid #12345d;background:rgba(2,12,30,.9);
+  backdrop-filter:blur(16px);display:flex;align-items:center;position:sticky;top:0;z-index:50;
+}
+.topbar-inner{width:min(1180px,calc(100% - 36px));margin:auto;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{display:flex;align-items:center;gap:10px;color:#f4f7ff;text-decoration:none;font-size:21px;font-weight:800;letter-spacing:-.8px}
+.brand-mark{width:38px;height:38px;border-radius:9px;display:grid;place-items:center;overflow:hidden;background:#000;border:1px solid #174b88;box-shadow:0 0 18px rgba(35,132,255,.14)} .brand-mark img{width:100%;height:100%;object-fit:contain;display:block}
+.brand-mark span{font-size:20px;color:#27a9ff;line-height:1}
+.brand .lite{color:#a46bff}
+.header-actions{display:flex;align-items:center;gap:10px}
+.back-link,.top-upload{border:1px solid #1b4f8d;border-radius:9px;padding:10px 15px;background:#071a35;color:#dbe9ff;text-decoration:none;font-weight:700;font-size:12px;cursor:pointer}
+.top-upload{background:linear-gradient(100deg,#2d82ff,#7c3ff0);border-color:transparent;color:#fff}
 input[type=file]{display:none}
-main{max-width:1200px;margin:22px auto;padding:0 16px}
-.toolbar{background:#fff;border:1px solid #e3e8f1;border-radius:16px;padding:12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;box-shadow:0 6px 25px #00000008}
-.toolbar label{font-size:13px;font-weight:700}.toolbar input[type=color]{width:38px;height:34px;padding:2px;border:1px solid #ddd;border-radius:8px}
-.toolbar input[type=number]{width:68px;padding:9px;border:1px solid #dbe1ea;border-radius:8px}
-.workspace{margin-top:16px;display:grid;grid-template-columns:250px 1fr;gap:16px}
-.sidebar,.canvas-area{background:#fff;border:1px solid #e3e8f1;border-radius:16px}
-.sidebar{padding:12px;min-height:620px;overflow-y:auto}.sidebar h3{margin:4px 4px 12px;font-size:14px}
-.thumbs{display:flex;flex-direction:column;gap:12px}.thumb{border:2px solid transparent;border-radius:10px;padding:6px;background:#f7f8fb;cursor:pointer;transition:all 0.2s}.thumb:hover{background:#f0f4fa;border-color:#d1d5db}.thumb.active{border-color:#2563eb;box-shadow:0 0 0 3px #dbeafe}.thumb canvas{width:100%;display:block;background:#fff;border-radius:6px}.thumb small{display:block;font-size:11px;color:#667085;margin-top:6px;text-align:center;font-weight:500}
-.canvas-area{padding:18px;overflow:auto;min-height:620px}.empty{text-align:center;padding:130px 20px;color:#697386}.page-wrap{position:relative;margin:0 auto 20px;width:max-content;background:white;box-shadow:0 8px 30px #0002}.page-wrap canvas{display:block}.overlay{position:absolute;inset:0}.overlay-item{position:absolute;user-select:none;cursor:move;white-space:pre-wrap}.text-item{font-weight:500}.draw-layer{position:absolute;inset:0;pointer-events:none}
-.hint{font-size:13px;color:#667085;margin-top:8px}
-@media(max-width:800px){.workspace{grid-template-columns:1fr}.sidebar{min-height:auto;max-height:200px}.thumbs{flex-direction:row;gap:8px;overflow-x:auto}.thumb{min-width:100px;flex-shrink:0}.canvas-area{min-height:500px}}
+
+main{width:min(1180px,calc(100% - 36px));margin:24px auto 45px}
+.page-heading{text-align:center;margin:15px 0 22px}
+.page-heading .eyebrow{
+  display:inline-flex;align-items:center;gap:8px;border:1px solid #7c3154;
+  border-radius:20px;padding:6px 13px;color:#ffb6d0;background:rgba(94,20,55,.25);
+  font-size:11px;font-weight:800
+}
+.page-heading h1{margin:13px 0 7px;font-size:34px;letter-spacing:-1.2px}
+.page-heading p{margin:0;color:#9eb8dc;font-size:13px}
+
+.editor-shell{
+  border:1px solid #7d2349;border-radius:20px;background:
+  linear-gradient(145deg,rgba(10,20,43,.97),rgba(4,12,29,.98));
+  box-shadow:0 18px 60px rgba(0,0,0,.3),0 0 45px rgba(255,44,125,.06);
+  padding:14px;
+}
+.toolbar{
+  background:linear-gradient(145deg,#0a2244,#071832);border:1px solid #194b84;
+  border-radius:14px;padding:10px;display:flex;gap:7px;align-items:center;flex-wrap:wrap;
+  box-shadow:0 8px 28px #0004
+}
+.toolbar button,.toolbar .control{
+  border:1px solid #214f86;border-radius:9px;padding:9px 12px;background:#0b254a;
+  color:#dce9ff;font-weight:700;font-size:11px;cursor:pointer
+}
+.toolbar button:hover,.toolbar .control:hover{border-color:#4b9cff;background:#10315d}
+.toolbar button.primary{background:linear-gradient(100deg,#ff3976,#c34dff);border-color:transparent;color:#fff;box-shadow:0 7px 20px rgba(255,57,118,.18)}
+.toolbar button.danger{background:#351522;border-color:#733044;color:#ffb4c7}
+.toolbar label{font-size:11px;font-weight:700;color:#a9c1e3;display:flex;align-items:center;gap:6px}
+.toolbar input[type=color]{width:35px;height:31px;padding:2px;border:1px solid #31537f;border-radius:7px;background:#071832}
+.toolbar input[type=number]{width:62px;padding:8px;border:1px solid #31537f;border-radius:7px;background:#071832;color:#fff}
+.zoom{display:flex;align-items:center;gap:5px;margin-left:auto}
+.zoom-label{min-width:42px;text-align:center;color:#9eb8dc;font-size:11px}
+
+.hint{margin:10px 4px 2px;color:#7696bf;font-size:11px;text-align:center}
+
+.workspace{margin-top:14px;display:grid;grid-template-columns:205px 1fr;gap:14px}
+.sidebar,.canvas-area{background:linear-gradient(145deg,#071b37,#051329);border:1px solid #17477e;border-radius:15px}
+.sidebar{padding:11px;min-height:620px;overflow-y:auto}
+.sidebar h3{margin:4px 5px 12px;font-size:12px;color:#dce9ff}
+.thumbs{display:flex;flex-direction:column;gap:10px}
+.thumb{border:1px solid #234f83;border-radius:9px;padding:5px;background:#071932;cursor:pointer;transition:.2s}
+.thumb:hover{background:#0c2548;border-color:#4b9cff}
+.thumb.active{border-color:#ff3976;box-shadow:0 0 0 2px rgba(255,57,118,.18)}
+.thumb canvas{width:100%;display:block;background:#fff;border-radius:5px}
+.thumb small{display:block;font-size:10px;color:#8ca8cf;margin-top:5px;text-align:center;font-weight:600}
+
+.canvas-area{padding:18px;overflow:auto;min-height:620px;position:relative}
+.empty{
+  min-height:580px;display:flex;align-items:center;justify-content:center;padding:35px;
+}
+.upload-card{
+  width:min(650px,100%);min-height:390px;border:1px solid #7d2349;border-radius:20px;
+  background:linear-gradient(145deg,rgba(13,17,37,.96),rgba(6,9,23,.98));
+  padding:13px;box-shadow:0 0 40px rgba(255,37,113,.08)
+}
+.upload-inner{
+  min-height:360px;border:1px dashed rgba(255,57,118,.55);border-radius:15px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+  background:
+    radial-gradient(circle at 50% 45%,rgba(193,60,255,.13),transparent 32%),
+    radial-gradient(circle at 50% 55%,rgba(0,126,255,.08),transparent 58%);
+}
+.cloud{
+  width:78px;height:78px;border-radius:21px;border:1px solid #ff3976;
+  display:grid;place-items:center;color:#ff5b91;font-size:37px;
+  box-shadow:0 0 28px rgba(255,57,118,.2),inset 0 0 18px rgba(255,57,118,.08);
+  margin-bottom:18px
+}
+.upload-inner h2{margin:0 0 8px;font-size:23px;letter-spacing:-.5px}
+.upload-inner p{margin:0 0 20px;color:#91acd1;font-size:12px;max-width:430px;line-height:1.6}
+.select-file{
+  display:inline-flex;align-items:center;gap:8px;border:0;border-radius:10px;padding:12px 22px;
+  background:linear-gradient(100deg,#ff3976,#c34dff);color:#fff;font-weight:800;font-size:12px;
+  cursor:pointer;box-shadow:0 10px 28px rgba(255,57,118,.2)
+}
+.drop-note{margin-top:13px!important;margin-bottom:0!important;color:#607fa9!important;font-size:10px!important}
+
+.page-wrap{position:relative;margin:0 auto 20px;width:max-content;background:white;box-shadow:0 12px 40px #0008}
+.page-wrap canvas{display:block}
+.overlay{position:absolute;inset:0}
+.overlay-item{position:absolute;user-select:none;cursor:move;white-space:pre-wrap}
+.text-item{font-weight:500}
+.draw-layer{position:absolute;inset:0;pointer-events:none}
+
+.features{
+  margin-top:16px;border:1px solid #164d8b;border-radius:14px;background:#061a36;
+  padding:14px 8px;display:grid;grid-template-columns:repeat(3,1fr)
+}
+.feature{display:flex;align-items:center;justify-content:center;gap:10px;padding:8px 16px;border-right:1px solid #173e6c}
+.feature:last-child{border:0}
+.feature-icon{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:#10347a;color:#66a9ff;font-size:17px}
+.feature b{display:block;font-size:10px}.feature small{display:block;color:#7895bc;font-size:8px;margin-top:4px}
+
+@media(max-width:850px){
+  .workspace{grid-template-columns:1fr}
+  .sidebar{min-height:auto;max-height:210px}
+  .thumbs{flex-direction:row;overflow-x:auto}
+  .thumb{min-width:100px;flex-shrink:0}
+  .features{grid-template-columns:1fr}
+  .feature{border:0;border-bottom:1px solid #173e6c}
+  .feature:last-child{border:0}
+}
+@media(max-width:560px){
+  main,.topbar-inner{width:calc(100% - 20px)}
+  .back-link{display:none}
+  .page-heading h1{font-size:27px}
+  .toolbar{gap:5px}
+  .zoom{margin-left:0}
+  .empty{padding:12px;min-height:480px}
+  .upload-card{min-height:350px}
+  .upload-inner{min-height:320px}
+}
 </style>
 </head>
 <body>
-<header>
-  <div class="logo">PDF Editor</div>
-  <div class="actions">
-    <label class="upload primary"><input id="fileInput" type="file" accept="application/pdf">Open PDF</label>
-    <button id="newPdf">New PDF</button>
-    <button class="primary" id="savePdf">Download PDF</button>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="/">
+      <span class="brand-mark"><img src="data:image/png;base64,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" alt="ConvertKit Lite logo"></span>
+      ConvertKit <span class="lite">Lite</span>
+    </a>
+    <div class="header-actions">
+      <a class="back-link" href="/">← Back to Tools</a>
+      <label class="top-upload"><input id="fileInput" type="file" accept="application/pdf">Open PDF</label>
+    </div>
   </div>
 </header>
 
 <main>
-  <div class="toolbar">
-    <button id="addText">Add Text</button>
-    <button id="draw">Draw</button>
-    <button id="erase">Erase</button>
-    <button id="addPage">Add Blank Page</button>
-    <button id="deletePage" class="danger">Delete Page</button>
-    <label>Text size <input id="fontSize" type="number" min="8" max="96" value="20"></label>
-    <label>Color <input id="color" type="color" value="#111827"></label>
-    <button id="zoomOut">−</button><span id="zoomLabel">100%</span><button id="zoomIn">+</button>
+  <div class="page-heading">
+    <span class="eyebrow">✦ PDF TOOL</span>
+    <h1>Edit &amp; Create PDF</h1>
+    <p>Edit your PDF, add text, draw, manage pages, and download the finished file.</p>
   </div>
-  <div class="hint">Upload a PDF to annotate it, add text, draw, add/remove pages, or start a new PDF. Existing PDF text is preserved; this editor adds editable overlay content.</div>
 
-  <section class="workspace">
-    <aside class="sidebar">
-      <h3>Pages</h3>
-      <div id="thumbs" class="thumbs"></div>
-    </aside>
-    <section id="canvasArea" class="canvas-area">
-      <div class="empty" id="empty">
-        <h2>Edit or create a PDF</h2>
-        <p>Open a PDF or click "New PDF" to begin.</p>
-      </div>
+  <section class="editor-shell">
+    <div class="toolbar">
+      <button id="addText">Add Text</button>
+      <button id="draw">Draw</button>
+      <button id="erase">Erase</button>
+      <button id="addPage">Add Blank Page</button>
+      <button id="deletePage" class="danger">Delete Page</button>
+      <label>Text size <input id="fontSize" type="number" min="8" max="96" value="20"></label>
+      <label>Color <input id="color" type="color" value="#111827"></label>
+      <div class="zoom"><button id="zoomOut">−</button><span id="zoomLabel" class="zoom-label">100%</span><button id="zoomIn">+</button></div>
+      <button class="primary" id="newPdf">New PDF</button>
+      <button class="primary" id="savePdf">Download PDF</button>
+    </div>
+
+    <div class="hint">Upload a PDF to start editing, or create a new blank PDF.</div>
+
+    <section class="workspace">
+      <aside class="sidebar">
+        <h3>Pages</h3>
+        <div id="thumbs" class="thumbs"></div>
+      </aside>
+
+      <section id="canvasArea" class="canvas-area">
+        <div class="empty" id="empty">
+          <div class="upload-card">
+            <div class="upload-inner">
+              <div class="cloud">☁</div>
+              <h2>Upload your PDF</h2>
+              <p>Drop your PDF here or choose a file from your device to start editing.</p>
+              <label class="select-file">
+                <input id="emptyUpload" type="file" accept="application/pdf">
+                ↑ Select PDF
+              </label>
+              <p class="drop-note">PDF files only • Your file stays in your browser</p>
+            </div>
+          </div>
+        </div>
+      </section>
     </section>
   </section>
+
+  <div class="features">
+    <div class="feature"><div class="feature-icon">⚡</div><div><b>Fast Conversion</b><small>Runs directly in your browser.</small></div></div>
+    <div class="feature"><div class="feature-icon">♢</div><div><b>Secure &amp; Private</b><small>Your files stay on your device.</small></div></div>
+    <div class="feature"><div class="feature-icon">∞</div><div><b>Works Everywhere</b><small>Use it on any modern browser.</small></div></div>
+  </div>
 </main>
 
 <script type="module">
+
 import * as pdfjsLib from "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs";
 pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.worker.min.mjs";
 
@@ -175,7 +333,7 @@ async function createNew(){pdfDoc=null;sourceBytes=null;pages=[blankPage()];curr
 function updateZoom(){zoomLabel.textContent=Math.round(zoom*100)+"%"}
 fileInput.onchange=e=>{if(e.target.files[0])loadPdf(e.target.files[0])};
 document.getElementById("newPdf").onclick=createNew;
-document.getElementById("addText").onclick=()=>{setMode("text");if(!pages.length)createNew();const p=pages[current];p.items.push({text:"New text",x:50,y:60,size:+fontSize.value,color:color.value});setMode("select");render();renderThumbs()};
+document.getElementById("addText").onclick=()=>{setMode("text");if(!pages.length)render();const p=pages[current];p.items.push({text:"New text",x:50,y:60,size:+fontSize.value,color:color.value});setMode("select");render();renderThumbs()};
 document.getElementById("draw").onclick=()=>{setMode(mode==="draw"?"select":"draw");render()};
 document.getElementById("erase").onclick=()=>{if(!pages.length)return;pages[current].items.pop();pages[current].draws.pop();render();renderThumbs()};
 document.getElementById("addPage").onclick=()=>{pages.splice(current+1,0,blankPage());current++;renderThumbs();render()};
@@ -207,6 +365,22 @@ async function save(){
 }
 document.getElementById("savePdf").onclick=save;
 createNew();
+
+</script>
+
+<script>
+const emptyUpload=document.getElementById("emptyUpload");
+const mainFileInput=document.getElementById("fileInput");
+if(emptyUpload && mainFileInput){
+  emptyUpload.addEventListener("change",e=>{
+    if(e.target.files[0]){
+      const dt=new DataTransfer();
+      dt.items.add(e.target.files[0]);
+      mainFileInput.files=dt.files;
+      mainFileInput.dispatchEvent(new Event("change",{bubbles:true}));
+    }
+  });
+}
 </script>
 </body>
 </html>
