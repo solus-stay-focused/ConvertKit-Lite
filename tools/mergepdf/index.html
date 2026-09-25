@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Merge PDF — ConvertKit Lite</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<style>
+  :root{
+    --bg:#0b0e1e;
+    --bg-2:#0f1330;
+    --panel:#131832;
+    --panel-2:#161c3c;
+    --border:rgba(255,255,255,0.08);
+    --border-hover:rgba(124,108,255,0.5);
+    --text:#f2f3ff;
+    --text-dim:#9aa0c3;
+    --text-faint:#6b7093;
+    --accent:#7c6cff;
+    --accent-2:#a855f7;
+    --accent-blue:#3b82f6;
+    --success:#22c55e;
+    --danger:#f43f5e;
+    --radius:16px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family:'Poppins', sans-serif;
+    background:
+      radial-gradient(ellipse 900px 500px at 85% -10%, rgba(124,108,255,0.18), transparent 60%),
+      radial-gradient(ellipse 700px 500px at -10% 20%, rgba(59,130,246,0.12), transparent 60%),
+      var(--bg);
+    color:var(--text);
+    min-height:100vh;
+    padding-bottom:80px;
+  }
+
+  /* NAV */
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:20px 48px;
+    border-bottom:1px solid var(--border);
+    background:rgba(11,14,30,0.7);
+    backdrop-filter:blur(10px);
+    position:sticky; top:0; z-index:50;
+  }
+  .brand{display:flex; align-items:center; gap:10px; font-weight:800; font-size:20px;}
+  .brand .logo{
+    width:34px; height:34px; object-fit:contain;
+  }
+  .brand span{color:var(--accent-2);}
+  .nav-links{display:flex; gap:32px; font-size:14.5px; color:var(--text-dim);}
+  .nav-links a{color:inherit; text-decoration:none; transition:color .2s;}
+  .nav-links a:hover{color:var(--text);}
+  .get-started{
+    background:linear-gradient(135deg, var(--accent-blue), var(--accent));
+    color:#fff; border:none; padding:10px 22px; border-radius:10px;
+    font-family:inherit; font-weight:600; font-size:14px; cursor:pointer;
+  }
+  @media (max-width:860px){ .nav-links{display:none;} }
+
+  /* HEADER */
+  .header{ text-align:center; max-width:680px; margin:56px auto 8px; padding:0 20px; }
+  .icon-badge{
+    width:64px; height:64px; border-radius:16px; margin:0 auto 20px;
+    background:linear-gradient(135deg, #ec4899, #7c6cff);
+    display:flex; align-items:center; justify-content:center; font-size:28px;
+    box-shadow:0 10px 30px rgba(124,108,255,0.35);
+  }
+  .header h1{ font-size:34px; font-weight:800; margin-bottom:10px; }
+  .header p{ color:var(--text-dim); font-size:15.5px; line-height:1.6; }
+  .trust-row{ display:flex; gap:22px; justify-content:center; margin-top:18px; flex-wrap:wrap; }
+  .trust-row div{ font-size:13px; color:var(--text-dim); display:flex; align-items:center; gap:6px; }
+  .trust-row div::before{ content:"✓"; color:var(--success); font-weight:700; }
+
+  /* MAIN CARD */
+  .container{ max-width:760px; margin:36px auto 0; padding:0 20px; }
+  .card{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:28px;
+  }
+
+  .dropzone{
+    border:2px dashed rgba(124,108,255,0.4);
+    border-radius:14px;
+    background:rgba(124,108,255,0.05);
+    padding:44px 20px;
+    text-align:center;
+    cursor:pointer;
+    transition:all .2s;
+  }
+  .dropzone:hover, .dropzone.dragover{
+    border-color:var(--accent);
+    background:rgba(124,108,255,0.1);
+  }
+  .dropzone .dz-icon{
+    width:56px; height:56px; border-radius:14px; margin:0 auto 16px;
+    background:linear-gradient(135deg, var(--accent-blue), var(--accent));
+    display:flex; align-items:center; justify-content:center; font-size:24px;
+  }
+  .dropzone h3{ font-size:17px; font-weight:600; margin-bottom:6px; }
+  .dropzone p{ color:var(--text-faint); font-size:13.5px; }
+  .dropzone input{ display:none; }
+
+  /* FILE LIST */
+  #fileListWrap{ margin-top:22px; display:none; }
+  .list-head{
+    display:flex; justify-content:space-between; align-items:center;
+    margin-bottom:12px;
+  }
+  .list-head span{ font-size:13.5px; color:var(--text-dim); font-weight:600; }
+  .add-more-btn{
+    background:none; border:1px solid var(--border); color:var(--text-dim);
+    padding:6px 14px; border-radius:8px; font-family:inherit; font-size:12.5px;
+    cursor:pointer; transition:all .2s;
+  }
+  .add-more-btn:hover{ border-color:var(--border-hover); color:var(--text); }
+
+  #fileList{ display:flex; flex-direction:column; gap:10px; }
+  .file-item{
+    display:flex; align-items:center; gap:12px;
+    background:var(--panel-2);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:12px 14px;
+    cursor:grab;
+    transition:border-color .15s, transform .15s;
+  }
+  .file-item:active{ cursor:grabbing; }
+  .file-item.dragging{ opacity:0.4; }
+  .file-item.drag-over{ border-color:var(--accent); }
+  .drag-handle{ color:var(--text-faint); font-size:15px; user-select:none; }
+  .file-order{
+    width:24px; height:24px; border-radius:7px; flex-shrink:0;
+    background:linear-gradient(135deg, var(--accent-blue), var(--accent));
+    display:flex; align-items:center; justify-content:center;
+    font-size:12px; font-weight:700;
+  }
+  .file-icon{
+    width:34px; height:34px; border-radius:8px; flex-shrink:0;
+    background:rgba(244,63,94,0.15); color:#f43f5e;
+    display:flex; align-items:center; justify-content:center; font-size:15px;
+  }
+  .file-meta{ flex:1; min-width:0; }
+  .file-name{ font-size:13.5px; font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .file-size{ font-size:11.5px; color:var(--text-faint); margin-top:2px; }
+  .file-remove{
+    background:none; border:none; color:var(--text-faint); cursor:pointer;
+    font-size:16px; padding:4px 8px; border-radius:6px; transition:all .15s;
+  }
+  .file-remove:hover{ color:var(--danger); background:rgba(244,63,94,0.1); }
+
+  .hint{ font-size:12px; color:var(--text-faint); margin-top:10px; text-align:center; }
+
+  /* MERGE BUTTON */
+  .merge-btn{
+    width:100%; margin-top:22px;
+    background:linear-gradient(135deg, var(--accent-blue), var(--accent), var(--accent-2));
+    background-size:200% 100%;
+    color:#fff; border:none; padding:15px; border-radius:12px;
+    font-family:inherit; font-weight:700; font-size:15px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    transition:background-position .3s, transform .1s;
+  }
+  .merge-btn:hover:not(:disabled){ background-position:100% 0; }
+  .merge-btn:active:not(:disabled){ transform:scale(0.99); }
+  .merge-btn:disabled{ opacity:0.4; cursor:not-allowed; }
+
+  .spinner{
+    width:16px; height:16px; border-radius:50%;
+    border:2px solid rgba(255,255,255,0.35); border-top-color:#fff;
+    animation:spin .7s linear infinite; display:none;
+  }
+  .merge-btn.loading .spinner{ display:inline-block; }
+  .merge-btn.loading .btn-label{ display:none; }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+
+  /* RESULT */
+  #result{
+    display:none; margin-top:22px; text-align:center;
+    background:rgba(34,197,94,0.08); border:1px solid rgba(34,197,94,0.3);
+    border-radius:14px; padding:26px;
+  }
+  #result .result-icon{
+    width:52px; height:52px; border-radius:50%; margin:0 auto 14px;
+    background:rgba(34,197,94,0.15); color:var(--success);
+    display:flex; align-items:center; justify-content:center; font-size:24px;
+  }
+  #result h3{ font-size:17px; margin-bottom:6px; }
+  #result p{ color:var(--text-dim); font-size:13.5px; margin-bottom:18px; }
+  .result-actions{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+  .btn-download{
+    background:linear-gradient(135deg, var(--accent-blue), var(--accent));
+    color:#fff; border:none; padding:11px 22px; border-radius:10px;
+    font-family:inherit; font-weight:600; font-size:13.5px; cursor:pointer; text-decoration:none;
+    display:inline-flex; align-items:center; gap:6px;
+  }
+  .btn-reset{
+    background:none; border:1px solid var(--border); color:var(--text-dim);
+    padding:11px 22px; border-radius:10px; font-family:inherit; font-weight:600;
+    font-size:13.5px; cursor:pointer;
+  }
+  .btn-reset:hover{ border-color:var(--border-hover); color:var(--text); }
+
+  #errorBox{
+    display:none; margin-top:16px; padding:12px 16px; border-radius:10px;
+    background:rgba(244,63,94,0.1); border:1px solid rgba(244,63,94,0.3);
+    color:#fca5b5; font-size:13px;
+  }
+
+  /* FEATURES */
+  .features{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:32px; }
+  .feature{
+    background:var(--panel); border:1px solid var(--border); border-radius:14px;
+    padding:18px; text-align:center;
+  }
+  .feature .f-icon{ font-size:20px; margin-bottom:8px; }
+  .feature h4{ font-size:13.5px; font-weight:600; margin-bottom:4px; }
+  .feature p{ font-size:11.5px; color:var(--text-faint); line-height:1.5; }
+  @media (max-width:640px){ .features{ grid-template-columns:1fr; } .header h1{ font-size:26px; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand"><img class="logo" src="data:image/png;base64,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" alt="ConvertKit Lite logo">ConvertKit <span>Lite</span></div>
+  <div class="nav-links">
+    <a href="#">Home</a><a href="#">Tools</a><a href="#">About</a><a href="#">FAQ</a>
+  </div>
+  <button class="get-started">Get Started</button>
+</nav>
+
+<div class="header">
+  <div class="icon-badge">📄</div>
+  <h1>Merge PDF Files</h1>
+  <p>Combine multiple PDFs into a single document. Drag to reorder, then merge — all done right in your browser.</p>
+  <div class="trust-row">
+    <div>No registration required</div>
+    <div>Secure & private</div>
+    <div>Works on any device</div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="card">
+
+    <div class="dropzone" id="dropzone">
+      <div class="dz-icon">⬆</div>
+      <h3>Drop PDF files here</h3>
+      <p>or click to browse — you can select multiple files at once</p>
+      <input type="file" id="fileInput" accept="application/pdf" multiple>
+    </div>
+
+    <div id="fileListWrap">
+      <div class="list-head">
+        <span id="fileCount">0 files</span>
+        <button class="add-more-btn" id="addMoreBtn">+ Add more files</button>
+      </div>
+      <div id="fileList"></div>
+      <div class="hint">Drag items to change the merge order</div>
+    </div>
+
+    <div id="errorBox"></div>
+
+    <button class="merge-btn" id="mergeBtn" disabled>
+      <span class="spinner"></span>
+      <span class="btn-label">Merge PDFs</span>
+    </button>
+
+    <div id="result">
+      <div class="result-icon">✓</div>
+      <h3>Your merged PDF is ready</h3>
+      <p id="resultMeta"></p>
+      <div class="result-actions">
+        <a class="btn-download" id="downloadLink" download="merged.pdf">⬇ Download PDF</a>
+        <button class="btn-reset" id="resetBtn">Start Over</button>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="features">
+    <div class="feature">
+      <div class="f-icon">🔒</div>
+      <h4>100% Private</h4>
+      <p>Files are merged locally in your browser — nothing is uploaded to a server.</p>
+    </div>
+    <div class="feature">
+      <div class="f-icon">⚡</div>
+      <h4>Fast</h4>
+      <p>No waiting on uploads. Merging happens instantly on your device.</p>
+    </div>
+    <div class="feature">
+      <div class="f-icon">🆓</div>
+      <h4>Free & Unlimited</h4>
+      <p>No account, no watermark, no file limits.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const { PDFDocument } = PDFLib;
+
+  const dropzone   = document.getElementById('dropzone');
+  const fileInput  = document.getElementById('fileInput');
+  const fileListWrap = document.getElementById('fileListWrap');
+  const fileListEl = document.getElementById('fileList');
+  const fileCountEl = document.getElementById('fileCount');
+  const addMoreBtn = document.getElementById('addMoreBtn');
+  const mergeBtn   = document.getElementById('mergeBtn');
+  const resultBox  = document.getElementById('result');
+  const resultMeta = document.getElementById('resultMeta');
+  const downloadLink = document.getElementById('downloadLink');
+  const resetBtn   = document.getElementById('resetBtn');
+  const errorBox   = document.getElementById('errorBox');
+
+  let files = []; // { id, file }
+  let idCounter = 0;
+  let dragSrcId = null;
+
+  function showError(msg){
+    errorBox.textContent = msg;
+    errorBox.style.display = 'block';
+  }
+  function clearError(){
+    errorBox.style.display = 'none';
+    errorBox.textContent = '';
+  }
+
+  function formatSize(bytes){
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024*1024) return (bytes/1024).toFixed(1) + ' KB';
+    return (bytes/(1024*1024)).toFixed(1) + ' MB';
+  }
+
+  function addFiles(fileListArg){
+    clearError();
+    const incoming = Array.from(fileListArg);
+    for (const f of incoming){
+      if (f.type !== 'application/pdf' && !f.name.toLowerCase().endsWith('.pdf')){
+        showError(`"${f.name}" is not a PDF file and was skipped.`);
+        continue;
+      }
+      files.push({ id: idCounter++, file: f });
+    }
+    renderList();
+  }
+
+  function renderList(){
+    fileListEl.innerHTML = '';
+    fileCountEl.textContent = files.length + (files.length === 1 ? ' file' : ' files');
+    fileListWrap.style.display = files.length ? 'block' : 'none';
+    mergeBtn.disabled = files.length < 2;
+
+    files.forEach((item, idx) => {
+      const el = document.createElement('div');
+      el.className = 'file-item';
+      el.draggable = true;
+      el.dataset.id = item.id;
+      el.innerHTML = `
+        <span class="drag-handle">⠿</span>
+        <div class="file-order">${idx + 1}</div>
+        <div class="file-icon">📄</div>
+        <div class="file-meta">
+          <div class="file-name">${item.file.name}</div>
+          <div class="file-size">${formatSize(item.file.size)}</div>
+        </div>
+        <button class="file-remove" title="Remove">✕</button>
+      `;
+
+      el.querySelector('.file-remove').addEventListener('click', () => {
+        files = files.filter(f => f.id !== item.id);
+        renderList();
+      });
+
+      el.addEventListener('dragstart', () => {
+        dragSrcId = item.id;
+        el.classList.add('dragging');
+      });
+      el.addEventListener('dragend', () => {
+        el.classList.remove('dragging');
+        document.querySelectorAll('.file-item').forEach(n => n.classList.remove('drag-over'));
+      });
+      el.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        el.classList.add('drag-over');
+      });
+      el.addEventListener('dragleave', () => el.classList.remove('drag-over'));
+      el.addEventListener('drop', (e) => {
+        e.preventDefault();
+        el.classList.remove('drag-over');
+        const targetId = item.id;
+        if (dragSrcId === null || dragSrcId === targetId) return;
+        const srcIdx = files.findIndex(f => f.id === dragSrcId);
+        const tgtIdx = files.findIndex(f => f.id === targetId);
+        const [moved] = files.splice(srcIdx, 1);
+        files.splice(tgtIdx, 0, moved);
+        renderList();
+      });
+
+      fileListEl.appendChild(el);
+    });
+
+    if (files.length === 1){
+      showError('Add at least one more PDF to merge.');
+    }
+  }
+
+  // Dropzone interactions
+  dropzone.addEventListener('click', () => fileInput.click());
+  addMoreBtn.addEventListener('click', () => fileInput.click());
+  fileInput.addEventListener('change', (e) => {
+    addFiles(e.target.files);
+    fileInput.value = '';
+  });
+
+  ['dragenter','dragover'].forEach(evt => {
+    dropzone.addEventListener(evt, (e) => {
+      e.preventDefault();
+      dropzone.classList.add('dragover');
+    });
+  });
+  ['dragleave','drop'].forEach(evt => {
+    dropzone.addEventListener(evt, (e) => {
+      e.preventDefault();
+      dropzone.classList.remove('dragover');
+    });
+  });
+  dropzone.addEventListener('drop', (e) => {
+    if (e.dataTransfer.files && e.dataTransfer.files.length){
+      addFiles(e.dataTransfer.files);
+    }
+  });
+
+  // Merge
+  mergeBtn.addEventListener('click', async () => {
+    if (files.length < 2) return;
+    clearError();
+    mergeBtn.classList.add('loading');
+    mergeBtn.disabled = true;
+
+    try {
+      const mergedPdf = await PDFDocument.create();
+
+      for (const item of files){
+        const arrayBuffer = await item.file.arrayBuffer();
+        let srcDoc;
+        try {
+          srcDoc = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
+        } catch (err){
+          throw new Error(`Could not read "${item.file.name}". It may be corrupted or password-protected.`);
+        }
+        const copiedPages = await mergedPdf.copyPages(srcDoc, srcDoc.getPageIndices());
+        copiedPages.forEach(page => mergedPdf.addPage(page));
+      }
+
+      const mergedBytes = await mergedPdf.save();
+      const blob = new Blob([mergedBytes], { type: 'application/pdf' });
+      const url = URL.createObjectURL(blob);
+
+      downloadLink.href = url;
+      resultMeta.textContent = `${files.length} files combined into one PDF (${formatSize(blob.size)})`;
+      resultBox.style.display = 'block';
+      resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+    } catch (err){
+      showError(err.message || 'Something went wrong while merging. Please try again.');
+    } finally {
+      mergeBtn.classList.remove('loading');
+      mergeBtn.disabled = files.length < 2;
+    }
+  });
+
+  resetBtn.addEventListener('click', () => {
+    files = [];
+    renderList();
+    resultBox.style.display = 'none';
+    clearError();
+  });
+
+})();
+</script>
+
+</body>
+</html>
