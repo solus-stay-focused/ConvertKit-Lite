@@ -23,7 +23,7 @@ nav{display:flex;align-items:center;gap:32px;font-size:13px;color:#c4d6f4}nav a{
 h1{font-size:43px;line-height:1.12;letter-spacing:-1.8px;margin:16px 0 13px}h1 .gradient{background:linear-gradient(90deg,#2e8bff,#ad5bff);-webkit-background-clip:text;background-clip:text;color:transparent}
 .hero-copy p{max-width:570px;color:#c4d6ef;font-size:15px;line-height:1.65;margin:0}
 .checks{display:flex;flex-wrap:wrap;gap:25px;margin-top:22px;color:#dce9ff;font-size:12px}.checks span{display:flex;align-items:center;gap:10px}.checks i{font-style:normal;display:grid;place-items:center;width:21px;height:21px;border-radius:50%;background:#2d70f2;color:white;font-weight:800}
-/* Animated conversion hero */
+/* Decorative conversion preview — no upload interaction */
 .upload{position:relative;min-height:300px;border:0;border-radius:20px;background:transparent;overflow:visible;box-shadow:none}
 .dropzone{position:relative;min-height:300px;border:0;border-radius:18px;display:block;padding:0;background:radial-gradient(circle at 50% 48%,rgba(74,41,132,.20),transparent 37%),radial-gradient(circle at 50% 50%,rgba(0,126,255,.08),transparent 56%);overflow:hidden}
 .dropzone:before,.dropzone:after{content:"";position:absolute;left:50%;top:53%;border:1px solid rgba(124,39,155,.22);border-radius:50%;transform:translate(-50%,-50%);pointer-events:none}
@@ -40,7 +40,6 @@ h1{font-size:43px;line-height:1.12;letter-spacing:-1.8px;margin:16px 0 13px}h1 .
 .converter-stage{position:absolute;inset:0;display:flex;align-items:flex-start;justify-content:center;gap:78px;padding-top:25px}
 .format-card{position:relative;width:194px;height:228px;border:1px solid var(--card-accent,#ff3976);border-radius:22px;background:linear-gradient(145deg,rgba(13,17,37,.94),rgba(6,9,23,.96));box-shadow:0 0 28px rgba(255,37,113,.13),inset 0 0 25px rgba(255,255,255,.025);display:flex;flex-direction:column;align-items:center;padding-top:19px;transition:transform .35s ease,border-color .35s ease,box-shadow .35s ease}
 .format-card.output{--card-accent:#c13cff;box-shadow:0 0 28px rgba(193,60,255,.13),inset 0 0 25px rgba(255,255,255,.025)}
-.format-card:hover{transform:translateY(-4px)}
 .format-inner{width:166px;height:198px;border:1px solid rgba(105,126,177,.22);border-radius:15px;display:flex;flex-direction:column;align-items:center;padding-top:8px;position:relative}
 .format-icon-wrap{width:78px;height:78px;border:1px solid #16bfff;border-radius:19px;display:grid;place-items:center;margin-bottom:9px;box-shadow:0 0 16px rgba(0,194,255,.12),inset 0 0 12px rgba(0,194,255,.05)}
 .output .format-icon-wrap{border-color:#e04cff;box-shadow:0 0 16px rgba(224,76,255,.12),inset 0 0 12px rgba(224,76,255,.05)}
@@ -52,21 +51,17 @@ h1{font-size:43px;line-height:1.12;letter-spacing:-1.8px;margin:16px 0 13px}h1 .
 .converter-core{position:absolute;left:50%;top:91px;transform:translateX(-50%);width:78px;height:78px;border-radius:50%;display:grid;place-items:center;z-index:5}
 .converter-core:before,.converter-core:after{content:"";position:absolute;border-radius:50%;border:1px solid rgba(255,56,139,.35);inset:0;animation:corePulse 2.2s ease-in-out infinite}
 .converter-core:after{inset:8px;border-color:rgba(41,206,255,.5);animation-delay:.3s}
-.core-button{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 40% 35%,#28346f,#111538 65%,#0b0d20);border:1px solid #ff3b96;box-shadow:0 0 18px rgba(255,44,143,.5),inset 0 0 15px rgba(36,212,255,.12);position:relative;z-index:2;cursor:pointer;color:#fff;font-size:29px;line-height:1}
+.core-button{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 40% 35%,#28346f,#111538 65%,#0b0d20);border:1px solid #ff3b96;box-shadow:0 0 18px rgba(255,44,143,.5),inset 0 0 15px rgba(36,212,255,.12);position:relative;z-index:2;color:#fff;font-size:29px;line-height:1}
 .core-button span{display:block;transform:translateY(-1px)}
 .convert-label{position:absolute;top:83px;left:50%;transform:translateX(-50%);z-index:6;margin-top:68px;font-size:9px;letter-spacing:3px;color:#bcd7f2;font-weight:800;white-space:nowrap;text-shadow:0 0 10px rgba(50,190,255,.25)}
 .convert-line{position:absolute;top:132px;height:1px;left:calc(50% - 205px);right:calc(50% - 205px);background:linear-gradient(90deg,transparent,#ff3976 18%,#ca42ff 50%,#ff3976 82%,transparent);opacity:.7;box-shadow:0 0 9px rgba(255,50,155,.6)}
 .convert-line:after{content:"";position:absolute;left:0;top:-2px;width:6px;height:6px;border-radius:50%;background:#3ee7ff;box-shadow:0 0 12px #3ee7ff;animation:travelDot 2.1s linear infinite}
-.file-info{position:absolute;bottom:0;left:50%;transform:translateX(-50%);font-size:10px;color:#7598c6;white-space:nowrap;z-index:8}
-.choose{position:absolute;opacity:0;pointer-events:none}
-input[type=file]{display:none}
 @keyframes ringPulse{0%,100%{opacity:.25;transform:translate(-50%,-50%) scale(.98)}50%{opacity:.55;transform:translate(-50%,-50%) scale(1.03)}}
 @keyframes corePulse{0%,100%{transform:scale(.95);opacity:.55}50%{transform:scale(1.08);opacity:1}}
 @keyframes travelDot{from{left:0}to{left:100%}}
 @keyframes particleFloat{0%,100%{transform:translate(0,0);opacity:.45}50%{transform:translate(8px,-13px);opacity:1}}
 @media(max-width:950px){.converter-stage{gap:55px}.format-card{width:180px}.convert-line{left:calc(50% - 190px);right:calc(50% - 190px)}}
 @media(max-width:560px){.upload,.dropzone{min-height:520px}.converter-stage{gap:14px;padding-top:35px}.format-card{width:142px;height:210px}.format-inner{width:122px;height:180px}.format-icon-wrap{width:62px;height:62px}.format-icon-wrap svg{width:30px;height:30px}.format-name{font-size:20px}.converter-core{top:240px}.convert-label{top:232px}.convert-line{top:278px;left:18%;right:18%}.dropzone:after{width:330px;height:330px}}
-
 .categories{display:grid;grid-template-columns:repeat(7,1fr);gap:12px;margin:0 0 24px}
 .category{border:1px solid #194b87;border-radius:10px;background:linear-gradient(145deg,#0a2245,#071932);color:#d8e6ff;padding:12px 5px;cursor:pointer;text-align:center;transition:.2s}
 .category:hover,.category.active{border-color:#2d8cff;box-shadow:0 0 23px rgba(41,113,255,.25);background:linear-gradient(145deg,#102d59,#091d3b)}
@@ -156,28 +151,31 @@ footer{border-top:1px solid #12345d;padding:24px 0 30px;display:flex;align-items
 <h1>All Your File Conversions<br><span class="gradient">in One Place</span></h1>
 <p>ConvertKit Lite makes it simple to convert your files — images, documents, audio, video and more. Fast, secure and free.</p>
 <div class="checks"><span><i>✓</i>No registration required</span><span><i>✓</i>Secure & private</span><span><i>✓</i>Works on any device</span></div></div>
-<div class="upload">
-  <div class="dropzone" id="dropzone" title="Click the source card to choose a file">
+<div class="upload" aria-label="Conversion preview">
+  <div class="dropzone">
     <div class="converter-rings"><span></span><span></span><span></span></div>
     <div class="converter-particles"><i></i><i></i><i></i><i></i><i></i><i></i></div>
     <div class="convert-line"></div>
     <div class="converter-stage">
-      <button class="format-card source" id="sourceCard" type="button" onclick="document.getElementById('file').click()">
+      <div class="format-card source">
         <div class="format-inner">
-          <div class="format-icon-wrap" id="sourceIcon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M14 2v6h6M9 14h6M9 17h6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></div>
+          <div class="format-icon-wrap">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M14 2v6h6M9 14h6M9 17h6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+          </div>
           <div class="format-label">SOURCE</div>
           <div class="format-name" id="sourceFormat">MOV</div>
-          <div class="format-ready" id="sourceStatus">READY</div>
+          <div class="format-ready">READY</div>
           <span class="format-tab"></span>
         </div>
-      </button>
-      <div class="converter-core">
-        <button class="core-button" type="button" onclick="document.getElementById('file').click()" aria-label="Choose file"><span>⇄</span></button>
-        <div class="convert-label">CONVERTING</div>
+      </div>
+      <div class="converter-core" aria-hidden="true">
+        <div class="core-button"><span>⇄</span></div>
       </div>
       <div class="format-card output" id="outputCard">
         <div class="format-inner">
-          <div class="format-icon-wrap" id="outputIcon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M14 2v6h6M8 16l3-3 2 2 2-2 2 3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="format-icon-wrap">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M14 2v6h6M8 16l3-3 2 2 2-2 2 3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
           <div class="format-label">OUTPUT</div>
           <div class="format-name" id="outputFormat">MP4</div>
           <div class="format-ready">READY</div>
@@ -185,9 +183,6 @@ footer{border-top:1px solid #12345d;padding:24px 0 30px;display:flex;align-items
         </div>
       </div>
     </div>
-    <button class="choose" type="button" onclick="document.getElementById('file').click()">Choose File</button>
-    <input id="file" type="file">
-    <div class="file-info" id="drop-title">Click the source card or center button to choose a file</div>
   </div>
 </div>
 </section>
@@ -398,57 +393,59 @@ footer{border-top:1px solid #12345d;padding:24px 0 30px;display:flex;align-items
 <footer class="container" id="faq"><div class="brand"><img src="data:image/png;base64,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" alt="">ConvertKit <span class="lite">Lite</span></div><nav><a href="#">Home</a><a href="#tools">Tools</a><a href="#about">About</a><a href="#faq">FAQ</a></nav><div>© 2026 ConvertKit Lite. All rights reserved.</div></footer>
 <div class="toast" id="toast"></div>
 <script>
-const fileInput=document.getElementById('file');
 const sourceFormat=document.getElementById('sourceFormat');
 const outputFormat=document.getElementById('outputFormat');
-const sourceStatus=document.getElementById('sourceStatus');
-const dropTitle=document.getElementById('drop-title');
-const zone=document.getElementById('dropzone');
 
 const conversionPairs=[
-  ['MOV','MP4','video'],['JPG','PDF','image'],['PNG','WEBP','image'],['PDF','JPG','pdf'],
-  ['DOCX','PDF','pdf'],['MP4','MP3','audio'],['M4A','MP3','audio'],['XLSX','CSV','data']
+  ['MOV','MP4'],['JPG','PDF'],['PNG','WEBP'],['PDF','JPG'],
+  ['DOCX','PDF'],['MP4','MP3'],['M4A','MP3'],['XLSX','CSV']
 ];
 let pairIndex=0;
 let pairTimer;
+
 function setConversionPair(pair){
   sourceFormat.textContent=pair[0];
   outputFormat.textContent=pair[1];
-  sourceStatus.textContent='READY';
 }
+
 function startPairAnimation(){
   clearInterval(pairTimer);
   pairTimer=setInterval(()=>{
-    if(fileInput.files.length) return;
     pairIndex=(pairIndex+1)%conversionPairs.length;
-    const source=document.getElementById('sourceCard');
+    const source=document.querySelector('.format-card.source');
     const output=document.getElementById('outputCard');
     source.style.transform='translateX(-5px) scale(.98)';
     output.style.transform='translateX(5px) scale(.98)';
     setTimeout(()=>{
       setConversionPair(conversionPairs[pairIndex]);
-      source.style.transform=''; output.style.transform='';
+      source.style.transform='';
+      output.style.transform='';
     },180);
   },3200);
 }
+
 setConversionPair(conversionPairs[0]);
 startPairAnimation();
 
-function handleFile(file){
-  if(!file) return;
-  const ext=(file.name.split('.').pop()||'FILE').toUpperCase();
-  sourceFormat.textContent=ext.length>5 ? 'FILE' : ext;
-  sourceStatus.textContent='SELECTED';
-  dropTitle.textContent='Selected: '+file.name;
-  showToast('File selected successfully');
+document.querySelectorAll('.category').forEach(btn=>btn.addEventListener('click',()=>{
+  document.querySelectorAll('.category').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const filter=btn.dataset.filter;
+  document.querySelectorAll('.tool-card').forEach(card=>{
+    card.style.display=filter==='all'||card.dataset.kind===filter?'flex':'none';
+  });
+}));
+
+function chooseTool(name){
+  showToast(name+' selected — connect your converter backend here.');
 }
-fileInput.addEventListener('change',()=>handleFile(fileInput.files[0]));
-['dragenter','dragover'].forEach(e=>zone.addEventListener(e,ev=>{ev.preventDefault();zone.classList.add('dragging');}));
-['dragleave','drop'].forEach(e=>zone.addEventListener(e,ev=>{ev.preventDefault();zone.classList.remove('dragging');}));
-zone.addEventListener('drop',ev=>{if(ev.dataTransfer.files.length){try{fileInput.files=ev.dataTransfer.files}catch(e){} handleFile(ev.dataTransfer.files[0]);}});
-document.querySelectorAll('.category').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.category').forEach(b=>b.classList.remove('active'));btn.classList.add('active');const filter=btn.dataset.filter;document.querySelectorAll('.tool-card').forEach(card=>{card.style.display=filter==='all'||card.dataset.kind===filter?'flex':'none';});}));
-function chooseTool(name){showToast(name+' selected — connect your converter backend here.');}
-function showToast(message){const t=document.getElementById('toast');t.textContent=message;t.style.display='block';setTimeout(()=>t.style.display='none',2600);}
+
+function showToast(message){
+  const t=document.getElementById('toast');
+  t.textContent=message;
+  t.style.display='block';
+  setTimeout(()=>t.style.display='none',2600);
+}
 </script>
 </body>
 </html>
