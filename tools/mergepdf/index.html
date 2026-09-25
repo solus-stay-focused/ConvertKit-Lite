@@ -7,6 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.5.207/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.0/jspdf.umd.min.js"></script>
 <style>
   :root{
     --bg:#0b0e1e;
@@ -270,6 +272,7 @@
       <span class="spinner"></span>
       <span class="btn-label">Merge PDFs</span>
     </button>
+    <div id="mergeStatus" style="display:none;text-align:center;margin-top:10px;font-size:13px;opacity:.82;line-height:1.45"></div>
 
     <div id="result">
       <div class="result-icon">✓</div>
@@ -318,6 +321,7 @@
   const downloadLink = document.getElementById('downloadLink');
   const resetBtn   = document.getElementById('resetBtn');
   const errorBox   = document.getElementById('errorBox');
+  const mergeStatus = document.getElementById('mergeStatus');
 
   let files = []; // { id, file }
   let idCounter = 0;
@@ -330,6 +334,20 @@
   function clearError(){
     errorBox.style.display = 'none';
     errorBox.textContent = '';
+  }
+
+  function setMergeStatus(message){
+    mergeStatus.textContent = message || '';
+    mergeStatus.style.display = message ? 'block' : 'none';
+  }
+
+  function setButtonLabel(message){
+    const label = mergeBtn.querySelector('.btn-label');
+    if (label) label.textContent = message;
+  }
+
+  function yieldToBrowser(){
+    return new Promise(resolve => requestAnimationFrame(() => setTimeout(resolve, 0)));
   }
 
   function formatSize(bytes){
@@ -438,41 +456,187 @@
   });
 
   // Merge
+  let downloadUrl = null;
+
+  // PDF.js is used only as a fallback. pdf-lib is faster and preserves
+  // the original PDF content when the source files are well-formed.
+  if (window.pdfjsLib) {
+    // Keep the worker exactly the same version as pdf.min.js.
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+      'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.5.207/pdf.worker.min.js';
+  }
+
+  function bytesToArrayBuffer(file) {
+    return file.arrayBuffer();
+  }
+
+  async function mergeWithPdfLib() {
+    const mergedPdf = await PDFDocument.create();
+
+    for (let fileIndex = 0; fileIndex < files.length; fileIndex++) {
+      const item = files[fileIndex];
+      setButtonLabel('Processing…');
+      setMergeStatus(`Reading PDF ${fileIndex + 1} of ${files.length}: ${item.file.name}`);
+      await yieldToBrowser();
+
+      const arrayBuffer = await bytesToArrayBuffer(item.file);
+      const srcDoc = await PDFDocument.load(arrayBuffer, {
+        ignoreEncryption: true
+      });
+
+      const pageIndices = srcDoc.getPageIndices();
+      setMergeStatus(`Merging PDF ${fileIndex + 1} of ${files.length}: ${item.file.name} (${pageIndices.length} pages)`);
+      await yieldToBrowser();
+
+      const copiedPages = await mergedPdf.copyPages(srcDoc, pageIndices);
+      copiedPages.forEach(page => mergedPdf.addPage(page));
+      await yieldToBrowser();
+    }
+
+    setMergeStatus('Creating the merged PDF…');
+    await yieldToBrowser();
+    return await mergedPdf.save();
+  }
+
+  // Fallback for PDFs that PDF-LIB can open but cannot copy because of
+  // malformed/missing internal PDF objects. PDF.js is much more tolerant
+  // of such files and can render their pages.
+  async function mergeByRendering() {
+    if (!window.pdfjsLib || !window.jspdf) {
+      throw new Error('PDF fallback libraries did not load. Please make sure you are online and reload this page.');
+    }
+
+    const { jsPDF } = window.jspdf;
+    let output = null;
+    let processedPages = 0;
+
+    for (let fileIndex = 0; fileIndex < files.length; fileIndex++) {
+      const item = files[fileIndex];
+      const data = new Uint8Array(await bytesToArrayBuffer(item.file));
+
+      setButtonLabel('Compatibility mode…');
+      setMergeStatus(`Opening PDF ${fileIndex + 1} of ${files.length}: ${item.file.name}`);
+      await yieldToBrowser();
+
+      let loadingTask;
+      try {
+        loadingTask = pdfjsLib.getDocument({ data });
+      } catch (err) {
+        throw new Error(`Could not open "${item.file.name}" with the PDF reader.`);
+      }
+
+      let pdf;
+      try {
+        pdf = await loadingTask.promise;
+      } catch (err) {
+        throw new Error(`Could not read "${item.file.name}": ${err && err.message ? err.message : 'PDF.js failed to read the file.'}`);
+      }
+
+      for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
+        setMergeStatus(`Rendering ${item.file.name} — page ${pageNumber} of ${pdf.numPages} (PDF ${fileIndex + 1}/${files.length})`);
+        await yieldToBrowser();
+
+        const page = await pdf.getPage(pageNumber);
+        const baseViewport = page.getViewport({ scale: 1 });
+        const scale = 1.25;
+        const viewport = page.getViewport({ scale });
+
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d', { alpha: false, willReadFrequently: false });
+        if (!context) throw new Error(`Your browser could not create a canvas for page ${pageNumber} of "${item.file.name}".`);
+
+        canvas.width = Math.ceil(viewport.width);
+        canvas.height = Math.ceil(viewport.height);
+
+        await page.render({ canvasContext: context, viewport }).promise;
+
+        const widthMm = baseViewport.width * 25.4 / 72;
+        const heightMm = baseViewport.height * 25.4 / 72;
+        const orientation = widthMm > heightMm ? 'landscape' : 'portrait';
+
+        if (!output) {
+          output = new jsPDF({ unit: 'mm', format: [widthMm, heightMm], orientation, compress: true });
+        } else {
+          output.addPage([widthMm, heightMm], orientation);
+        }
+
+        const imageData = canvas.toDataURL('image/jpeg', 0.84);
+        output.addImage(imageData, 'JPEG', 0, 0, widthMm, heightMm, undefined, 'FAST');
+
+        processedPages++;
+        canvas.width = 1;
+        canvas.height = 1;
+        if (page.cleanup) page.cleanup();
+        await yieldToBrowser();
+      }
+
+      if (pdf.cleanup) pdf.cleanup();
+      if (pdf.destroy) await pdf.destroy();
+    }
+
+    if (!output || processedPages === 0) {
+      throw new Error('No readable pages were found in the selected PDFs.');
+    }
+
+    setMergeStatus(`Building final PDF — ${processedPages} pages processed…`);
+    await yieldToBrowser();
+    return output.output('arraybuffer');
+  }
+
   mergeBtn.addEventListener('click', async () => {
     if (files.length < 2) return;
+
     clearError();
+    resultBox.style.display = 'none';
+    setMergeStatus('Starting…');
+    setButtonLabel('Processing…');
     mergeBtn.classList.add('loading');
     mergeBtn.disabled = true;
 
     try {
-      const mergedPdf = await PDFDocument.create();
+      let mergedBytes;
+      let usedFallback = false;
 
-      for (const item of files){
-        const arrayBuffer = await item.file.arrayBuffer();
-        let srcDoc;
-        try {
-          srcDoc = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
-        } catch (err){
-          throw new Error(`Could not read "${item.file.name}". It may be corrupted or password-protected.`);
-        }
-        const copiedPages = await mergedPdf.copyPages(srcDoc, srcDoc.getPageIndices());
-        copiedPages.forEach(page => mergedPdf.addPage(page));
+      // First try the normal lossless PDF merge.
+      try {
+        mergedBytes = await mergeWithPdfLib();
+      } catch (pdfLibError) {
+        console.warn('PDF-LIB merge failed. Trying PDF.js fallback:', pdfLibError);
+
+        // If a malformed PDF triggers the pdf-lib error, render pages with
+        // PDF.js and rebuild the document so the merge can still complete.
+        usedFallback = true;
+        mergedBytes = await mergeByRendering();
       }
 
-      const mergedBytes = await mergedPdf.save();
       const blob = new Blob([mergedBytes], { type: 'application/pdf' });
-      const url = URL.createObjectURL(blob);
 
-      downloadLink.href = url;
-      resultMeta.textContent = `${files.length} files combined into one PDF (${formatSize(blob.size)})`;
+      if (downloadUrl) URL.revokeObjectURL(downloadUrl);
+      downloadUrl = URL.createObjectURL(blob);
+
+      downloadLink.href = downloadUrl;
+      resultMeta.textContent =
+        `${files.length} files combined into one PDF (${formatSize(blob.size)})` +
+        (usedFallback ? ' — compatibility mode used' : '');
+
       resultBox.style.display = 'block';
-      resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      resultBox.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest'
+      });
 
-    } catch (err){
-      showError(err.message || 'Something went wrong while merging. Please try again.');
+    } catch (err) {
+      console.error('PDF merge error:', err);
+      showError(
+        err && err.message
+          ? err.message
+          : 'Something went wrong while merging. Please try again.'
+      );
     } finally {
       mergeBtn.classList.remove('loading');
       mergeBtn.disabled = files.length < 2;
+      setMergeStatus('');
+      setButtonLabel('Merge PDFs');
     }
   });
 
@@ -481,6 +645,14 @@
     renderList();
     resultBox.style.display = 'none';
     clearError();
+    setMergeStatus('');
+    setButtonLabel('Merge PDFs');
+
+    if (downloadUrl) {
+      URL.revokeObjectURL(downloadUrl);
+      downloadUrl = null;
+    }
+    downloadLink.removeAttribute('href');
   });
 
 })();
