@@ -23,16 +23,67 @@ nav{display:flex;align-items:center;gap:32px;font-size:13px;color:#c4d6f4}nav a{
 h1{font-size:43px;line-height:1.12;letter-spacing:-1.8px;margin:16px 0 13px}h1 .gradient{background:linear-gradient(90deg,#2e8bff,#ad5bff);-webkit-background-clip:text;background-clip:text;color:transparent}
 .hero-copy p{max-width:570px;color:#c4d6ef;font-size:15px;line-height:1.65;margin:0}
 .checks{display:flex;flex-wrap:wrap;gap:25px;margin-top:22px;color:#dce9ff;font-size:12px}.checks span{display:flex;align-items:center;gap:10px}.checks i{font-style:normal;display:grid;place-items:center;width:21px;height:21px;border-radius:50%;background:#2d70f2;color:white;font-weight:800}
-.upload{border:1px solid #267cff;border-radius:14px;padding:14px;background:linear-gradient(145deg,#0a244b,#06162f);box-shadow:0 0 35px rgba(25,89,255,.13)}
-.dropzone{min-height:242px;border:1px dashed #5b85c0;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:25px}
-.cloud{font-size:48px;color:#7771ff;line-height:1;margin-bottom:10px}.dropzone strong{font-size:14px}.dropzone small{color:#91acd4;margin:8px 0 17px}
-.choose{border:0;border-radius:9px;background:linear-gradient(90deg,#4c65ff,#7545f3);color:white;font-weight:700;padding:12px 54px;cursor:pointer}
-.file-info{font-size:11px;color:#9bb7dd;margin-top:13px}input[type=file]{display:none}
+/* Animated conversion hero */
+.upload{position:relative;min-height:300px;border:0;border-radius:20px;background:transparent;overflow:visible;box-shadow:none}
+.dropzone{position:relative;min-height:300px;border:0;border-radius:18px;display:block;padding:0;background:radial-gradient(circle at 50% 48%,rgba(74,41,132,.20),transparent 37%),radial-gradient(circle at 50% 50%,rgba(0,126,255,.08),transparent 56%);overflow:hidden}
+.dropzone:before,.dropzone:after{content:"";position:absolute;left:50%;top:53%;border:1px solid rgba(124,39,155,.22);border-radius:50%;transform:translate(-50%,-50%);pointer-events:none}
+.dropzone:before{width:260px;height:260px;box-shadow:0 0 55px rgba(169,38,255,.08)}
+.dropzone:after{width:390px;height:390px;border-color:rgba(255,48,111,.12)}
+.converter-rings{position:absolute;inset:0;pointer-events:none}
+.converter-rings span{position:absolute;left:50%;top:53%;border:1px solid rgba(114,50,173,.25);border-radius:50%;transform:translate(-50%,-50%);animation:ringPulse 4s ease-in-out infinite}
+.converter-rings span:nth-child(1){width:175px;height:175px}
+.converter-rings span:nth-child(2){width:285px;height:285px;animation-delay:.7s}
+.converter-rings span:nth-child(3){width:400px;height:400px;animation-delay:1.4s}
+.converter-particles{position:absolute;inset:0;pointer-events:none}
+.converter-particles i{position:absolute;width:4px;height:4px;border-radius:50%;background:#28dfff;box-shadow:0 0 10px #28dfff;animation:particleFloat 3.8s ease-in-out infinite}
+.converter-particles i:nth-child(1){left:16%;top:46%}.converter-particles i:nth-child(2){left:24%;top:20%;background:#b85cff;box-shadow:0 0 10px #b85cff;animation-delay:.6s}.converter-particles i:nth-child(3){left:50%;top:16%;animation-delay:1.2s}.converter-particles i:nth-child(4){right:16%;top:43%;animation-delay:1.8s}.converter-particles i:nth-child(5){right:27%;top:20%;background:#d25cff;box-shadow:0 0 10px #d25cff;animation-delay:2.3s}.converter-particles i:nth-child(6){left:34%;bottom:15%;animation-delay:2.8s}
+.converter-stage{position:absolute;inset:0;display:flex;align-items:flex-start;justify-content:center;gap:78px;padding-top:25px}
+.format-card{position:relative;width:194px;height:228px;border:1px solid var(--card-accent,#ff3976);border-radius:22px;background:linear-gradient(145deg,rgba(13,17,37,.94),rgba(6,9,23,.96));box-shadow:0 0 28px rgba(255,37,113,.13),inset 0 0 25px rgba(255,255,255,.025);display:flex;flex-direction:column;align-items:center;padding-top:19px;transition:transform .35s ease,border-color .35s ease,box-shadow .35s ease}
+.format-card.output{--card-accent:#c13cff;box-shadow:0 0 28px rgba(193,60,255,.13),inset 0 0 25px rgba(255,255,255,.025)}
+.format-card:hover{transform:translateY(-4px)}
+.format-inner{width:166px;height:198px;border:1px solid rgba(105,126,177,.22);border-radius:15px;display:flex;flex-direction:column;align-items:center;padding-top:8px;position:relative}
+.format-icon-wrap{width:78px;height:78px;border:1px solid #16bfff;border-radius:19px;display:grid;place-items:center;margin-bottom:9px;box-shadow:0 0 16px rgba(0,194,255,.12),inset 0 0 12px rgba(0,194,255,.05)}
+.output .format-icon-wrap{border-color:#e04cff;box-shadow:0 0 16px rgba(224,76,255,.12),inset 0 0 12px rgba(224,76,255,.05)}
+.format-icon-wrap svg{width:37px;height:37px;color:#24d4ff}.output .format-icon-wrap svg{color:#ef65ff}
+.format-label{font-size:11px;letter-spacing:3px;color:#87c9ed;font-weight:800;margin-bottom:11px}.output .format-label{color:#cfa5f3}
+.format-name{font-size:25px;line-height:1;font-weight:900;letter-spacing:1px;color:#fff;text-shadow:0 0 12px rgba(255,255,255,.16)}
+.format-ready{margin-top:13px;font-size:9px;letter-spacing:1px;color:#ff6b9a;font-weight:800}.format-ready:before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:#ff3976;box-shadow:0 0 8px #ff3976;margin-right:7px}
+.format-tab{position:absolute;bottom:-1px;width:42px;height:18px;border-radius:20px 20px 0 0;border:1px solid #1668a4;border-bottom:0;background:#081b38}
+.converter-core{position:absolute;left:50%;top:91px;transform:translateX(-50%);width:78px;height:78px;border-radius:50%;display:grid;place-items:center;z-index:5}
+.converter-core:before,.converter-core:after{content:"";position:absolute;border-radius:50%;border:1px solid rgba(255,56,139,.35);inset:0;animation:corePulse 2.2s ease-in-out infinite}
+.converter-core:after{inset:8px;border-color:rgba(41,206,255,.5);animation-delay:.3s}
+.core-button{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 40% 35%,#28346f,#111538 65%,#0b0d20);border:1px solid #ff3b96;box-shadow:0 0 18px rgba(255,44,143,.5),inset 0 0 15px rgba(36,212,255,.12);position:relative;z-index:2;cursor:pointer;color:#fff;font-size:29px;line-height:1}
+.core-button span{display:block;transform:translateY(-1px)}
+.convert-label{position:absolute;top:83px;left:50%;transform:translateX(-50%);z-index:6;margin-top:68px;font-size:9px;letter-spacing:3px;color:#bcd7f2;font-weight:800;white-space:nowrap;text-shadow:0 0 10px rgba(50,190,255,.25)}
+.convert-line{position:absolute;top:132px;height:1px;left:calc(50% - 205px);right:calc(50% - 205px);background:linear-gradient(90deg,transparent,#ff3976 18%,#ca42ff 50%,#ff3976 82%,transparent);opacity:.7;box-shadow:0 0 9px rgba(255,50,155,.6)}
+.convert-line:after{content:"";position:absolute;left:0;top:-2px;width:6px;height:6px;border-radius:50%;background:#3ee7ff;box-shadow:0 0 12px #3ee7ff;animation:travelDot 2.1s linear infinite}
+.file-info{position:absolute;bottom:0;left:50%;transform:translateX(-50%);font-size:10px;color:#7598c6;white-space:nowrap;z-index:8}
+.choose{position:absolute;opacity:0;pointer-events:none}
+input[type=file]{display:none}
+@keyframes ringPulse{0%,100%{opacity:.25;transform:translate(-50%,-50%) scale(.98)}50%{opacity:.55;transform:translate(-50%,-50%) scale(1.03)}}
+@keyframes corePulse{0%,100%{transform:scale(.95);opacity:.55}50%{transform:scale(1.08);opacity:1}}
+@keyframes travelDot{from{left:0}to{left:100%}}
+@keyframes particleFloat{0%,100%{transform:translate(0,0);opacity:.45}50%{transform:translate(8px,-13px);opacity:1}}
+@media(max-width:950px){.converter-stage{gap:55px}.format-card{width:180px}.convert-line{left:calc(50% - 190px);right:calc(50% - 190px)}}
+@media(max-width:560px){.upload,.dropzone{min-height:520px}.converter-stage{gap:14px;padding-top:35px}.format-card{width:142px;height:210px}.format-inner{width:122px;height:180px}.format-icon-wrap{width:62px;height:62px}.format-icon-wrap svg{width:30px;height:30px}.format-name{font-size:20px}.converter-core{top:240px}.convert-label{top:232px}.convert-line{top:278px;left:18%;right:18%}.dropzone:after{width:330px;height:330px}}
+
 .categories{display:grid;grid-template-columns:repeat(7,1fr);gap:12px;margin:0 0 24px}
 .category{border:1px solid #194b87;border-radius:10px;background:linear-gradient(145deg,#0a2245,#071932);color:#d8e6ff;padding:12px 5px;cursor:pointer;text-align:center;transition:.2s}
 .category:hover,.category.active{border-color:#2d8cff;box-shadow:0 0 23px rgba(41,113,255,.25);background:linear-gradient(145deg,#102d59,#091d3b)}
-.category .cat-icon{display:grid;place-items:center;width:35px;height:35px;margin:0 auto 9px;border-radius:8px;background:#477cff;font-size:20px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.14),0 5px 12px rgba(0,0,0,.18)}
-.category:nth-child(2) .cat-icon{background:#2bd9c1}.category:nth-child(3) .cat-icon{background:#f24e82}.category:nth-child(4) .cat-icon{background:#9654f4}.category:nth-child(5) .cat-icon{background:#347ff2}.category:nth-child(6) .cat-icon{background:#ff9c3e}.category:nth-child(7) .cat-icon{background:#35cdbd}
+.category .cat-icon{
+  display:grid;place-items:center;width:38px;height:38px;margin:0 auto 9px;
+  border-radius:10px;font-size:20px;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.20),0 6px 16px rgba(0,0,0,.22);
+  transition:transform .2s ease,filter .2s ease;
+}
+.category:hover .cat-icon{transform:scale(1.08);filter:brightness(1.1)}
+.category:nth-child(1) .cat-icon{background:linear-gradient(135deg,#5264ff,#8b5cf6)}
+.category:nth-child(2) .cat-icon{background:linear-gradient(135deg,#10cdb9,#38e6c8)}
+.category:nth-child(3) .cat-icon{background:linear-gradient(135deg,#ff3976,#ff4fa0)}
+.category:nth-child(4) .cat-icon{background:linear-gradient(135deg,#8b3ff2,#c34dff)}
+.category:nth-child(5) .cat-icon{background:linear-gradient(135deg,#287cff,#24b7ff)}
+.category:nth-child(6) .cat-icon{background:linear-gradient(135deg,#ff8a24,#ffc044)}
+.category:nth-child(7) .cat-icon{background:linear-gradient(135deg,#00b8c8,#36dfca)}
 .category b{font-size:13px}
 .phase{border:1px solid #123f75;border-radius:14px;background:linear-gradient(145deg,#061b38,#06152d);padding:14px 10px 10px;margin:18px 0 24px}
 .phase-header{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:0 5px 14px}
@@ -40,14 +91,51 @@ h1{font-size:43px;line-height:1.12;letter-spacing:-1.8px;margin:16px 0 13px}h1 .
 .phase-title h2{font-size:15px;margin:0;font-weight:700}.phase-title h2 span{font-size:12px;color:#b6c9e8;font-weight:400}.phase-title p{font-size:11px;color:#9bb7df;margin:7px 0 0}
 .tool-count{font-size:11px;color:#7ce0e5;border:1px solid #126a76;border-radius:18px;padding:8px 12px;white-space:nowrap}
 .tools-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
-.tool-card{display:flex;align-items:center;gap:9px;min-width:0;border:1px solid #194a84;border-radius:10px;background:linear-gradient(145deg,#0b254a,#071a35);color:white;text-align:left;padding:10px;cursor:pointer;transition:.2s}
-.tool-card:hover{transform:translateY(-2px);border-color:#5b91ff;background:#102e59}.tool-icon{flex:0 0 35px;width:35px;height:35px;border-radius:8px;display:grid;place-items:center;font-size:20px}
-.pink{background:#f04778}.mint{background:#25d7c0}.blue{background:#347ff2}.purple{background:#8c4ee9}
+.tool-card{
+  display:flex;align-items:center;gap:10px;min-width:0;
+  border:1px solid #194a84;border-radius:11px;
+  background:linear-gradient(145deg,#0b254a,#071a35);
+  color:white;text-align:left;padding:10px;cursor:pointer;
+  transition:transform .22s ease,border-color .22s ease,background .22s ease,box-shadow .22s ease
+}
+.tool-card:hover{
+  transform:translateY(-3px);border-color:#4b9cff;
+  background:linear-gradient(145deg,#10315d,#0a2142);
+  box-shadow:0 8px 25px rgba(30,120,255,.15),0 0 15px rgba(50,120,255,.08)
+}
+.tool-icon{
+  position:relative;flex:0 0 38px;width:38px;height:38px;border-radius:10px;
+  display:grid;place-items:center;font-size:20px;overflow:hidden;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.20),0 5px 15px rgba(0,0,0,.25);
+  transition:transform .22s ease,filter .22s ease,box-shadow .22s ease
+}
+.tool-card:hover .tool-icon{
+  transform:scale(1.08);filter:brightness(1.12);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.28),0 7px 18px rgba(0,0,0,.3)
+}
+.tool-icon svg{width:21px;height:21px;display:block;color:#fff;position:relative;z-index:2}
+.pink{background:linear-gradient(135deg,#ff3976,#ff4fa0)}
+.mint{background:linear-gradient(135deg,#10cdb9,#38e6c8)}
+.blue{background:linear-gradient(135deg,#287cff,#24b7ff)}
+.purple{background:linear-gradient(135deg,#7b3ff2,#c34dff)}
+.orange{background:linear-gradient(135deg,#ff8a24,#ffc044)}
+.cyan{background:linear-gradient(135deg,#00b8ff,#25e0d0)}
+.indigo{background:linear-gradient(135deg,#5264ff,#8b5cf6)}
+.green{background:linear-gradient(135deg,#10b981,#48e59d)}
+.red{background:linear-gradient(135deg,#ff405d,#ff6b8a)}
+.tool-text{min-width:0;flex:1}
+.tool-text strong{display:block;font-size:11px;font-weight:700;color:#f5f8ff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tool-text small{display:block;color:#9bb6df;font-size:9px;margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.arrow{font-size:17px;color:#b7d0f3;transition:transform .2s ease,color .2s ease}
+.tool-card:hover .arrow{transform:translateX(3px);color:#66a9ff}
 
-.tool-icon svg{width:21px;height:21px;display:block;color:#fff}
-.tool-card .tool-icon{box-shadow:inset 0 0 0 1px rgba(255,255,255,.12),0 5px 12px rgba(0,0,0,.16)}
-.tool-card:hover .tool-icon{filter:brightness(1.08)}
-.tool-text{min-width:0;flex:1}.tool-text strong{display:block;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.tool-text small{display:block;color:#9bb6df;font-size:9px;margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.arrow{font-size:16px;color:#b7d0f3}
+/* Individual colorful tool icon palette */
+.tools-grid .tool-card:nth-child(5n+1) .tool-icon{background:linear-gradient(135deg,#ff3976,#ff4fa0)}
+.tools-grid .tool-card:nth-child(5n+2) .tool-icon{background:linear-gradient(135deg,#ff8a24,#ffc044)}
+.tools-grid .tool-card:nth-child(5n+3) .tool-icon{background:linear-gradient(135deg,#c33cff,#ff4fa0)}
+.tools-grid .tool-card:nth-child(5n+4) .tool-icon{background:linear-gradient(135deg,#10cdb9,#38e6c8)}
+.tools-grid .tool-card:nth-child(5n) .tool-icon{background:linear-gradient(135deg,#287cff,#24b7ff)}
+
 .features{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid #164d8b;border-radius:13px;background:#061a36;padding:19px 10px;margin:20px 0 32px}
 .feature{display:flex;align-items:center;gap:13px;padding:0 20px;border-right:1px solid #173e6c}.feature:last-child{border:0}.feature-icon{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:#10347a;color:#5d9cff;font-size:23px;flex:0 0 auto}.feature b{display:block;font-size:11px}.feature small{display:block;color:#9db7dd;font-size:9px;margin-top:6px}
 footer{border-top:1px solid #12345d;padding:24px 0 30px;display:flex;align-items:center;justify-content:space-between;color:#9db7dd;font-size:11px}footer .brand{font-size:16px}footer .brand img{width:29px;height:29px}footer nav{gap:28px}footer nav a{border:0;padding:0;font-size:11px}
@@ -68,7 +156,40 @@ footer{border-top:1px solid #12345d;padding:24px 0 30px;display:flex;align-items
 <h1>All Your File Conversions<br><span class="gradient">in One Place</span></h1>
 <p>ConvertKit Lite makes it simple to convert your files — images, documents, audio, video and more. Fast, secure and free.</p>
 <div class="checks"><span><i>✓</i>No registration required</span><span><i>✓</i>Secure & private</span><span><i>✓</i>Works on any device</span></div></div>
-<div class="upload"><div class="dropzone" id="dropzone"><div class="cloud">☁</div><strong id="drop-title">Drag & drop your file here</strong><small>or</small><button class="choose" onclick="document.getElementById('file').click()">Choose File</button><input id="file" type="file"><div class="file-info">Supports multiple formats &nbsp;•&nbsp; Max file size: 100MB</div></div></div>
+<div class="upload">
+  <div class="dropzone" id="dropzone" title="Click the source card to choose a file">
+    <div class="converter-rings"><span></span><span></span><span></span></div>
+    <div class="converter-particles"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="convert-line"></div>
+    <div class="converter-stage">
+      <button class="format-card source" id="sourceCard" type="button" onclick="document.getElementById('file').click()">
+        <div class="format-inner">
+          <div class="format-icon-wrap" id="sourceIcon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M14 2v6h6M9 14h6M9 17h6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></div>
+          <div class="format-label">SOURCE</div>
+          <div class="format-name" id="sourceFormat">MOV</div>
+          <div class="format-ready" id="sourceStatus">READY</div>
+          <span class="format-tab"></span>
+        </div>
+      </button>
+      <div class="converter-core">
+        <button class="core-button" type="button" onclick="document.getElementById('file').click()" aria-label="Choose file"><span>⇄</span></button>
+        <div class="convert-label">CONVERTING</div>
+      </div>
+      <div class="format-card output" id="outputCard">
+        <div class="format-inner">
+          <div class="format-icon-wrap" id="outputIcon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M14 2v6h6M8 16l3-3 2 2 2-2 2 3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="format-label">OUTPUT</div>
+          <div class="format-name" id="outputFormat">MP4</div>
+          <div class="format-ready">READY</div>
+          <span class="format-tab"></span>
+        </div>
+      </div>
+    </div>
+    <button class="choose" type="button" onclick="document.getElementById('file').click()">Choose File</button>
+    <input id="file" type="file">
+    <div class="file-info" id="drop-title">Click the source card or center button to choose a file</div>
+  </div>
+</div>
 </section>
 <div class="categories" id="tools">
 <button class="category active" data-filter="all"><span class="cat-icon">▦</span><b>All Tools</b></button>
@@ -278,11 +399,53 @@ footer{border-top:1px solid #12345d;padding:24px 0 30px;display:flex;align-items
 <div class="toast" id="toast"></div>
 <script>
 const fileInput=document.getElementById('file');
-fileInput.addEventListener('change',()=>{if(fileInput.files[0]){document.getElementById('drop-title').textContent='Selected: '+fileInput.files[0].name;showToast('File selected successfully');}});
+const sourceFormat=document.getElementById('sourceFormat');
+const outputFormat=document.getElementById('outputFormat');
+const sourceStatus=document.getElementById('sourceStatus');
+const dropTitle=document.getElementById('drop-title');
 const zone=document.getElementById('dropzone');
-['dragenter','dragover'].forEach(e=>zone.addEventListener(e,ev=>{ev.preventDefault();zone.style.borderColor='#70a2ff';}));
-['dragleave','drop'].forEach(e=>zone.addEventListener(e,ev=>{ev.preventDefault();zone.style.borderColor='#5b85c0';}));
-zone.addEventListener('drop',ev=>{if(ev.dataTransfer.files.length){fileInput.files=ev.dataTransfer.files;document.getElementById('drop-title').textContent='Selected: '+ev.dataTransfer.files[0].name;showToast('File selected successfully');}});
+
+const conversionPairs=[
+  ['MOV','MP4','video'],['JPG','PDF','image'],['PNG','WEBP','image'],['PDF','JPG','pdf'],
+  ['DOCX','PDF','pdf'],['MP4','MP3','audio'],['M4A','MP3','audio'],['XLSX','CSV','data']
+];
+let pairIndex=0;
+let pairTimer;
+function setConversionPair(pair){
+  sourceFormat.textContent=pair[0];
+  outputFormat.textContent=pair[1];
+  sourceStatus.textContent='READY';
+}
+function startPairAnimation(){
+  clearInterval(pairTimer);
+  pairTimer=setInterval(()=>{
+    if(fileInput.files.length) return;
+    pairIndex=(pairIndex+1)%conversionPairs.length;
+    const source=document.getElementById('sourceCard');
+    const output=document.getElementById('outputCard');
+    source.style.transform='translateX(-5px) scale(.98)';
+    output.style.transform='translateX(5px) scale(.98)';
+    setTimeout(()=>{
+      setConversionPair(conversionPairs[pairIndex]);
+      source.style.transform=''; output.style.transform='';
+    },180);
+  },3200);
+}
+setConversionPair(conversionPairs[0]);
+startPairAnimation();
+
+function handleFile(file){
+  if(!file) return;
+  const ext=(file.name.split('.').pop()||'FILE').toUpperCase();
+  sourceFormat.textContent=ext.length>5 ? 'FILE' : ext;
+  sourceStatus.textContent='SELECTED';
+  dropTitle.textContent='Selected: '+file.name;
+  showToast('File selected successfully');
+}
+fileInput.addEventListener('change',()=>handleFile(fileInput.files[0]));
+['dragenter','dragover'].forEach(e=>zone.addEventListener(e,ev=>{ev.preventDefault();zone.classList.add('dragging');}));
+['dragleave','drop'].forEach(e=>zone.addEventListener(e,ev=>{ev.preventDefault();zone.classList.remove('dragging');}));
+zone.addEventListener('drop',ev=>{if(ev.dataTransfer.files.length){try{fileInput.files=ev.dataTransfer.files}catch(e){} handleFile(ev.dataTransfer.files[0]);}});
 document.querySelectorAll('.category').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.category').forEach(b=>b.classList.remove('active'));btn.classList.add('active');const filter=btn.dataset.filter;document.querySelectorAll('.tool-card').forEach(card=>{card.style.display=filter==='all'||card.dataset.kind===filter?'flex':'none';});}));
 function chooseTool(name){showToast(name+' selected — connect your converter backend here.');}
 function showToast(message){const t=document.getElementById('toast');t.textContent=message;t.style.display='block';setTimeout(()=>t.style.display='none',2600);}
