@@ -1,157 +1,273 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Edit & Create PDF</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs" type="module"></script>
-<script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ConvertKit Lite — All Your File Conversions in One Place</title>
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;background:#f5f7fb;color:#172033}
-header{background:#fff;border-bottom:1px solid #e5e9f2;padding:14px 20px;display:flex;gap:12px;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:20}
-.logo{font-weight:800;font-size:20px}.actions{display:flex;gap:8px;flex-wrap:wrap}
-button,.upload{border:0;border-radius:10px;padding:10px 14px;background:#eef2f8;color:#172033;font-weight:700;cursor:pointer}
-button.primary,.upload.primary{background:#2563eb;color:#fff}.danger{background:#fee2e2!important;color:#b91c1c!important}
-input[type=file]{display:none}
-main{max-width:1200px;margin:22px auto;padding:0 16px}
-.toolbar{background:#fff;border:1px solid #e3e8f1;border-radius:16px;padding:12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;box-shadow:0 6px 25px #00000008}
-.toolbar label{font-size:13px;font-weight:700}.toolbar input[type=color]{width:38px;height:34px;padding:2px;border:1px solid #ddd;border-radius:8px}
-.toolbar input[type=number]{width:68px;padding:9px;border:1px solid #dbe1ea;border-radius:8px}
-.workspace{margin-top:16px;display:grid;grid-template-columns:220px 1fr;gap:16px}
-.sidebar,.canvas-area{background:#fff;border:1px solid #e3e8f1;border-radius:16px}
-.sidebar{padding:12px;min-height:620px}.sidebar h3{margin:4px 4px 12px}
-.thumbs{display:flex;flex-direction:column;gap:10px;max-height:560px;overflow:auto}.thumb{border:2px solid transparent;border-radius:10px;padding:5px;background:#f7f8fb;cursor:pointer}.thumb.active{border-color:#2563eb}.thumb canvas{width:100%;display:block;background:#fff}
-.canvas-area{padding:18px;overflow:auto;min-height:620px}.empty{text-align:center;padding:130px 20px;color:#697386}.page-wrap{position:relative;margin:0 auto 20px;width:max-content;background:white;box-shadow:0 8px 30px #0002}.page-wrap canvas{display:block}.overlay{position:absolute;inset:0}.overlay-item{position:absolute;user-select:none;cursor:move;white-space:pre-wrap}.text-item{font-weight:500}.draw-layer{position:absolute;inset:0;pointer-events:none}
-.hint{font-size:13px;color:#667085;margin-top:8px}
-@media(max-width:800px){.workspace{grid-template-columns:1fr}.sidebar{min-height:auto}.thumbs{flex-direction:row;max-height:130px}.thumb{min-width:90px}.canvas-area{min-height:500px}}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+:root{--bg:#020c1e;--panel:#071a35;--panel2:#0a2142;--border:#174b88;--muted:#9bb8e0;--white:#f2f6ff;--blue:#2c83ff;--purple:#a35cff;}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:
+radial-gradient(ellipse at 83% 15%,rgba(21,71,145,.28),transparent 35%),
+linear-gradient(135deg,#020a19 0%,#03132b 60%,#061a39 100%);color:var(--white);font-family:Inter,Arial,sans-serif;min-height:100vh}
+body:after{content:"";position:fixed;inset:0;pointer-events:none;background:linear-gradient(140deg,transparent 70%,rgba(70,45,220,.17) 70%,transparent 85%)}
+a{color:inherit;text-decoration:none}button{font:inherit}.container{width:min(1180px,calc(100% - 48px));margin:auto}
+header{height:72px;border-bottom:1px solid #12345d;background:rgba(2,12,30,.92);backdrop-filter:blur(15px);position:sticky;top:0;z-index:20}
+.navbar{height:100%;display:flex;align-items:center;justify-content:space-between;gap:25px}
+.brand{display:flex;align-items:center;gap:11px;font-size:22px;font-weight:800;letter-spacing:-.8px;white-space:nowrap}
+.brand img{width:34px;height:34px;object-fit:contain}.brand .lite{color:#a46bff}
+nav{display:flex;align-items:center;gap:32px;font-size:13px;color:#c4d6f4}nav a{padding:27px 0 23px;border-bottom:2px solid transparent}nav a.active{color:white;border-color:#7257ff}
+.nav-actions{display:flex;align-items:center;gap:25px}.theme{font-size:22px;color:#9ebef0}.primary{border:0;border-radius:9px;color:white;font-weight:700;padding:11px 27px;background:linear-gradient(100deg,#2d82ff,#7c3ff0);box-shadow:0 8px 25px rgba(66,67,255,.2);cursor:pointer}
+.hero{display:grid;grid-template-columns:1.12fr .88fr;gap:58px;align-items:center;padding:43px 0 35px}
+.kicker{display:inline-flex;gap:12px;border:1px solid #2b5d97;border-radius:20px;padding:5px 14px;color:#d6e6ff;font-size:12px}
+h1{font-size:43px;line-height:1.12;letter-spacing:-1.8px;margin:16px 0 13px}h1 .gradient{background:linear-gradient(90deg,#2e8bff,#ad5bff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-copy p{max-width:570px;color:#c4d6ef;font-size:15px;line-height:1.65;margin:0}
+.checks{display:flex;flex-wrap:wrap;gap:25px;margin-top:22px;color:#dce9ff;font-size:12px}.checks span{display:flex;align-items:center;gap:10px}.checks i{font-style:normal;display:grid;place-items:center;width:21px;height:21px;border-radius:50%;background:#2d70f2;color:white;font-weight:800}
+/* Decorative conversion preview — no upload interaction */
+.upload{position:relative;min-height:300px;border:0;border-radius:20px;background:transparent;overflow:visible;box-shadow:none}
+.dropzone{position:relative;min-height:300px;border:0;border-radius:18px;display:block;padding:0;background:radial-gradient(circle at 50% 48%,rgba(74,41,132,.20),transparent 37%),radial-gradient(circle at 50% 50%,rgba(0,126,255,.08),transparent 56%);overflow:hidden}
+.dropzone:before,.dropzone:after{content:"";position:absolute;left:50%;top:53%;border:1px solid rgba(124,39,155,.22);border-radius:50%;transform:translate(-50%,-50%);pointer-events:none}
+.dropzone:before{width:260px;height:260px;box-shadow:0 0 55px rgba(169,38,255,.08)}
+.dropzone:after{width:390px;height:390px;border-color:rgba(255,48,111,.12)}
+.converter-rings{position:absolute;inset:0;pointer-events:none}
+.converter-rings span{position:absolute;left:50%;top:53%;border:1px solid rgba(114,50,173,.25);border-radius:50%;transform:translate(-50%,-50%);animation:ringPulse 4s ease-in-out infinite}
+.converter-rings span:nth-child(1){width:175px;height:175px}
+.converter-rings span:nth-child(2){width:285px;height:285px;animation-delay:.7s}
+.converter-rings span:nth-child(3){width:400px;height:400px;animation-delay:1.4s}
+.converter-particles{position:absolute;inset:0;pointer-events:none}
+.converter-particles i{position:absolute;width:4px;height:4px;border-radius:50%;background:#28dfff;box-shadow:0 0 10px #28dfff;animation:particleFloat 3.8s ease-in-out infinite}
+.converter-particles i:nth-child(1){left:16%;top:46%}.converter-particles i:nth-child(2){left:24%;top:20%;background:#b85cff;box-shadow:0 0 10px #b85cff;animation-delay:.6s}.converter-particles i:nth-child(3){left:50%;top:16%;animation-delay:1.2s}.converter-particles i:nth-child(4){right:16%;top:43%;animation-delay:1.8s}.converter-particles i:nth-child(5){right:27%;top:20%;background:#d25cff;box-shadow:0 0 10px #d25cff;animation-delay:2.3s}.converter-particles i:nth-child(6){left:34%;bottom:15%;animation-delay:2.8s}
+.converter-stage{position:absolute;inset:0;display:flex;align-items:flex-start;justify-content:center;gap:78px;padding-top:25px}
+.format-card{position:relative;width:194px;height:228px;border:1px solid var(--card-accent,#ff3976);border-radius:22px;background:linear-gradient(145deg,rgba(13,17,37,.94),rgba(6,9,23,.96));box-shadow:0 0 28px rgba(255,37,113,.13),inset 0 0 25px rgba(255,255,255,.025);display:flex;flex-direction:column;align-items:center;padding-top:19px;transition:transform .35s ease,border-color .35s ease,box-shadow .35s ease}
+.format-card.output{--card-accent:#c13cff;box-shadow:0 0 28px rgba(193,60,255,.13),inset 0 0 25px rgba(255,255,255,.025)}
+.format-inner{width:166px;height:198px;border:1px solid rgba(105,126,177,.22);border-radius:15px;display:flex;flex-direction:column;align-items:center;padding-top:8px;position:relative}
+.format-icon-wrap{width:78px;height:78px;border:1px solid #16bfff;border-radius:19px;display:grid;place-items:center;margin-bottom:9px;box-shadow:0 0 16px rgba(0,194,255,.12),inset 0 0 12px rgba(0,194,255,.05)}
+.output .format-icon-wrap{border-color:#e04cff;box-shadow:0 0 16px rgba(224,76,255,.12),inset 0 0 12px rgba(224,76,255,.05)}
+.format-icon-wrap svg{width:37px;height:37px;color:#24d4ff}.output .format-icon-wrap svg{color:#ef65ff}
+.format-label{font-size:11px;letter-spacing:3px;color:#87c9ed;font-weight:800;margin-bottom:11px}.output .format-label{color:#cfa5f3}
+.format-name{font-size:25px;line-height:1;font-weight:900;letter-spacing:1px;color:#fff;text-shadow:0 0 12px rgba(255,255,255,.16)}
+.format-ready{margin-top:13px;font-size:9px;letter-spacing:1px;color:#ff6b9a;font-weight:800}.format-ready:before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:#ff3976;box-shadow:0 0 8px #ff3976;margin-right:7px}
+.format-tab{position:absolute;bottom:-1px;width:42px;height:18px;border-radius:20px 20px 0 0;border:1px solid #1668a4;border-bottom:0;background:#081b38}
+.converter-core{position:absolute;left:50%;top:91px;transform:translateX(-50%);width:78px;height:78px;border-radius:50%;display:grid;place-items:center;z-index:5}
+.converter-core:before,.converter-core:after{content:"";position:absolute;border-radius:50%;border:1px solid rgba(255,56,139,.35);inset:0;animation:corePulse 2.2s ease-in-out infinite}
+.converter-core:after{inset:8px;border-color:rgba(41,206,255,.5);animation-delay:.3s}
+.core-button{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 40% 35%,#28346f,#111538 65%,#0b0d20);border:1px solid #ff3b96;box-shadow:0 0 18px rgba(255,44,143,.5),inset 0 0 15px rgba(36,212,255,.12);position:relative;z-index:2;color:#fff;font-size:29px;line-height:1}
+.core-button span{display:block;transform:translateY(-1px)}
+.convert-label{position:absolute;top:83px;left:50%;transform:translateX(-50%);z-index:6;margin-top:68px;font-size:9px;letter-spacing:3px;color:#bcd7f2;font-weight:800;white-space:nowrap;text-shadow:0 0 10px rgba(50,190,255,.25)}
+.convert-line{position:absolute;top:132px;height:1px;left:calc(50% - 205px);right:calc(50% - 205px);background:linear-gradient(90deg,transparent,#ff3976 18%,#ca42ff 50%,#ff3976 82%,transparent);opacity:.7;box-shadow:0 0 9px rgba(255,50,155,.6)}
+.convert-line:after{content:"";position:absolute;left:0;top:-2px;width:6px;height:6px;border-radius:50%;background:#3ee7ff;box-shadow:0 0 12px #3ee7ff;animation:travelDot 2.1s linear infinite}
+@keyframes ringPulse{0%,100%{opacity:.25;transform:translate(-50%,-50%) scale(.98)}50%{opacity:.55;transform:translate(-50%,-50%) scale(1.03)}}
+@keyframes corePulse{0%,100%{transform:scale(.95);opacity:.55}50%{transform:scale(1.08);opacity:1}}
+@keyframes travelDot{from{left:0}to{left:100%}}
+@keyframes particleFloat{0%,100%{transform:translate(0,0);opacity:.45}50%{transform:translate(8px,-13px);opacity:1}}
+@media(max-width:950px){.converter-stage{gap:55px}.format-card{width:180px}.convert-line{left:calc(50% - 190px);right:calc(50% - 190px)}}
+@media(max-width:560px){.upload,.dropzone{min-height:520px}.converter-stage{gap:14px;padding-top:35px}.format-card{width:142px;height:210px}.format-inner{width:122px;height:180px}.format-icon-wrap{width:62px;height:62px}.format-icon-wrap svg{width:30px;height:30px}.format-name{font-size:20px}.converter-core{top:240px}.convert-label{top:232px}.convert-line{top:278px;left:18%;right:18%}.dropzone:after{width:330px;height:330px}}
+.categories{display:grid;grid-template-columns:repeat(7,1fr);gap:12px;margin:0 0 24px}
+.category{border:1px solid #194b87;border-radius:10px;background:linear-gradient(145deg,#0a2245,#071932);color:#d8e6ff;padding:12px 5px;cursor:pointer;text-align:center;transition:.2s}
+.category:hover,.category.active{border-color:#2d8cff;box-shadow:0 0 23px rgba(41,113,255,.25);background:linear-gradient(145deg,#102d59,#091d3b)}
+.category .cat-icon{
+  display:grid;place-items:center;width:38px;height:38px;margin:0 auto 9px;
+  border-radius:10px;font-size:20px;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.20),0 6px 16px rgba(0,0,0,.22);
+  transition:transform .2s ease,filter .2s ease;
+}
+.category:hover .cat-icon{transform:scale(1.08);filter:brightness(1.1)}
+.category:nth-child(1) .cat-icon{background:linear-gradient(135deg,#5264ff,#8b5cf6)}
+.category:nth-child(2) .cat-icon{background:linear-gradient(135deg,#10cdb9,#38e6c8)}
+.category:nth-child(3) .cat-icon{background:linear-gradient(135deg,#ff3976,#ff4fa0)}
+.category:nth-child(4) .cat-icon{background:linear-gradient(135deg,#8b3ff2,#c34dff)}
+.category:nth-child(5) .cat-icon{background:linear-gradient(135deg,#287cff,#24b7ff)}
+.category:nth-child(6) .cat-icon{background:linear-gradient(135deg,#ff8a24,#ffc044)}
+.category:nth-child(7) .cat-icon{background:linear-gradient(135deg,#00b8c8,#36dfca)}
+.category b{font-size:13px}
+.phase{border:1px solid #123f75;border-radius:14px;background:linear-gradient(145deg,#061b38,#06152d);padding:14px 10px 10px;margin:18px 0 24px}
+.phase-header{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:0 5px 14px}
+.phase-title{display:flex;align-items:center;gap:15px}.phase-badge{border-radius:18px;background:linear-gradient(90deg,#426dff,#6045f0);padding:8px 14px;font-size:12px;font-weight:800;white-space:nowrap}
+.phase-title h2{font-size:15px;margin:0;font-weight:700}.phase-title h2 span{font-size:12px;color:#b6c9e8;font-weight:400}.phase-title p{font-size:11px;color:#9bb7df;margin:7px 0 0}
+.tool-count{font-size:11px;color:#7ce0e5;border:1px solid #126a76;border-radius:18px;padding:8px 12px;white-space:nowrap}
+.tools-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.tool-card{
+  display:flex;align-items:center;gap:10px;min-width:0;
+  border:1px solid #194a84;border-radius:11px;
+  background:linear-gradient(145deg,#0b254a,#071a35);
+  color:white;text-align:left;padding:10px;cursor:pointer;
+  transition:transform .22s ease,border-color .22s ease,background .22s ease,box-shadow .22s ease
+}
+.tool-card:hover{
+  transform:translateY(-3px);border-color:#4b9cff;
+  background:linear-gradient(145deg,#10315d,#0a2142);
+  box-shadow:0 8px 25px rgba(30,120,255,.15),0 0 15px rgba(50,120,255,.08)
+}
+.tool-icon{
+  position:relative;flex:0 0 38px;width:38px;height:38px;border-radius:10px;
+  display:grid;place-items:center;font-size:20px;overflow:hidden;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.20),0 5px 15px rgba(0,0,0,.25);
+  transition:transform .22s ease,filter .22s ease,box-shadow .22s ease
+}
+.tool-card:hover .tool-icon{
+  transform:scale(1.08);filter:brightness(1.12);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.28),0 7px 18px rgba(0,0,0,.3)
+}
+.tool-icon svg{width:21px;height:21px;display:block;color:#fff;position:relative;z-index:2}
+.pink{background:linear-gradient(135deg,#ff3976,#ff4fa0)}
+.mint{background:linear-gradient(135deg,#10cdb9,#38e6c8)}
+.blue{background:linear-gradient(135deg,#287cff,#24b7ff)}
+.purple{background:linear-gradient(135deg,#7b3ff2,#c34dff)}
+.orange{background:linear-gradient(135deg,#ff8a24,#ffc044)}
+.cyan{background:linear-gradient(135deg,#00b8ff,#25e0d0)}
+.indigo{background:linear-gradient(135deg,#5264ff,#8b5cf6)}
+.green{background:linear-gradient(135deg,#10b981,#48e59d)}
+.red{background:linear-gradient(135deg,#ff405d,#ff6b8a)}
+.tool-text{min-width:0;flex:1}
+.tool-text strong{display:block;font-size:11px;font-weight:700;color:#f5f8ff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tool-text small{display:block;color:#9bb6df;font-size:9px;margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.arrow{font-size:17px;color:#b7d0f3;transition:transform .2s ease,color .2s ease}
+.tool-card:hover .arrow{transform:translateX(3px);color:#66a9ff}
+
+/* Individual colorful tool icon palette */
+.tools-grid .tool-card:nth-child(5n+1) .tool-icon{background:linear-gradient(135deg,#ff3976,#ff4fa0)}
+.tools-grid .tool-card:nth-child(5n+2) .tool-icon{background:linear-gradient(135deg,#ff8a24,#ffc044)}
+.tools-grid .tool-card:nth-child(5n+3) .tool-icon{background:linear-gradient(135deg,#c33cff,#ff4fa0)}
+.tools-grid .tool-card:nth-child(5n+4) .tool-icon{background:linear-gradient(135deg,#10cdb9,#38e6c8)}
+.tools-grid .tool-card:nth-child(5n) .tool-icon{background:linear-gradient(135deg,#287cff,#24b7ff)}
+
+.features{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid #164d8b;border-radius:13px;background:#061a36;padding:19px 10px;margin:20px 0 32px}
+.feature{display:flex;align-items:center;gap:13px;padding:0 20px;border-right:1px solid #173e6c}.feature:last-child{border:0}.feature-icon{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:#10347a;color:#5d9cff;font-size:23px;flex:0 0 auto}.feature b{display:block;font-size:11px}.feature small{display:block;color:#9db7dd;font-size:9px;margin-top:6px}
+footer{border-top:1px solid #12345d;padding:24px 0 30px;display:flex;align-items:center;justify-content:space-between;color:#9db7dd;font-size:11px}footer .brand{font-size:16px}footer .brand img{width:29px;height:29px}footer nav{gap:28px}footer nav a{border:0;padding:0;font-size:11px}
+.toast{position:fixed;bottom:22px;right:22px;background:#102c54;border:1px solid #347cff;border-radius:10px;padding:13px 18px;color:white;display:none;z-index:50;box-shadow:0 10px 35px #0005}
+@media(max-width:950px){.hero{grid-template-columns:1fr;gap:30px}.tools-grid{grid-template-columns:repeat(2,1fr)}.categories{grid-template-columns:repeat(4,1fr)}.features{grid-template-columns:repeat(2,1fr);gap:20px}.feature:nth-child(2){border:0}nav{display:none}}
+@media(max-width:560px){.container{width:calc(100% - 24px)}h1{font-size:34px}.categories{grid-template-columns:repeat(2,1fr)}.tools-grid{grid-template-columns:1fr}.phase-header{align-items:flex-start}.phase-title{align-items:flex-start;flex-direction:column;gap:8px}.features{grid-template-columns:1fr}.feature{border:0}footer{flex-direction:column;gap:18px;text-align:center}}
 </style>
 </head>
 <body>
-<header>
-  <div class="logo">PDF Editor</div>
-  <div class="actions">
-    <label class="upload primary"><input id="fileInput" type="file" accept="application/pdf">Open PDF</label>
-    <button id="newPdf">New PDF</button>
-    <button class="primary" id="savePdf">Download PDF</button>
-  </div>
-</header>
-
-<main>
-  <div class="toolbar">
-    <button id="addText">Add Text</button>
-    <button id="draw">Draw</button>
-    <button id="erase">Erase</button>
-    <button id="addPage">Add Blank Page</button>
-    <button id="deletePage" class="danger">Delete Page</button>
-    <label>Text size <input id="fontSize" type="number" min="8" max="96" value="20"></label>
-    <label>Color <input id="color" type="color" value="#111827"></label>
-    <button id="zoomOut">−</button><span id="zoomLabel">100%</span><button id="zoomIn">+</button>
-  </div>
-  <div class="hint">Upload a PDF to annotate it, add text, draw, add/remove pages, or start a new PDF. Existing PDF text is preserved; this editor adds editable overlay content.</div>
-
-  <section class="workspace">
-    <aside class="sidebar">
-      <h3>Pages</h3>
-      <div id="thumbs" class="thumbs"></div>
-    </aside>
-    <section id="canvasArea" class="canvas-area">
-      <div class="empty" id="empty">
-        <h2>Edit or create a PDF</h2>
-        <p>Open a PDF or click “New PDF” to begin.</p>
-      </div>
-    </section>
-  </section>
+<header><div class="container navbar">
+<a class="brand" href="#"><img alt="ConvertKit Lite logo" src="data:image/png;base64,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"/>ConvertKit <span class="lite">Lite</span></a>
+<nav><a class="active" href="#">Home</a><a href="#tools">Tools</a><a href="#about">About</a><a href="#faq">FAQ</a></nav>
+<div class="nav-actions"><span class="theme">◔</span><a class="primary" href="#tools">Get Started</a></div>
+</div></header>
+<main class="container">
+<section class="hero">
+<div class="hero-copy"><h1>All Your File Conversions<br/><span class="gradient">in One Place</span></h1>
+<p>ConvertKit Lite makes it simple to convert your files — images, documents, audio, video and more. Fast, secure and free.</p>
+<div class="checks"><span><i>✓</i>No registration required</span><span><i>✓</i>Secure &amp; private</span><span><i>✓</i>Works on any device</span></div></div>
+<div aria-label="Conversion preview" class="upload">
+<div class="dropzone">
+<div class="converter-rings"><span></span><span></span><span></span></div>
+<div class="converter-particles"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+<div class="convert-line"></div>
+<div class="converter-stage">
+<div class="format-card source">
+<div class="format-inner">
+<div class="format-icon-wrap">
+<svg aria-hidden="true" viewbox="0 0 24 24"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.7"></path><path d="M14 2v6h6M9 14h6M9 17h6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.7"></path></svg>
+</div>
+<div class="format-label">SOURCE</div>
+<div class="format-name" id="sourceFormat">MOV</div>
+<div class="format-ready">READY</div>
+<span class="format-tab"></span>
+</div>
+</div>
+<div aria-hidden="true" class="converter-core">
+<div class="core-button"><span>⇄</span></div>
+</div>
+<div class="format-card output" id="outputCard">
+<div class="format-inner">
+<div class="format-icon-wrap">
+<svg aria-hidden="true" viewbox="0 0 24 24"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.7"></path><path d="M14 2v6h6M8 16l3-3 2 2 2-2 2 3" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7"></path></svg>
+</div>
+<div class="format-label">OUTPUT</div>
+<div class="format-name" id="outputFormat">MP4</div>
+<div class="format-ready">READY</div>
+<span class="format-tab"></span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<div class="categories" id="tools">
+<button class="category active" data-filter="all"><span class="cat-icon">▦</span><b>All Tools</b></button>
+<button class="category" data-filter="image"><span class="cat-icon">▱</span><b>Image</b></button>
+<button class="category" data-filter="pdf"><span class="cat-icon">▤</span><b>PDF &amp; Document</b></button>
+<button class="category" data-filter="audio"><span class="cat-icon">♫</span><b>Audio</b></button>
+<button class="category" data-filter="video"><span class="cat-icon">▷</span><b>Video</b></button>
+<button class="category" data-filter="archive"><span class="cat-icon">◫</span><b>Archive</b></button>
+<button class="category" data-filter="data"><span class="cat-icon">▦</span><b>Data</b></button>
+</div>
+<section class="phase">
+<div class="phase-header">
+<div class="phase-title">
+<span class="phase-badge">✦ Popular Tools</span>
+<div><h2>Popular &amp; Essential Tools <span>— 35 tools</span></h2><p>The most useful file conversion and utility tools in one place.</p></div>
+</div>
+<span class="tool-count">● 35 tools</span>
+</div>
+<div class="tools-grid"><button class="tool-card" data-kind="pdf" onclick="chooseTool('PDF to Word')" type="button"><span class="tool-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.8"></path><path d="M14 2v6h6" fill="none" stroke="currentColor" stroke-width="1.8"></path></svg></span><span class="tool-text"><strong>PDF to Word</strong><small>Convert PDF to Word</small></span><span class="arrow">→</span></button><button class="tool-card" data-kind="pdf" onclick="chooseTool('Word to PDF')" type="button"><span class="tool-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.8"></path><path d="M14 2v6h6" fill="none" stroke="currentColor" stroke-width="1.8"></path></svg></span><span class="tool-text"><strong>Word to PDF</strong><small>Convert Word documents to PDF</small></span><span class="arrow">→</span></button><button class="tool-card" data-kind="pdf" onclick="chooseTool('PDF to Excel')" type="button"><span class="tool-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.8"></path><path d="M14 2v6h6" fill="none" stroke="currentColor" stroke-width="1.8"></path></svg></span><span class="tool-text"><strong>PDF to Excel</strong><small>Convert PDF to Excel</small></span><span class="arrow">→</span></button><button class="tool-card" data-kind="pdf" onclick="chooseTool('Excel to PDF')" type="button"><span class="tool-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.8"></path><path d="M14 2v6h6" fill="none" stroke="currentColor" stroke-width="1.8"></path></svg></span><span class="tool-text"><strong>Excel to PDF</strong><small>Convert Excel to PDF</small></span><span class="arrow">→</span></button><button class="tool-card" data-kind="pdf" onclick="chooseTool('PDF to PowerPoint')" type="button"><span class="tool-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.8"></path><path d="M14 2v6h6" fill="none" stroke="currentColor" stroke-width="1.8"></path></svg></span><span class="tool-text"><strong>PDF to PowerPoint</strong><small>Convert PDF to PowerPoint</small></span><span class="arrow">→</span></button><button class="tool-card" data-kind="pdf" onclick="chooseTool('PowerPoint to PDF')" type="button"><span class="tool-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.8"></path><path d="M14 2v6h6" fill="none" stroke="currentColor" stroke-width="1.8"></path></svg></span><span class="tool-text"><strong>PowerPoint to PDF</strong><small>Convert PowerPoint to PDF</small></span><span class="arrow">→</span></button><button class="tool-card" data-kind="pdf" onclick="chooseTool('Merge PDF')" type="button"><span class="tool-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.8"></path><path d="M14 2v6h6" fill="none" stroke="currentColor" stroke-width="1.8"></path></svg></span><span class="tool-text"><strong>Merge PDF</strong><small>Combine multiple PDF files</small></span><span class="arrow">→</span></button><button class="tool-card" data-kind="pdf" onclick="chooseTool('Split PDF')" type="button"><span class="tool-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.8"></path><path d="M14 2v6h6" fill="none" stroke="currentColor" stroke-width="1.8"></path></svg></span><span class="tool-text"><strong>Split PDF</strong><small>Split a PDF into separate files</small></span><span class="arrow">→</span></button><button class="tool-card" data-kind="pdf" onclick="chooseTool('Compress PDF')" type="button"><span class="tool-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.8"></path><path d="M14 2v6h6" fill="none" stroke="currentColor" stroke-width="1.8"></path></svg></span><span class="tool-text"><strong>Compress PDF</strong><small>Reduce PDF file size</small></span><span class="arrow">→</span></button><button class="tool-card" data-kind="pdf" onclick="chooseTool('JPG to PDF')" type="button"><span class="tool-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.8"></path><path d="M14 2v6h6" fill="none" stroke="currentColor" stroke-width="1.8"></path></svg></span><span class="tool-text"><strong>JPG to PDF</strong><small>Convert JPG images to PDF</small></span><span class="arrow">→</span></button><button class="tool-card" data-kind="pdf" onclick="chooseTool('PDF to JPG')" type="button"><span class="tool-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.8"></path><path d="M14 2v6h6" fill="none" stroke="currentColor" stroke-width="1.8"></path></svg></span><span class="tool-text"><strong>PDF to JPG</strong><small>Convert PDF pages to JPG</small></span><span class="arrow">→</span></button><a class="tool-card" data-kind="pdf" href="tools/create%20or%20edit/PDF_Editor_Create_Tool.html"><span class="tool-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.8"></path><path d="M14 2v6h6" fill="none" stroke="currentColor" stroke-width="1.8"></path></svg></span><span class="tool-text"><strong>Edit or Create PDF</strong><small>Edit or create PDF files</small></span><span class="arrow">→</span></a><button class="tool-card" data-kind="image" onclick="chooseTool('JPG to PNG')" type="button"><span class="tool-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><rect fill="none" height="16" rx="2" stroke="currentColor" stroke-width="1.8" width="18" x="3" y="4"></rect><circle cx="8.5" cy="9" fill="currentColor" r="1.7"></circle><path d="m5 17 5-5 3.5 3 2.5-2.5 3 4.5" fill="none" stroke="currentColor" stroke-width="1.8"></path></svg></span><span class="tool-text"><strong>JPG to PNG</strong><small>Convert JPG images to PNG</small></span><span class="arrow">→</span></button><button class="tool-card" data-kind="image" onclick="chooseTool('PNG to JPG')" type="button"><span class="tool-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><rect fill="none" height="16" rx="2" stroke="currentColor" stroke-width="1.8" width="18" x="3" y="4"></rect><circle cx="8.5" cy="9" fill="currentColor" r="1.7"></circle><path d="m5 17 5-5 3.5 3 2.5-2.5 3 4.5" fill="none" stroke="currentColor" stroke-width="1.8"></path></svg></span><span class="tool-text"><strong>PNG to JPG</strong><small>Convert PNG images to JPG</small></span><span class="arrow">→</span></button><button class="tool-card" data-kind="image" onclick="chooseTool('JPG to WebP')" type="button"><span class="tool-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><rect fill="none" height="16" rx="2" stroke="currentColor" stroke-width="1.8" width="18" x="3" y="4"></rect><circle cx="8.5" cy="9" fill="currentColor" r="1.7"></circle><path d="m5 17 5-5 3.5 3 2.5-2.5 3 4.5" fill="none" stroke="currentColor" stroke-width="1.8"></path></svg></span><span class="tool-text"><strong>JPG to WebP</strong><small>Convert JPG images to WebP</small></span><span class="arrow">→</span></button><button class="tool-card" data-kind="image" onclick="chooseTool('WebP to JPG')" type="button"><span class="tool-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><rect fill="none" height="16" rx="2" stroke="currentColor" stroke-width="1.8" width="18" x="3" y="4"></rect><circle cx="8.5" cy="9" fill="currentColor" r="1.7"></circle><path d="m5 17 5-5 3.5 3 2.5-2.5 3 4.5" fill="none" stroke="currentColor" stroke-width="1.8"></path></svg></span><span class="tool-text"><strong>WebP to JPG</strong><small>Convert WebP images to JPG</small></span><span class="arrow">→</span></button><button class="tool-card" data-kind="image" onclick="chooseTool('HEIC to JPG')" type="button"><span class="tool-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><rect fill="none" height="16" rx="2" stroke="currentColor" stroke-width="1.8" width="18" x="3" y="4"></rect><circle cx="8.5" cy="9" fill="currentColor" r="1.7"></circle><path d="m5 17 5-5 3.5 3 2.5-2.5 3 4.5" fill="none" stroke="currentColor" stroke-width="1.8"></path></svg></span><span class="tool-text"><strong>HEIC to JPG</strong><small>Convert HEIC photos to JPG</small></span><span class="arrow">→</span></button><button class="tool-card" data-kind="image" onclick="chooseTool('Image Converter')" type="button"><span class="tool-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><rect fill="none" height="16" rx="2" stroke="currentColor" stroke-width="1.8" width="18" x="3" y="4"></rect><circle cx="8.5" cy="9" fill="currentColor" r="1.7"></circle><path d="m5 17 5-5 3.5 3 2.5-2.5 3 4.5" fill="none" stroke="currentColor" stroke-width="1.8"></path></svg></span><span class="tool-text"><strong>Image Converter</strong><small>Convert between image formats</small></span><span class="arrow">→</span></button><button class="tool-card" data-kind="image" onclick="chooseTool('Image Compressor &amp; Resizer')" type="button"><span class="tool-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><rect fill="none" height="16" rx="2" stroke="currentColor" stroke-width="1.8" width="18" x="3" y="4"></rect><circle cx="8.5" cy="9" fill="currentColor" r="1.7"></circle><path d="m5 17 5-5 3.5 3 2.5-2.5 3 4.5" fill="none" stroke="currentColor" stroke-width="1.8"></path></svg></span><span class="tool-text"><strong>Image Compressor &amp; Resizer</strong><small>Compress and resize images</small></span><span class="arrow">→</span></button><button class="tool-card" data-kind="document" onclick="chooseTool('DOCX to TXT')" type="button"><span class="tool-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.8"></path><path d="M14 2v6h6" fill="none" stroke="currentColor" stroke-width="1.8"></path></svg></span><span class="tool-text"><strong>DOCX to TXT</strong><small>Convert Word documents to text</small></span><span class="arrow">→</span></button><button class="tool-card" data-kind="document" onclick="chooseTool('TXT to PDF')" type="button"><span class="tool-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.8"></path><path d="M14 2v6h6" fill="none" stroke="currentColor" stroke-width="1.8"></path></svg></span><span class="tool-text"><strong>TXT to PDF</strong><small>Convert text files to PDF</small></span><span class="arrow">→</span></button><button class="tool-card" data-kind="document" onclick="chooseTool('PDF to TXT')" type="button"><span class="tool-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.8"></path><path d="M14 2v6h6" fill="none" stroke="currentColor" stroke-width="1.8"></path></svg></span><span class="tool-text"><strong>PDF to TXT</strong><small>Extract PDF text</small></span><span class="arrow">→</span></button><button class="tool-card" data-kind="document" onclick="chooseTool('DOCX to HTML')" type="button"><span class="tool-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.8"></path><path d="M14 2v6h6" fill="none" stroke="currentColor" stroke-width="1.8"></path></svg></span><span class="tool-text"><strong>DOCX to HTML</strong><small>Convert Word documents to HTML</small></span><span class="arrow">→</span></button><button class="tool-card" data-kind="document" onclick="chooseTool('RTF to PDF')" type="button"><span class="tool-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.8"></path><path d="M14 2v6h6" fill="none" stroke="currentColor" stroke-width="1.8"></path></svg></span><span class="tool-text"><strong>RTF to PDF</strong><small>Convert RTF documents to PDF</small></span><span class="arrow">→</span></button><button class="tool-card" data-kind="data" onclick="chooseTool('XLSX to CSV')" type="button"><span class="tool-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><rect fill="none" height="18" rx="2" stroke="currentColor" stroke-width="1.8" width="16" x="4" y="3"></rect><path d="M4 8h16M4 13h16M4 17h16M9 8v13M15 8v13" stroke="currentColor" stroke-width="1.4"></path></svg></span><span class="tool-text"><strong>XLSX to CSV</strong><small>Convert Excel to CSV</small></span><span class="arrow">→</span></button><button class="tool-card" data-kind="data" onclick="chooseTool('CSV to XLSX')" type="button"><span class="tool-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><rect fill="none" height="18" rx="2" stroke="currentColor" stroke-width="1.8" width="16" x="4" y="3"></rect><path d="M4 8h16M4 13h16M4 17h16M9 8v13M15 8v13" stroke="currentColor" stroke-width="1.4"></path></svg></span><span class="tool-text"><strong>CSV to XLSX</strong><small>Convert CSV to Excel</small></span><span class="arrow">→</span></button><button class="tool-card" data-kind="data" onclick="chooseTool('XLSX to PDF')" type="button"><span class="tool-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><rect fill="none" height="18" rx="2" stroke="currentColor" stroke-width="1.8" width="16" x="4" y="3"></rect><path d="M4 8h16M4 13h16M4 17h16M9 8v13M15 8v13" stroke="currentColor" stroke-width="1.4"></path></svg></span><span class="tool-text"><strong>XLSX to PDF</strong><small>Convert Excel spreadsheets to PDF</small></span><span class="arrow">→</span></button><button class="tool-card" data-kind="presentation" onclick="chooseTool('PPTX to PDF')" type="button"><span class="tool-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.8"></path><path d="M14 2v6h6" fill="none" stroke="currentColor" stroke-width="1.8"></path></svg></span><span class="tool-text"><strong>PPTX to PDF</strong><small>Convert presentations to PDF</small></span><span class="arrow">→</span></button><button class="tool-card" data-kind="presentation" onclick="chooseTool('PDF to PPTX')" type="button"><span class="tool-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.8"></path><path d="M14 2v6h6" fill="none" stroke="currentColor" stroke-width="1.8"></path></svg></span><span class="tool-text"><strong>PDF to PPTX</strong><small>Convert PDF to presentations</small></span><span class="arrow">→</span></button><button class="tool-card" data-kind="audio" onclick="chooseTool('MP4 to MP3')" type="button"><span class="tool-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M14 5v11.2a3.2 3.2 0 1 1-2-3V7l8-2v8.2a3.2 3.2 0 1 1-2-3V3z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.8"></path></svg></span><span class="tool-text"><strong>MP4 to MP3</strong><small>Extract audio from MP4</small></span><span class="arrow">→</span></button><button class="tool-card" data-kind="audio" onclick="chooseTool('MP3 to WAV')" type="button"><span class="tool-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M14 5v11.2a3.2 3.2 0 1 1-2-3V7l8-2v8.2a3.2 3.2 0 1 1-2-3V3z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.8"></path></svg></span><span class="tool-text"><strong>MP3 to WAV</strong><small>Convert MP3 audio to WAV</small></span><span class="arrow">→</span></button><button class="tool-card" data-kind="video" onclick="chooseTool('MOV to MP4')" type="button"><span class="tool-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><rect fill="none" height="14" rx="2" stroke="currentColor" stroke-width="1.8" width="13" x="3" y="5"></rect><path d="m16 10 5-3v10l-5-3z" fill="none" stroke="currentColor" stroke-width="1.8"></path></svg></span><span class="tool-text"><strong>MOV to MP4</strong><small>Convert MOV video to MP4</small></span><span class="arrow">→</span></button><button class="tool-card" data-kind="video" onclick="chooseTool('MP4 to GIF')" type="button"><span class="tool-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><rect fill="none" height="14" rx="2" stroke="currentColor" stroke-width="1.8" width="13" x="3" y="5"></rect><path d="m16 10 5-3v10l-5-3z" fill="none" stroke="currentColor" stroke-width="1.8"></path></svg></span><span class="tool-text"><strong>MP4 to GIF</strong><small>Convert MP4 video to GIF</small></span><span class="arrow">→</span></button><button class="tool-card" data-kind="other" onclick="chooseTool('ZIP / RAR Extractor')" type="button"><span class="tool-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><rect fill="none" height="14" rx="2" stroke="currentColor" stroke-width="1.8" width="18" x="3" y="5"></rect><path d="M8 9h8M8 13h5" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path></svg></span><span class="tool-text"><strong>ZIP / RAR Extractor</strong><small>Extract ZIP and RAR archives</small></span><span class="arrow">→</span></button><button class="tool-card" data-kind="other" onclick="chooseTool('QR Code Generator')" type="button"><span class="tool-icon"><svg aria-hidden="true" viewbox="0 0 24 24"><rect fill="none" height="14" rx="2" stroke="currentColor" stroke-width="1.8" width="18" x="3" y="5"></rect><path d="M8 9h8M8 13h5" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path></svg></span><span class="tool-text"><strong>QR Code Generator</strong><small>Create QR codes</small></span><span class="arrow">→</span></button></div>
+</section>
+<section class="features" id="about">
+<div class="feature"><span class="feature-icon">ϟ</span><div><b>Fast Conversion</b><small>Get your files converted in seconds.</small></div></div>
+<div class="feature"><span class="feature-icon">⬟</span><div><b>Secure &amp; Private</b><small>Your files are safe with us.</small></div></div>
+<div class="feature"><span class="feature-icon">▣</span><div><b>Works Everywhere</b><small>Use it on any device, any browser.</small></div></div>
+<div class="feature"><span class="feature-icon">∞</span><div><b>Free to Use</b><small>No hidden fees. No registration needed.</small></div></div>
+</section>
 </main>
+<footer class="container" id="faq"><div class="brand"><img alt="" src="data:image/png;base64,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"/>ConvertKit <span class="lite">Lite</span></div><div>© 2026 ConvertKit Lite. All rights reserved.</div></footer>
+<div class="toast" id="toast"></div>
+<script>
+const sourceFormat=document.getElementById('sourceFormat');
+const outputFormat=document.getElementById('outputFormat');
 
-<script type="module">
-import * as pdfjsLib from "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs";
-pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.worker.min.mjs";
+const conversionPairs=[
+  ['MOV','MP4'],['JPG','PDF'],['PNG','WEBP'],['PDF','JPG'],
+  ['DOCX','PDF'],['MP4','MP3'],['M4A','MP3'],['XLSX','CSV']
+];
+let pairIndex=0;
+let pairTimer;
 
-const {PDFDocument,rgb,StandardFonts}=PDFLib;
-const fileInput=document.getElementById("fileInput"), thumbs=document.getElementById("thumbs"), area=document.getElementById("canvasArea");
-const empty=document.getElementById("empty"), fontSize=document.getElementById("fontSize"), color=document.getElementById("color"), zoomLabel=document.getElementById("zoomLabel");
-let pdfDoc=null, sourceBytes=null, pages=[], current=0, zoom=1, mode="select";
-
-function hexRgb(h){return [parseInt(h.slice(1,3),16)/255,parseInt(h.slice(3,5),16)/255,parseInt(h.slice(5,7),16)/255]}
-function blankPage(){return {width:595,height:842,source:null,items:[],draws:[]}}
-function setMode(m){mode=m; document.querySelectorAll(".toolbar button").forEach(b=>b.classList.remove("primary")); if(m==="text")document.getElementById("addText").classList.add("primary"); if(m==="draw")document.getElementById("draw").classList.add("primary")}
-function renderThumbs(){
-  thumbs.innerHTML="";
-  pages.forEach((p,i)=>{const d=document.createElement("div");d.className="thumb"+(i===current?" active":"");d.innerHTML=`<canvas></canvas><small>Page ${i+1}</small>`;d.onclick=()=>{current=i;render();renderThumbs()};thumbs.appendChild(d);});
+function setConversionPair(pair){
+  sourceFormat.textContent=pair[0];
+  outputFormat.textContent=pair[1];
 }
-async function render(){
-  empty.style.display=pages.length?"none":"block"; if(!pages.length)return;
-  area.querySelectorAll(".page-wrap").forEach(x=>x.remove());
-  const p=pages[current], wrap=document.createElement("div");wrap.className="page-wrap";
-  const canvas=document.createElement("canvas"); const scale=zoom; canvas.width=p.width*scale;canvas.height=p.height*scale;
-  wrap.appendChild(canvas); const overlay=document.createElement("div");overlay.className="overlay";wrap.appendChild(overlay); area.appendChild(wrap);
-  if(p.source){
-    try{
-      const src=await pdfDoc.getPage(p.source); const vp=src.getViewport({scale}); canvas.width=vp.width;canvas.height=vp.height; wrap.style.width=vp.width+"px";
-      await src.render({canvasContext:canvas.getContext("2d"),viewport:vp}).promise;
-    }catch(e){}
-  }else{
-    const ctx=canvas.getContext("2d");ctx.fillStyle="#fff";ctx.fillRect(0,0,canvas.width,canvas.height);
-  }
-  p.items.forEach((it,idx)=>{
-    const el=document.createElement("div");el.className="overlay-item text-item";el.textContent=it.text;
-    el.style.left=(it.x*zoom)+"px";el.style.top=(it.y*zoom)+"px";el.style.fontSize=(it.size*zoom)+"px";el.style.color=it.color;
-    el.title="Drag to move • Double-click to edit";
-    el.ondblclick=()=>{const v=prompt("Edit text",it.text);if(v!==null){it.text=v;render()}};
-    let sx,sy,ox,oy;el.onpointerdown=e=>{sx=e.clientX;sy=e.clientY;ox=it.x;oy=it.y;el.setPointerCapture(e.pointerId)};
-    el.onpointermove=e=>{if(e.buttons!==1)return;it.x=ox+(e.clientX-sx)/zoom;it.y=oy+(e.clientY-sy)/zoom;el.style.left=it.x*zoom+"px";el.style.top=it.y*zoom+"px"};
-    overlay.appendChild(el);
+
+function startPairAnimation(){
+  clearInterval(pairTimer);
+  pairTimer=setInterval(()=>{
+    pairIndex=(pairIndex+1)%conversionPairs.length;
+    const source=document.querySelector('.format-card.source');
+    const output=document.getElementById('outputCard');
+    source.style.transform='translateX(-5px) scale(.98)';
+    output.style.transform='translateX(5px) scale(.98)';
+    setTimeout(()=>{
+      setConversionPair(conversionPairs[pairIndex]);
+      source.style.transform='';
+      output.style.transform='';
+    },180);
+  },3200);
+}
+
+setConversionPair(conversionPairs[0]);
+startPairAnimation();
+
+document.querySelectorAll('.category').forEach(btn=>btn.addEventListener('click',()=>{
+  document.querySelectorAll('.category').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const filter=btn.dataset.filter;
+  document.querySelectorAll('.tool-card').forEach(card=>{
+    card.style.display=filter==='all'||card.dataset.kind===filter?'flex':'none';
   });
-  if(mode==="draw"){
-    const draw=document.createElement("canvas");draw.className="draw-layer";draw.width=canvas.width;draw.height=canvas.height;draw.style.pointerEvents="auto";overlay.appendChild(draw);
-    const ctx=draw.getContext("2d");ctx.lineWidth=2*zoom;ctx.lineCap="round";ctx.strokeStyle=color.value;
-    let drawing=false,last=null;
-    draw.onpointerdown=e=>{drawing=true;last=[e.offsetX,e.offsetY];};
-    draw.onpointermove=e=>{if(!drawing)return;ctx.beginPath();ctx.moveTo(last[0],last[1]);ctx.lineTo(e.offsetX,e.offsetY);ctx.stroke();p.draws.push({x1:last[0]/zoom,y1:last[1]/zoom,x2:e.offsetX/zoom,y2:e.offsetY/zoom,color:color.value,width:2});last=[e.offsetX,e.offsetY]};
-    draw.onpointerup=()=>drawing=false;draw.onpointerleave=()=>drawing=false;
-  }
-}
-async function loadPdf(file){
-  sourceBytes=await file.arrayBuffer();pdfDoc=await pdfjsLib.getDocument({data:sourceBytes.slice(0)}).promise;pages=[];
-  for(let i=1;i<=pdfDoc.numPages;i++){const pg=await pdfDoc.getPage(i);const v=pg.getViewport({scale:1});pages.push({width:v.width,height:v.height,source:i,items:[],draws:[]})}
-  current=0;zoom=1;updateZoom();renderThumbs();render();
-}
-async function createNew(){pdfDoc=null;sourceBytes=null;pages=[blankPage()];current=0;zoom=1;updateZoom();renderThumbs();render()}
-function updateZoom(){zoomLabel.textContent=Math.round(zoom*100)+"%"}
-fileInput.onchange=e=>{if(e.target.files[0])loadPdf(e.target.files[0])};
-document.getElementById("newPdf").onclick=createNew;
-document.getElementById("addText").onclick=()=>{setMode("text");if(!pages.length)createNew();const p=pages[current];p.items.push({text:"New text",x:50,y:60,size:+fontSize.value,color:color.value});setMode("select");render()};
-document.getElementById("draw").onclick=()=>{setMode(mode==="draw"?"select":"draw");render()};
-document.getElementById("erase").onclick=()=>{if(!pages.length)return;pages[current].items.pop();pages[current].draws.pop();render()};
-document.getElementById("addPage").onclick=()=>{pages.splice(current+1,0,blankPage());current++;renderThumbs();render()};
-document.getElementById("deletePage").onclick=()=>{if(pages.length<=1){alert("A PDF needs at least one page.");return}pages.splice(current,1);current=Math.max(0,current-1);renderThumbs();render()};
-document.getElementById("zoomIn").onclick=()=>{zoom=Math.min(2.5,zoom+.1);updateZoom();render()};
-document.getElementById("zoomOut").onclick=()=>{zoom=Math.max(.5,zoom-.1);updateZoom();render()};
+}));
 
-async function save(){
-  if(!pages.length){alert("Open a PDF or create a new one first.");return}
-  const out=await PDFDocument.create();
-  const font=await out.embedFont(StandardFonts.Helvetica);
-  for(const p of pages){
-    let page;
-    if(p.source && sourceBytes){
-      const src=await PDFDocument.load(sourceBytes);
-      const copied=await out.copyPages(src,[p.source-1]); page=copied[0];out.addPage(page);
-    }else page=out.addPage([p.width,p.height]);
-    const [r,g,b]=hexRgb(color.value);
-    for(const it of p.items){
-      const [ir,ig,ib]=hexRgb(it.color||color.value);
-      page.drawText(it.text,{x:it.x,y:p.height-it.y-it.size,size:it.size,font,color:rgb(ir,ig,ib)});
-    }
-    for(const d of p.draws){
-      const [dr,dg,db]=hexRgb(d.color||color.value);
-      page.drawLine({start:{x:d.x1,y:p.height-d.y1},end:{x:d.x2,y:p.height-d.y2},thickness:d.width,color:rgb(dr,dg,db)});
-    }
-  }
-  const bytes=await out.save();const blob=new Blob([bytes],{type:"application/pdf"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="edited-document.pdf";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+function chooseTool(name){
+  showToast(name+' selected — connect your converter backend here.');
 }
-document.getElementById("savePdf").onclick=save;
-createNew();
+
+function showToast(message){
+  const t=document.getElementById('toast');
+  t.textContent=message;
+  t.style.display='block';
+  setTimeout(()=>t.style.display='none',2600);
+}
 </script>
 </body>
 </html>
